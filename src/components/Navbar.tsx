@@ -1,10 +1,15 @@
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Menu, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "./ui/use-toast";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   const menuItems = [
     { href: "/", label: "Inicio" },
@@ -12,6 +17,23 @@ export const Navbar = () => {
     { href: "/#membresias", label: "Membresías" },
     { href: "/store", label: "Tienda" },
   ];
+
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      navigate("/login");
+      toast({
+        title: "Sesión cerrada",
+        description: "Has cerrado sesión exitosamente",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "No se pudo cerrar la sesión",
+        variant: "destructive",
+      });
+    }
+  };
 
   const NavLinks = () => (
     <>
@@ -25,6 +47,15 @@ export const Navbar = () => {
           {item.label}
         </Link>
       ))}
+      <Button
+        variant="ghost"
+        size="sm"
+        className="text-gray-600 hover:text-nativo-green"
+        onClick={handleLogout}
+      >
+        <LogOut className="h-4 w-4 mr-2" />
+        Cerrar sesión
+      </Button>
     </>
   );
 
