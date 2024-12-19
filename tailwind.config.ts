@@ -20,10 +20,11 @@ export default {
     extend: {
       colors: {
         nativo: {
-          green: "#4A5D4C",
-          brown: "#8B7355",
-          pink: "#E8D0D0",
-          beige: "#F5F0EB",
+          brown: "#8B4513",    // Rich earth brown
+          beige: "#F5F5DC",    // Natural beige
+          sage: "#8B8B6B",     // Muted sage
+          green: "#2F4F4F",    // Deep forest green
+          cream: "#FFFAF0",    // Soft cream
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

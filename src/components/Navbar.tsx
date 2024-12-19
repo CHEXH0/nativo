@@ -41,7 +41,7 @@ export const Navbar = () => {
         <Link
           key={item.href}
           to={item.href}
-          className="text-gray-600 hover:text-nativo-green transition-colors"
+          className="text-nativo-sage hover:text-nativo-green transition-colors"
           onClick={() => setIsOpen(false)}
         >
           {item.label}
@@ -50,7 +50,7 @@ export const Navbar = () => {
       <Button
         variant="ghost"
         size="sm"
-        className="text-gray-600 hover:text-nativo-green"
+        className="text-nativo-sage hover:text-nativo-green hover:bg-nativo-cream/50"
         onClick={handleLogout}
       >
         <LogOut className="h-4 w-4 mr-2" />
@@ -60,7 +60,7 @@ export const Navbar = () => {
   );
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
+    <nav className="fixed top-0 left-0 right-0 bg-nativo-cream/80 backdrop-blur-md z-50 border-b border-nativo-sage/20">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-2">
@@ -76,10 +76,10 @@ export const Navbar = () => {
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild className="md:hidden">
               <button className="p-2">
-                <Menu className="h-6 w-6" />
+                <Menu className="h-6 w-6 text-nativo-sage" />
               </button>
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className="bg-nativo-cream">
               <div className="flex flex-col space-y-4 mt-8">
                 <NavLinks />
               </div>

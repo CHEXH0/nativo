@@ -56,20 +56,21 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-nativo-beige">
+    <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
       <Navbar />
       
       {/* Hero Section */}
-      <section id="inicio" className="pt-24 pb-12 md:pt-32 md:pb-24">
-        <div className="container px-4 mx-auto">
+      <section id="inicio" className="pt-24 pb-12 md:pt-32 md:pb-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/lovable-uploads/f426299b-bbc1-4d1f-95e5-4b7315e93ac0.png')] opacity-10 bg-cover bg-center" />
+        <div className="container px-4 mx-auto relative">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-nativo-green mb-6 animate-fadeIn">
               Tu Camino Hacia el Bienestar Holístico
             </h1>
-            <p className="text-xl text-gray-600 mb-8 animate-fadeIn" style={{ animationDelay: "0.2s" }}>
+            <p className="text-xl text-nativo-sage mb-8 animate-fadeIn" style={{ animationDelay: "0.2s" }}>
               Descubre el equilibrio perfecto entre cuerpo, mente y espíritu con NATIVO Fitness Holístico
             </p>
-            <button className="bg-nativo-green text-white px-8 py-3 rounded-md hover:bg-nativo-brown transition-colors duration-300 animate-fadeIn" style={{ animationDelay: "0.4s" }}>
+            <button className="bg-nativo-green text-nativo-cream px-8 py-3 rounded-md hover:bg-nativo-sage transition-colors duration-300 animate-fadeIn shadow-lg" style={{ animationDelay: "0.4s" }}>
               Comienza Tu Viaje
             </button>
           </div>
@@ -77,7 +78,7 @@ const Index = () => {
       </section>
 
       {/* Programs Section */}
-      <section id="programas" className="py-12 md:py-24">
+      <section id="programas" className="py-12 md:py-24 bg-nativo-cream/50">
         <div className="container px-4 mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-nativo-green text-center mb-12">
             Nuestros Programas
@@ -93,7 +94,7 @@ const Index = () => {
       </section>
 
       {/* Membership Section */}
-      <section id="membresias" className="py-12 md:py-24 bg-white">
+      <section id="membresias" className="py-12 md:py-24 bg-gradient-to-t from-nativo-sage/10 to-nativo-cream/50">
         <div className="container px-4 mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-nativo-green text-center mb-12">
             Membresías
