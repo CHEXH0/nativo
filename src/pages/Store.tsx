@@ -16,7 +16,7 @@ const products: Product[] = [
     id: "fluidos",
     name: "Fluidos",
     description: "Fluides para limpieza espiritual",
-    price: 25,
+    price: 15,
     image: "https://images.unsplash.com/photo-1612198526331-66fcc90c44cd?w=500",
   },
   {
