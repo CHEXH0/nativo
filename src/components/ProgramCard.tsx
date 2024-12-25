@@ -3,15 +3,15 @@ import { Card } from "@/components/ui/card";
 interface ProgramCardProps {
   title: string;
   description: string;
-  imageUrl: string;
+  image: string;
 }
 
-export const ProgramCard = ({ title, description, imageUrl }: ProgramCardProps) => {
+export const ProgramCard = ({ title, description, image }: ProgramCardProps) => {
   return (
     <Card className="overflow-hidden group hover:shadow-lg transition-all duration-300 bg-white">
       <div className="aspect-video overflow-hidden">
         <img
-          src={imageUrl}
+          src={image}
           alt={title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />

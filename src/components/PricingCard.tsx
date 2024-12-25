@@ -9,6 +9,7 @@ interface PricingCardProps {
 }
 
 export const PricingCard = ({ title, price, features, isPopular }: PricingCardProps) => {
+  
   return (
     <Card className={`relative p-6 bg-white ${isPopular ? 'border-2 border-nativo-green' : ''}`}>
       {isPopular && (

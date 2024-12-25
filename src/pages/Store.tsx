@@ -17,21 +17,21 @@ const products: Product[] = [
     name: "Fluidos",
     description: "Fluides para limpieza espiritual",
     price: 15,
-    image: "https://images.unsplash.com/photo-1612198526331-66fcc90c44cd?w=500",
+    image: "/laptop-uploads/Fluidos.jpg",
   },
   {
     id: "manias",
     name: "Manías",
     description: "Pulseras inspiradas en Colombia",
     price: 15,
-    image: "https://images.unsplash.com/photo-1573880642673-3d7b45f2a130?w=500",
+    image: "/laptop-uploads/Manias.jpg",
   },
   {
     id: "copal",
     name: "Copal",
     description: "Incienso natural de resina de árbol",
     price: 20,
-    image: "https://images.unsplash.com/photo-1523293836414-f04e712e1f3b?w=500",
+    image: "/laptop-uploads/Copal.jpg",
   },
 ];
 

@@ -7,17 +7,17 @@ const Index = () => {
     {
       title: "Programa de Plan De Vida",
       description: "Descubre tu camino hacia una vida más equilibrada y consciente con nuestro programa holístico personalizado.",
-      imageUrl: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+      image: "/laptop-uploads/Vida.jpg",
     },
     {
       title: "Programa de Fitness",
       description: "Alcanza tus objetivos físicos con un enfoque integral que combina ejercicio, nutrición y bienestar mental.",
-      imageUrl: "https://images.unsplash.com/photo-1517022812141-23620dba5c23",
+      image: "/laptop-uploads/Fitness.jpg",
     },
     {
       title: "Programa de Detox",
       description: "Renueva tu cuerpo y mente con nuestro programa de desintoxicación natural y sostenible.",
-      imageUrl: "https://images.unsplash.com/photo-1501854140801-50d01698950b",
+      image: "/laptop-uploads/Detox.jpg",
     },
   ];
 
@@ -67,7 +67,7 @@ const Index = () => {
             <h1 className="text-4xl md:text-6xl font-bold text-nativo-green mb-8 animate-fadeIn bg-nativo-cream/80 bg-opacity-85 p-4 rounded">
               Tu Camino Hacia el Bienestar Holístico
             </h1>
-            <p className="text-xl text-nativo-sage mb-8 animate-fadeIn bg-nativo-cream/80 bg-opacity-85 p-4 rounded" style={{ animationDelay: "0.2s" }}>
+            <p className="text-xl text-black mb-8 animate-fadeIn bg-nativo-cream/80 bg-opacity-85 p-4 rounded" style={{ animationDelay: "0.2s" }}>
               Descubre el equilibrio perfecto entre cuerpo, mente y espíritu con NATIVO Fitness Holístico
             </p>
             <button className="bg-nativo-green text-nativo-cream px-8 py-3 rounded-md hover:bg-nativo-brown transition-colors duration-300 animate-fadeIn shadow-lg" style={{ animationDelay: "0.4s" }}>
