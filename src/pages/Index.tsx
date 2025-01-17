@@ -23,8 +23,8 @@ const Index = () => {
 
   const memberships = [
     {
-      title: "Básico Gratis",
-      price: "Gratis",
+      title: "Básico",
+      price: "$9/mes",
       features: [
         "Acceso a contenido básico",
         "Comunidad en línea",
@@ -33,24 +33,24 @@ const Index = () => {
       ],
     },
     {
-      title: "Professional",
-      price: "$29/mes",
+      title: "GOLD",
+      price: "$59/mes",
       features: [
         "Todo lo del plan Básico",
-        "Acceso a todos los programas",
-        "Asesoría personalizada",
-        "4 clases virtuales al mes",
+        "Acceso a dos talleres grupales al mes",
+        "Seguimiento personalizado por Chat",
+        "2 acesorias en vivo al mes",
       ],
       isPopular: true,
     },
     {
-      title: "Elite",
-      price: "$59/mes",
+      title: "VIP",
+      price: "$109/mes",
       features: [
-        "Todo lo del plan Professional",
+        "Todo lo del plan GOLD",
         "Sesiones privadas",
-        "Seguimiento personalizado",
-        "Clases virtuales ilimitadas",
+        "Talleres virtuales ilimitadas",
+        "Una limpieza energetica medicina tradicional"
       ],
     },
   ];
