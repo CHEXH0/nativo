@@ -1,11 +1,14 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AuthError } from "@supabase/supabase-js";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     // Check if user is already logged in
@@ -13,8 +16,40 @@ const Login = () => {
       if (session) {
         navigate("/");
       }
+      
+      // Clear error when auth state changes
+      if (event === 'SIGNED_OUT') {
+        setErrorMessage("");
+      }
     });
   }, [navigate]);
+
+  // Handle auth errors
+  useEffect(() => {
+    const handleAuthError = (error: AuthError) => {
+      switch (error.message) {
+        case "User already registered":
+          setErrorMessage("This email is already registered. Please sign in instead.");
+          break;
+        case "Invalid login credentials":
+          setErrorMessage("Invalid email or password. Please try again.");
+          break;
+        default:
+          setErrorMessage(error.message);
+      }
+    };
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event) => {
+      if (event === 'USER_UPDATED') {
+        const { error } = await supabase.auth.getSession();
+        if (error) {
+          handleAuthError(error);
+        }
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
     <div className="min-h-screen bg-nativo-beige flex items-center justify-center p-4">
@@ -28,6 +63,13 @@ const Login = () => {
           <h1 className="text-2xl font-bold text-nativo-green">Bienvenido a NATIVO</h1>
           <p className="text-gray-600">Inicia sesión para continuar</p>
         </div>
+        
+        {errorMessage && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertDescription>{errorMessage}</AlertDescription>
+          </Alert>
+        )}
+
         <Auth
           supabaseClient={supabase}
           appearance={{
