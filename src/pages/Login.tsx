@@ -32,7 +32,7 @@ const Login = () => {
           setErrorMessage("This email is already registered. Please sign in instead.");
           break;
         case "Invalid login credentials":
-          setErrorMessage("Invalid email or password. Please try again.");
+          setErrorMessage("Invalid email or password. Please check your credentials and try again.");
           break;
         default:
           setErrorMessage(error.message);
