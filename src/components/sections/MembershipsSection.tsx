@@ -8,7 +8,7 @@ const memberships = [
       "Acceso a contenido básico",
       "Comunidad en línea",
       "Newsletter mensual",
-      "1 clase virtual al mes",
+      "Acesoria virtual al mes",
     ],
   },
   {
@@ -27,9 +27,9 @@ const memberships = [
     price: "$109/mes",
     features: [
       "Todo lo del plan GOLD",
-      "Sesiones privadas",
+      "Acesorias privadas",
       "Talleres virtuales ilimitadas",
-      "Una limpieza energetica medicina tradicional"
+      "Limpieza energetica medicina tradicional"
     ],
   },
 ];

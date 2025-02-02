@@ -2,18 +2,18 @@ import { ProgramCard } from "@/components/ProgramCard";
 
 const programs = [
   {
-    title: "Programa de Plan De Vida",
-    description: "Descubre tu camino hacia una vida más equilibrada y consciente con nuestro programa holístico personalizado.",
+    title: "Talleres Holisticos",
+    description: "Descubre tu camino hacia una vida más equilibrada y consciente con nuestros reuniones.",
     image: "/laptop-uploads/Vida.jpg",
   },
   {
-    title: "Programa de Fitness",
-    description: "Alcanza tus objetivos físicos con un enfoque integral que combina ejercicio, nutrición y bienestar mental.",
+    title: "Programa De Bienestar",
+    description: "Lleva una vida saludable integrando el ejercicio la nutricion, las emociones, y la espirutualidad.",
     image: "/laptop-uploads/Fitness.jpg",
   },
   {
-    title: "Programa de Detox",
-    description: "Renueva tu cuerpo y mente con nuestro programa de desintoxicación natural y sostenible.",
+    title: "Casa NATIVO",
+    description: "Es un lugar donde te podras conectar contigomismo, la naturaleza, y con la espiritualidad.",
     image: "/laptop-uploads/Detox.jpg",
   },
 ];

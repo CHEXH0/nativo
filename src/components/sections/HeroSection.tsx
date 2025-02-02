@@ -16,7 +16,7 @@ export const HeroSection = () => {
             className="text-xl text-black mb-8 animate-fadeIn bg-nativo-cream/80 bg-opacity-85 p-4 rounded" 
             style={{ animationDelay: "0.2s" }}
           >
-            Descubre el equilibrio perfecto entre cuerpo, mente y espíritu con NATIVO Fitness Holístico
+            Descubre el equilibrio perfecto entre cuerpo, mente y espíritu con NATIVO Holístico
           </p>
           <Button 
             className="bg-nativo-green text-nativo-cream px-8 py-3 rounded-md hover:bg-nativo-brown transition-colors duration-300 animate-fadeIn shadow-lg" 
