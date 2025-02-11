@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, LogOut, LogIn } from "lucide-react";
@@ -30,7 +29,6 @@ export const Navbar = () => {
       href: "/", 
       label: "Inicio",
       action: () => {
-        window.location.reload();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     },
