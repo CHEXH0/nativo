@@ -29,7 +29,10 @@ export const Navbar = () => {
     { 
       href: "/", 
       label: "Inicio",
-      action: () => window.location.reload()
+      action: () => {
+        window.location.reload();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     },
     { href: "/#programas", label: "Programas" },
     { 
