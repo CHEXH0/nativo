@@ -1,3 +1,4 @@
+
 import { PricingCard } from "@/components/PricingCard";
 
 const memberships = [
@@ -34,9 +35,17 @@ const memberships = [
   },
 ];
 
-export const MembershipsSection = () => {
+interface MembershipsSectionProps {
+  inDialog?: boolean;
+}
+
+export const MembershipsSection = ({ inDialog = false }: MembershipsSectionProps) => {
+  const sectionClass = inDialog 
+    ? "py-8" 
+    : "py-12 md:py-24 bg-gradient-to-t from-nativo-sage/10 to-nativo-cream/50";
+
   return (
-    <section id="membresias" className="py-12 md:py-24 bg-gradient-to-t from-nativo-sage/10 to-nativo-cream/50">
+    <section id="membresias" className={sectionClass}>
       <div className="container px-4 mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-nativo-green text-center mb-12">
           Membresías

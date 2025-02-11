@@ -1,4 +1,11 @@
+
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { MembershipsSection } from "./MembershipsSection";
 
 export const HeroSection = () => {
   return (
@@ -18,12 +25,19 @@ export const HeroSection = () => {
           >
             Descubre el equilibrio perfecto entre cuerpo, mente y espíritu con NATIVO Holístico
           </p>
-          <Button 
-            className="bg-nativo-green text-nativo-cream px-8 py-3 rounded-md hover:bg-nativo-brown transition-colors duration-300 animate-fadeIn shadow-lg" 
-            style={{ animationDelay: "0.4s" }}
-          >
-            Comienza Tu Viaje
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button 
+                className="bg-nativo-green text-nativo-cream px-8 py-3 rounded-md hover:bg-nativo-brown transition-colors duration-300 animate-fadeIn shadow-lg" 
+                style={{ animationDelay: "0.4s" }}
+              >
+                Comienza Tu Viaje
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-nativo-cream">
+              <MembershipsSection inDialog={true} />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </section>
