@@ -3,7 +3,6 @@ import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { WelcomeSection } from "@/components/sections/WelcomeSection";
 import { ProgramsSection } from "@/components/sections/ProgramsSection";
-import { MembershipsSection } from "@/components/sections/MembershipsSection";
 
 const Index = () => {
   return (
@@ -12,7 +11,6 @@ const Index = () => {
       <HeroSection />
       <WelcomeSection />
       <ProgramsSection />
-      <MembershipsSection />
     </div>
   );
 };
