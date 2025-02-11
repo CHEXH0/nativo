@@ -1,7 +1,8 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, LogOut } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "./ui/use-toast";
@@ -10,6 +11,7 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const location = useLocation();
 
   const menuItems = [
     { href: "/", label: "Inicio" },
@@ -17,6 +19,27 @@ export const Navbar = () => {
     { href: "/#membresias", label: "Membresías" },
     { href: "/store", label: "Tienda" },
   ];
+
+  const handleNavigation = (href: string) => {
+    setIsOpen(false);
+    
+    if (href.startsWith('/#')) {
+      // If we're already on the home page, just scroll
+      if (location.pathname === '/') {
+        const elementId = href.replace('/#', '');
+        const element = document.getElementById(elementId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        // If we're on another page, navigate to home and then scroll
+        navigate(href);
+      }
+    } else {
+      // For regular routes like /store
+      navigate(href);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -38,14 +61,13 @@ export const Navbar = () => {
   const NavLinks = () => (
     <>
       {menuItems.map((item) => (
-        <Link
+        <button
           key={item.href}
-          to={item.href}
+          onClick={() => handleNavigation(item.href)}
           className="text-nativo-sage hover:text-nativo-green transition-colors"
-          onClick={() => setIsOpen(false)}
         >
           {item.label}
-        </Link>
+        </button>
       ))}
       <Button
         variant="ghost"
@@ -63,7 +85,7 @@ export const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 bg-nativo-cream/80 backdrop-blur-md z-50 border-b border-nativo-sage/20">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center space-x-2 ">
+          <Link to="/" className="flex items-center space-x-2">
             <img src="/lovable-uploads/4ce2f22a-9027-492f-9194-5ccea4d31a29.png" alt="NATIVO Logo" className="h-12" />
           </Link>
 
