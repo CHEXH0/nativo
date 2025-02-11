@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,7 +7,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import Index from "./pages/Index";
-import Store from "./pages/Store";
 import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
@@ -41,14 +41,6 @@ const App = () => (
             element={
               <ProtectedRoute>
                 <Index />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/store"
-            element={
-              <ProtectedRoute>
-                <Store />
               </ProtectedRoute>
             }
           />

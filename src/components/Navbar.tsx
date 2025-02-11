@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, LogOut } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -17,11 +17,20 @@ export const Navbar = () => {
     { href: "/", label: "Inicio" },
     { href: "/#programas", label: "Programas" },
     { href: "/#membresias", label: "Membresías" },
-    { href: "/store", label: "Tienda" },
+    { 
+      href: "https://www.etsy.com/es/shop/TiendaNativa", 
+      label: "Tienda",
+      external: true 
+    },
   ];
 
-  const handleNavigation = (href: string) => {
+  const handleNavigation = (href: string, external?: boolean) => {
     setIsOpen(false);
+    
+    if (external) {
+      window.open(href, '_blank');
+      return;
+    }
     
     if (href.startsWith('/#')) {
       // If we're already on the home page, just scroll
@@ -36,7 +45,7 @@ export const Navbar = () => {
         navigate(href);
       }
     } else {
-      // For regular routes like /store
+      // For regular routes
       navigate(href);
     }
   };
@@ -63,7 +72,7 @@ export const Navbar = () => {
       {menuItems.map((item) => (
         <button
           key={item.href}
-          onClick={() => handleNavigation(item.href)}
+          onClick={() => handleNavigation(item.href, item.external)}
           className="text-nativo-sage hover:text-nativo-green transition-colors"
         >
           {item.label}
