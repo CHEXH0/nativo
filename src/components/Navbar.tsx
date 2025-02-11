@@ -1,20 +1,29 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, LogOut } from "lucide-react";
+import { Menu, LogOut, LogIn } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "./ui/use-toast";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { MembershipsSection } from "./sections/MembershipsSection";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showMemberships, setShowMemberships] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
   const location = useLocation();
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setIsAuthenticated(!!session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const menuItems = [
     { href: "/", label: "Inicio" },
@@ -65,7 +74,6 @@ export const Navbar = () => {
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
-      navigate("/login");
       toast({
         title: "Sesión cerrada",
         description: "Has cerrado sesión exitosamente",
@@ -79,6 +87,37 @@ export const Navbar = () => {
     }
   };
 
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
+  const AuthButton = () => {
+    if (isAuthenticated) {
+      return (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-nativo-sage hover:text-nativo-green hover:bg-nativo-cream/50"
+          onClick={handleLogout}
+        >
+          <LogOut className="h-4 w-4 mr-2" />
+          Cerrar sesión
+        </Button>
+      );
+    }
+    return (
+      <Button
+        variant="ghost"
+        size="sm"
+        className="text-nativo-sage hover:text-nativo-green hover:bg-nativo-cream/50"
+        onClick={handleLogin}
+      >
+        <LogIn className="h-4 w-4 mr-2" />
+        Iniciar sesión
+      </Button>
+    );
+  };
+
   const NavLinks = () => (
     <>
       {menuItems.map((item) => (
@@ -90,15 +129,7 @@ export const Navbar = () => {
           {item.label}
         </button>
       ))}
-      <Button
-        variant="ghost"
-        size="sm"
-        className="text-nativo-sage hover:text-nativo-green hover:bg-nativo-cream/50"
-        onClick={handleLogout}
-      >
-        <LogOut className="h-4 w-4 mr-2" />
-        Cerrar sesión
-      </Button>
+      <AuthButton />
     </>
   );
 
