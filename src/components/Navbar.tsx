@@ -6,9 +6,12 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "./ui/use-toast";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { MembershipsSection } from "./sections/MembershipsSection";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showMemberships, setShowMemberships] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
   const location = useLocation();
@@ -16,7 +19,11 @@ export const Navbar = () => {
   const menuItems = [
     { href: "/", label: "Inicio" },
     { href: "/#programas", label: "Programas" },
-    { href: "/#membresias", label: "Membresías" },
+    { 
+      href: "#", 
+      label: "Membresías",
+      action: () => setShowMemberships(true)
+    },
     { 
       href: "https://www.etsy.com/es/shop/TiendaNativa", 
       label: "Tienda",
@@ -24,8 +31,13 @@ export const Navbar = () => {
     },
   ];
 
-  const handleNavigation = (href: string, external?: boolean) => {
+  const handleNavigation = (href: string, external?: boolean, action?: () => void) => {
     setIsOpen(false);
+    
+    if (action) {
+      action();
+      return;
+    }
     
     if (external) {
       window.open(href, '_blank');
@@ -72,7 +84,7 @@ export const Navbar = () => {
       {menuItems.map((item) => (
         <button
           key={item.href}
-          onClick={() => handleNavigation(item.href, item.external)}
+          onClick={() => handleNavigation(item.href, item.external, item.action)}
           className="text-nativo-sage hover:text-nativo-green transition-colors"
         >
           {item.label}
@@ -92,6 +104,12 @@ export const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-nativo-cream/80 backdrop-blur-md z-50 border-b border-nativo-sage/20">
+      <Dialog open={showMemberships} onOpenChange={setShowMemberships}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-nativo-cream">
+          <MembershipsSection inDialog={true} />
+        </DialogContent>
+      </Dialog>
+
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-2">
