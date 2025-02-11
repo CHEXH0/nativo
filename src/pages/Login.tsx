@@ -1,3 +1,4 @@
+
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useNavigate } from "react-router-dom";
@@ -29,10 +30,10 @@ const Login = () => {
     const handleAuthError = (error: AuthError) => {
       switch (error.message) {
         case "User already registered":
-          setErrorMessage("This email is already registered. Please sign in instead.");
+          setErrorMessage("Este correo ya está registrado. Por favor inicia sesión.");
           break;
         case "Invalid login credentials":
-          setErrorMessage("Invalid email or password. Please check your credentials and try again.");
+          setErrorMessage("Correo o contraseña incorrectos. Por favor verifica tus credenciales e intenta de nuevo.");
           break;
         default:
           setErrorMessage(error.message);
