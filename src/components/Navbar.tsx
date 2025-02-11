@@ -26,7 +26,11 @@ export const Navbar = () => {
   }, []);
 
   const menuItems = [
-    { href: "/", label: "Inicio" },
+    { 
+      href: "/", 
+      label: "Inicio",
+      action: () => window.location.reload()
+    },
     { href: "/#programas", label: "Programas" },
     { 
       href: "#", 
