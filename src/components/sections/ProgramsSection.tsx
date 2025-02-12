@@ -3,18 +3,18 @@ import { ProgramCard } from "@/components/ProgramCard";
 const programs = [
   {
     title: "Talleres Holisticos",
-    description: "Descubre tu camino hacia una vida más equilibrada y consciente con nuestros reuniones.",
+    description: "Descubre tu camino hacia una vida más equilibrada y consciente con nuestros talleres.",
     image: "/laptop-uploads/Vida.jpg",
   },
   {
     title: "Programa De Bienestar",
-    description: "Lleva una vida saludable integrando el ejercicio la nutricion, las emociones, y la espirutualidad.",
-    image: "/laptop-uploads/Fitness.jpg",
+    description: "Lleva una vida saludable integrando el ejercicio la nutricion, las emociones, y la espirutualidad mediante ascesorias personalizadas.",
+    image: "/laptop-uploads/Muscle_Man.jpg",
   },
   {
     title: "Casa NATIVO",
-    description: "Es un lugar donde te podras conectar contigomismo, la naturaleza, y con la espiritualidad.",
-    image: "/laptop-uploads/Detox.jpg",
+    description: "Es un lugar donde podras conectar contigomismo, con las plantas, con los animales, y con la espiritualidad.",
+    image: "/laptop-uploads/Casa_Nativa.jpg",
   },
 ];
 
