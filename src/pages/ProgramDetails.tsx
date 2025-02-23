@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookOpen, Video, Calendar, Users, Award, Package } from "lucide-react";
+import { useEffect } from "react";
 
 const programs = {
   "talleres-holisticos": {
@@ -62,13 +63,14 @@ const ProgramDetails = () => {
   const navigate = useNavigate();
   const program = programs[programId as keyof typeof programs];
 
+  const handleProgramChange = (slug: string) => {
+    if (slug === programId) return; // Don't navigate if we're already on this program
+    navigate(`/program/${slug}`, { replace: true });
+  };
+
   if (!program) {
     return <div>Programa no encontrado</div>;
   }
-
-  const handleProgramChange = (slug: string) => {
-    navigate(`/program/${slug}`);
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
@@ -87,7 +89,7 @@ const ProgramDetails = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div key={programId} className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <div className="aspect-video overflow-hidden rounded-lg">
             <img
               src={program.image}
