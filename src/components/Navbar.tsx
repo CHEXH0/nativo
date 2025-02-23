@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, LogOut, LogIn } from "lucide-react";
+import { Menu, LogOut, LogIn, User } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -59,7 +60,6 @@ export const Navbar = () => {
     }
     
     if (href.startsWith('/#')) {
-      // If we're already on the home page, just scroll
       if (location.pathname === '/') {
         const elementId = href.replace('/#', '');
         const element = document.getElementById(elementId);
@@ -67,11 +67,9 @@ export const Navbar = () => {
           element.scrollIntoView({ behavior: 'smooth' });
         }
       } else {
-        // If we're on another page, navigate to home and then scroll
         navigate(href);
       }
     } else {
-      // For regular routes
       navigate(href);
     }
   };
@@ -96,18 +94,33 @@ export const Navbar = () => {
     navigate("/login");
   };
 
+  const handleProfile = () => {
+    navigate("/profile");
+  };
+
   const AuthButton = () => {
     if (isAuthenticated) {
       return (
-        <Button
-          variant="ghost"
-          size="sm"
-          className="text-nativo-sage hover:text-nativo-green hover:bg-nativo-cream/50"
-          onClick={handleLogout}
-        >
-          <LogOut className="h-4 w-4 mr-2" />
-          Cerrar sesión
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-nativo-sage hover:text-nativo-green hover:bg-nativo-cream/50"
+            onClick={handleProfile}
+          >
+            <User className="h-4 w-4 mr-2" />
+            Perfil
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-nativo-sage hover:text-nativo-green hover:bg-nativo-cream/50"
+            onClick={handleLogout}
+          >
+            <LogOut className="h-4 w-4 mr-2" />
+            Cerrar sesión
+          </Button>
+        </div>
       );
     }
     return (
