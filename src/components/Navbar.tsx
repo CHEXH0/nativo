@@ -33,7 +33,10 @@ export const Navbar = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     },
-    { href: "/#programas", label: "Programas" },
+    { 
+      href: "/program/talleres-holisticos", 
+      label: "Programas"
+    },
     { 
       href: "#", 
       label: "Membresías",
@@ -59,19 +62,7 @@ export const Navbar = () => {
       return;
     }
     
-    if (href.startsWith('/#')) {
-      if (location.pathname === '/') {
-        const elementId = href.replace('/#', '');
-        const element = document.getElementById(elementId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      } else {
-        navigate(href);
-      }
-    } else {
-      navigate(href);
-    }
+    navigate(href);
   };
 
   const handleLogout = async () => {
