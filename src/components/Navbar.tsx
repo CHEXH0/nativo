@@ -25,13 +25,24 @@ export const Navbar = () => {
     return () => subscription.unsubscribe();
   }, []);
 
+  const handleHomeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Wait for navigation to complete before scrolling
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const menuItems = [
     { 
       href: "/", 
       label: "Inicio",
-      action: () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      action: handleHomeClick
     },
     { 
       href: "/program/talleres-holisticos", 
@@ -49,11 +60,11 @@ export const Navbar = () => {
     },
   ];
 
-  const handleNavigation = (href: string, external?: boolean, action?: () => void) => {
+  const handleNavigation = (href: string, external?: boolean, action?: (e: React.MouseEvent) => void) => {
     setIsOpen(false);
     
     if (action) {
-      action();
+      action(new MouseEvent('click') as unknown as React.MouseEvent);
       return;
     }
     
@@ -132,7 +143,7 @@ export const Navbar = () => {
       {menuItems.map((item) => (
         <button
           key={item.href}
-          onClick={() => handleNavigation(item.href, item.external, item.action)}
+          onClick={(e) => handleNavigation(item.href, item.external, item.action)}
           className="text-nativo-sage hover:text-nativo-green transition-colors"
         >
           {item.label}
@@ -152,7 +163,7 @@ export const Navbar = () => {
 
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" onClick={handleHomeClick} className="flex items-center space-x-2">
             <img src="/lovable-uploads/4ce2f22a-9027-492f-9194-5ccea4d31a29.png" alt="NATIVO Logo" className="h-12" />
           </Link>
 
