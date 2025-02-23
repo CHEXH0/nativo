@@ -1,5 +1,4 @@
-
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -67,11 +66,6 @@ const ProgramDetails = () => {
     window.scrollTo(0, 0);
   }, [programId]);
 
-  const handleProgramChange = (slug: string) => {
-    if (slug === programId) return; // Don't navigate if we're already on this program
-    navigate(`/program/${slug}`, { replace: true });
-  };
-
   if (!program) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
@@ -89,15 +83,19 @@ const ProgramDetails = () => {
       <div className="container mx-auto px-4 py-8 mt-16">
         <div className="flex flex-wrap gap-4 mb-6">
           {Object.entries(programs).map(([slug, programInfo]) => (
-            <Button
-              key={slug}
-              variant={slug === programId ? "default" : "outline"}
-              onClick={() => handleProgramChange(slug)}
+            <Link 
+              key={slug} 
+              to={`/program/${slug}`}
               className="flex-grow md:flex-grow-0"
-              type="button"
             >
-              {programInfo.title}
-            </Button>
+              <Button
+                variant={slug === programId ? "default" : "outline"}
+                className="w-full"
+                type="button"
+              >
+                {programInfo.title}
+              </Button>
+            </Link>
           ))}
         </div>
 
