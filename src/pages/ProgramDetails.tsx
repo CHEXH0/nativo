@@ -1,3 +1,4 @@
+
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
@@ -66,6 +67,13 @@ const ProgramDetails = () => {
     window.scrollTo(0, 0);
   }, [programId]);
 
+  const handleProgramClick = (e: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
+    if (slug === programId) {
+      e.preventDefault();
+      return;
+    }
+  };
+
   if (!program) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
@@ -86,6 +94,7 @@ const ProgramDetails = () => {
             <Link 
               key={slug} 
               to={`/program/${slug}`}
+              onClick={(e) => handleProgramClick(e, slug)}
               className="flex-grow md:flex-grow-0"
             >
               <Button
