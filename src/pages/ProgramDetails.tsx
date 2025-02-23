@@ -63,13 +63,24 @@ const ProgramDetails = () => {
   const navigate = useNavigate();
   const program = programs[programId as keyof typeof programs];
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [programId]);
+
   const handleProgramChange = (slug: string) => {
     if (slug === programId) return; // Don't navigate if we're already on this program
     navigate(`/program/${slug}`, { replace: true });
   };
 
   if (!program) {
-    return <div>Programa no encontrado</div>;
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
+        <Navbar />
+        <div className="container mx-auto px-4 py-8 mt-16">
+          <div>Programa no encontrado</div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -83,6 +94,7 @@ const ProgramDetails = () => {
               variant={slug === programId ? "default" : "outline"}
               onClick={() => handleProgramChange(slug)}
               className="flex-grow md:flex-grow-0"
+              type="button"
             >
               {programInfo.title}
             </Button>
