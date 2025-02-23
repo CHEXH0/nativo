@@ -4,7 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Video, Calendar, Users, Award, Package, ArrowLeft } from "lucide-react";
+import { BookOpen, Video, Calendar, Users, Award, Package } from "lucide-react";
 
 const programs = {
   "talleres-holisticos": {
@@ -66,18 +66,26 @@ const ProgramDetails = () => {
     return <div>Programa no encontrado</div>;
   }
 
+  const handleProgramChange = (slug: string) => {
+    navigate(`/program/${slug}`);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
       <Navbar />
       <div className="container mx-auto px-4 py-8 mt-16">
-        <Button 
-          variant="ghost" 
-          className="mb-6" 
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Volver
-        </Button>
+        <div className="flex flex-wrap gap-4 mb-6">
+          {Object.entries(programs).map(([slug, programInfo]) => (
+            <Button
+              key={slug}
+              variant={slug === programId ? "default" : "outline"}
+              onClick={() => handleProgramChange(slug)}
+              className="flex-grow md:flex-grow-0"
+            >
+              {programInfo.title}
+            </Button>
+          ))}
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <div className="aspect-video overflow-hidden rounded-lg">
