@@ -1,16 +1,18 @@
+
 import { useParams, useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Video, Calendar, Users, Award, Package } from "lucide-react";
-import { useEffect } from "react";
+import { BookOpen, Video, Calendar, Users, Award, Package, Play } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const programs = {
   "talleres-holisticos": {
     title: "Talleres Holisticos",
     description: "Descubre tu camino hacia una vida más equilibrada y consciente con nuestros talleres.",
     image: "/laptop-uploads/Vida.jpg",
+    video: "https://player.vimeo.com/video/824906699",
     details: {
       overview: "Nuestros talleres holísticos están diseñados para ayudarte a encontrar el equilibrio en todas las áreas de tu vida. A través de prácticas ancestrales y modernas, te guiaremos en un viaje de autodescubrimiento y crecimiento personal.",
       schedule: "Sesiones semanales de 2 horas | Grupos reducidos de máximo 12 personas",
@@ -27,6 +29,7 @@ const programs = {
     title: "Programa De Bienestar",
     description: "Lleva una vida saludable integrando el ejercicio la nutricion, las emociones, y la espirutualidad mediante ascesorias personalizadas.",
     image: "/laptop-uploads/Muscle_Man.jpg",
+    video: "https://player.vimeo.com/video/824906699",
     details: {
       overview: "Un programa integral que combina ejercicio físico, nutrición personalizada y apoyo emocional para alcanzar un estado óptimo de bienestar. Trabajamos con un enfoque personalizado para ayudarte a alcanzar tus objetivos de salud.",
       schedule: "Planes personalizados | Seguimiento semanal",
@@ -43,6 +46,7 @@ const programs = {
     title: "Casa NATIVO",
     description: "Es un lugar donde podras conectar contigomismo, con las plantas, con los animales, y con la espiritualidad.",
     image: "/laptop-uploads/Casa_Nativa.jpg",
+    video: "https://player.vimeo.com/video/824906699",
     details: {
       overview: "Un espacio sagrado diseñado para reconectar con tu esencia natural. Casa NATIVO te ofrece un ambiente único donde podrás experimentar la conexión con la naturaleza, las prácticas ancestrales y la sabiduría tradicional.",
       schedule: "Retiros de fin de semana | Experiencias diarias",
@@ -61,6 +65,7 @@ const ProgramDetails = () => {
   const { programId } = useParams();
   const navigate = useNavigate();
   const program = programs[programId as keyof typeof programs];
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -102,12 +107,29 @@ const ProgramDetails = () => {
         </div>
 
         <div key={programId} className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          <div className="aspect-video overflow-hidden rounded-lg">
-            <img
-              src={program.image}
-              alt={program.title}
-              className="w-full h-full object-cover"
-            />
+          <div className="aspect-video overflow-hidden rounded-lg relative group">
+            {!isPlaying ? (
+              <>
+                <img
+                  src={program.image}
+                  alt={program.title}
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  onClick={() => setIsPlaying(true)}
+                  className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                >
+                  <Play className="w-16 h-16 text-white" />
+                </button>
+              </>
+            ) : (
+              <iframe
+                src={`${program.video}?autoplay=1`}
+                allow="autoplay; fullscreen; picture-in-picture"
+                className="w-full h-full"
+                style={{ border: 0 }}
+              />
+            )}
           </div>
           <div>
             <h1 className="text-4xl font-bold text-nativo-green mb-4">{program.title}</h1>
