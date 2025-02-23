@@ -5,7 +5,7 @@ const programs = [
   {
     title: "Talleres Holisticos",
     description: "Descubre tu camino hacia una vida más equilibrada y consciente con nuestros talleres.",
-    image: "/laptop-uploads/Vida.jpg",
+    image: "/laptop-uploads/Equal.jpg",
     slug: "talleres-holisticos"
   },
   {
@@ -17,7 +17,7 @@ const programs = [
   {
     title: "Casa NATIVO",
     description: "Es un lugar donde podras conectar contigomismo, con las plantas, con los animales, y con la espiritualidad.",
-    image: "/laptop-uploads/Casa_Nativa.jpg",
+    image: "/laptop-uploads/NativaCasa.jpg",
     slug: "casa-nativo"
   },
 ];

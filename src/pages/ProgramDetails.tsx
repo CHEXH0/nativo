@@ -11,7 +11,7 @@ const programs = {
   "talleres-holisticos": {
     title: "Talleres Holisticos",
     description: "Descubre tu camino hacia una vida más equilibrada y consciente con nuestros talleres.",
-    image: "/laptop-uploads/Vida.jpg",
+    image: "/laptop-uploads/Equal.jpg",
     video: "https://player.vimeo.com/video/824906699",
     details: {
       overview: "Nuestros talleres holísticos están diseñados para ayudarte a encontrar el equilibrio en todas las áreas de tu vida. A través de prácticas ancestrales y modernas, te guiaremos en un viaje de autodescubrimiento y crecimiento personal.",
@@ -43,7 +43,7 @@ const programs = {
     }
   },
   "casa-nativo": {
-    title: "Casa NATIVO",
+    title: "Casa NATIVA",
     description: "Es un lugar donde podras conectar contigomismo, con las plantas, con los animales, y con la espiritualidad.",
     image: "/laptop-uploads/Casa_Nativa.jpg",
     video: "https://player.vimeo.com/video/824906699",

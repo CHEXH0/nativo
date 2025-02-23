@@ -5,10 +5,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const testimonials = [
   {
-    name: "María González",
+    name: "Brenda Cruz",
     role: "Participante del Programa de Bienestar",
-    quote: "NATIVO cambió mi vida por completo. Los talleres holísticos me ayudaron a encontrar equilibrio y paz interior.",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=400&fit=crop"
+    quote: "Fui acompañada respetuosamente hacia lograr mis objetivos tanto físicos como en nutrición, además en secciones personalizadas de sanacion interna, lo que hacen de este programa algo muy completo en todas las áreas de la vida.",
+    image: ""
   },
   {
     name: "Carlos Rodríguez",

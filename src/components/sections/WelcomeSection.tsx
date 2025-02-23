@@ -13,7 +13,11 @@ export const WelcomeSection = () => {
           {/* Video Card */}
           <Card className="overflow-hidden shadow-lg animate-fadeIn" style={{ animationDelay: "0.2s" }}>
             <div className="aspect-video bg-nativo-sage/20 flex items-center justify-center">
-              <p className="text-nativo-sage">Video Placeholder</p>
+              <video className="w-full h-auto" controls>
+                <source src="/laptop-uploads/NativoIntro.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+
             </div>
           </Card>
 
