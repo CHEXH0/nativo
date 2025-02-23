@@ -1,14 +1,28 @@
+
 import { Card } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
 
 interface ProgramCardProps {
   title: string;
   description: string;
   image: string;
+  slug?: string;
 }
 
-export const ProgramCard = ({ title, description, image }: ProgramCardProps) => {
+export const ProgramCard = ({ title, description, image, slug }: ProgramCardProps) => {
+  const navigate = useNavigate();
+  
+  const handleClick = () => {
+    if (slug) {
+      navigate(`/program/${slug}`);
+    }
+  };
+
   return (
-    <Card className="overflow-hidden group hover:shadow-lg transition-all duration-300 bg-white">
+    <Card 
+      className="overflow-hidden group hover:shadow-lg transition-all duration-300 bg-white cursor-pointer"
+      onClick={handleClick}
+    >
       <div className="aspect-video overflow-hidden">
         <img
           src={image}
