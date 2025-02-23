@@ -1,5 +1,4 @@
-
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -67,10 +66,9 @@ const ProgramDetails = () => {
     window.scrollTo(0, 0);
   }, [programId]);
 
-  const handleProgramClick = (e: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
-    if (slug === programId) {
-      e.preventDefault();
-      return;
+  const handleProgramClick = (slug: string) => {
+    if (slug !== programId) {
+      navigate(`/program/${slug}`);
     }
   };
 
@@ -91,20 +89,15 @@ const ProgramDetails = () => {
       <div className="container mx-auto px-4 py-8 mt-16">
         <div className="flex flex-wrap gap-4 mb-6">
           {Object.entries(programs).map(([slug, programInfo]) => (
-            <Link 
-              key={slug} 
-              to={`/program/${slug}`}
-              onClick={(e) => handleProgramClick(e, slug)}
+            <Button
+              key={slug}
+              variant={slug === programId ? "default" : "outline"}
+              onClick={() => handleProgramClick(slug)}
               className="flex-grow md:flex-grow-0"
+              type="button"
             >
-              <Button
-                variant={slug === programId ? "default" : "outline"}
-                className="w-full"
-                type="button"
-              >
-                {programInfo.title}
-              </Button>
-            </Link>
+              {programInfo.title}
+            </Button>
           ))}
         </div>
 
