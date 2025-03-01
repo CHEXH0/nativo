@@ -14,18 +14,21 @@ export type Database = {
           avatar_url: string | null
           created_at: string
           id: string
+          plan: string
           username: string | null
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string
           id: string
+          plan?: string
           username?: string | null
         }
         Update: {
           avatar_url?: string | null
           created_at?: string
           id?: string
+          plan?: string
           username?: string | null
         }
         Relationships: []
@@ -35,7 +38,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      update_user_plan: {
+        Args: {
+          user_id: string
+          new_plan: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
