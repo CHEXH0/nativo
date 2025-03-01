@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,13 +7,29 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { supabase } from "@/integrations/supabase/client";
-import { Settings, CreditCard, Film, Package } from "lucide-react";
+import { Settings, CreditCard, Film, Package, Edit, Camera } from "lucide-react";
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogDescription, 
+  DialogHeader, 
+  DialogTitle,
+  DialogFooter,
+  DialogClose
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 const Profile = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("Usuario NATIVO");
   const [userEmail, setUserEmail] = useState("usuario@example.com");
   const [isLoading, setIsLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [editNameOpen, setEditNameOpen] = useState(false);
+  const [newName, setNewName] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -28,6 +44,7 @@ const Profile = () => {
       // Get user details from the session
       const user = session.user;
       if (user) {
+        setUserId(user.id);
         const email = user.email || "usuario@example.com";
         setUserEmail(email);
         
@@ -39,6 +56,12 @@ const Profile = () => {
           // If no name is found, use the first part of the email
           const nameFromEmail = email.split('@')[0];
           setUserName(nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1));
+        }
+
+        // Get avatar from user metadata if available
+        const avatarUrlFromMeta = user.user_metadata?.avatar_url;
+        if (avatarUrlFromMeta) {
+          setAvatarUrl(avatarUrlFromMeta);
         }
       }
       
@@ -57,6 +80,94 @@ const Profile = () => {
       .join('');
   };
 
+  const handleEditNameClick = () => {
+    setNewName(userName);
+    setEditNameOpen(true);
+  };
+
+  const handleNameSave = async () => {
+    if (!newName.trim() || !userId) {
+      toast.error("Nombre no puede estar vacío");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      
+      const { error } = await supabase.auth.updateUser({
+        data: { full_name: newName }
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      setUserName(newName);
+      toast.success("Nombre actualizado con éxito");
+      setEditNameOpen(false);
+    } catch (error) {
+      console.error("Error updating name:", error);
+      toast.error("No se pudo actualizar el nombre");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !userId) return;
+
+    // Simple validation for image file
+    if (!file.type.startsWith('image/')) {
+      toast.error("Por favor selecciona un archivo de imagen");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+
+      // Upload the image to Supabase Storage
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${userId}-avatar-${Date.now()}.${fileExt}`;
+      const filePath = `avatars/${fileName}`;
+
+      // Upload to storage
+      const { error: uploadError, data } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      // Get the public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      // Update user metadata with the new avatar URL
+      const { error: updateError } = await supabase.auth.updateUser({
+        data: { avatar_url: publicUrl }
+      });
+
+      if (updateError) {
+        throw updateError;
+      }
+
+      setAvatarUrl(publicUrl);
+      toast.success("Avatar actualizado con éxito");
+    } catch (error) {
+      console.error("Error updating avatar:", error);
+      toast.error("No se pudo actualizar el avatar");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
       <Navbar />
@@ -64,14 +175,36 @@ const Profile = () => {
         <div className="max-w-4xl mx-auto">
           <Card className="mb-8">
             <CardContent className="flex items-center gap-6 py-6">
-              <Avatar className="h-24 w-24">
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>{getInitials(userName)}</AvatarFallback>
-              </Avatar>
-              <div>
-                <h2 className="text-2xl font-bold text-nativo-green">
-                  {isLoading ? "Cargando..." : userName}
-                </h2>
+              <div className="relative">
+                <Avatar className="h-24 w-24 cursor-pointer" onClick={handleAvatarClick}>
+                  <AvatarImage src={avatarUrl || "https://github.com/shadcn.png"} />
+                  <AvatarFallback>{getInitials(userName)}</AvatarFallback>
+                </Avatar>
+                <div className="absolute -bottom-1 -right-1 bg-nativo-green text-white p-1 rounded-full cursor-pointer"
+                  onClick={handleAvatarClick}>
+                  <Camera className="h-4 w-4" />
+                </div>
+                <input 
+                  type="file" 
+                  ref={fileInputRef} 
+                  className="hidden" 
+                  accept="image/*" 
+                  onChange={handleAvatarChange}
+                />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <h2 className="text-2xl font-bold text-nativo-green">
+                    {isLoading ? "Cargando..." : userName}
+                  </h2>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="h-8 w-8 rounded-full" 
+                    onClick={handleEditNameClick}>
+                    <Edit className="h-4 w-4" />
+                  </Button>
+                </div>
                 <p className="text-nativo-sage">
                   {isLoading ? "Cargando..." : userEmail}
                 </p>
@@ -149,7 +282,7 @@ const Profile = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <Button variant="outline" className="w-full">Cambiar Contraseña</Button>
-                  <Button variant="outline" className="w-full">Editar Perfil</Button>
+                  <Button variant="outline" className="w-full" onClick={handleEditNameClick}>Editar Perfil</Button>
                   <Button variant="outline" className="w-full text-red-600 hover:text-red-700">
                     Eliminar Cuenta
                   </Button>
@@ -159,6 +292,34 @@ const Profile = () => {
           </Tabs>
         </div>
       </div>
+
+      {/* Edit Name Dialog */}
+      <Dialog open={editNameOpen} onOpenChange={setEditNameOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Editar Nombre</DialogTitle>
+            <DialogDescription>
+              Actualiza cómo aparece tu nombre en NATIVO
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <Input 
+              value={newName} 
+              onChange={(e) => setNewName(e.target.value)} 
+              placeholder="Tu nombre"
+              disabled={isLoading}
+            />
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancelar</Button>
+            </DialogClose>
+            <Button onClick={handleNameSave} disabled={isLoading}>
+              {isLoading ? "Guardando..." : "Guardar"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
