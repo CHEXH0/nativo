@@ -29,6 +29,7 @@ const Profile = () => {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [editNameOpen, setEditNameOpen] = useState(false);
   const [newName, setNewName] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -128,12 +129,13 @@ const Profile = () => {
     }
 
     try {
-      setIsLoading(true);
+      setIsUploading(true);
+      toast.info("Subiendo imagen...");
 
       // Upload the image to Supabase Storage
       const fileExt = file.name.split('.').pop();
       const fileName = `${userId}-avatar-${Date.now()}.${fileExt}`;
-      const filePath = `avatars/${fileName}`;
+      const filePath = `${fileName}`;
 
       // Upload to storage
       const { error: uploadError, data } = await supabase.storage
@@ -141,6 +143,7 @@ const Profile = () => {
         .upload(filePath, file);
 
       if (uploadError) {
+        console.error("Upload error:", uploadError);
         throw uploadError;
       }
 
@@ -155,16 +158,17 @@ const Profile = () => {
       });
 
       if (updateError) {
+        console.error("Update user error:", updateError);
         throw updateError;
       }
 
       setAvatarUrl(publicUrl);
       toast.success("Avatar actualizado con éxito");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error updating avatar:", error);
-      toast.error("No se pudo actualizar el avatar");
+      toast.error(`No se pudo actualizar el avatar: ${error.message || 'Error desconocido'}`);
     } finally {
-      setIsLoading(false);
+      setIsUploading(false);
     }
   };
 
@@ -177,12 +181,21 @@ const Profile = () => {
             <CardContent className="flex items-center gap-6 py-6">
               <div className="relative">
                 <Avatar className="h-24 w-24 cursor-pointer" onClick={handleAvatarClick}>
-                  <AvatarImage src={avatarUrl || "https://github.com/shadcn.png"} />
-                  <AvatarFallback>{getInitials(userName)}</AvatarFallback>
+                  {avatarUrl ? (
+                    <AvatarImage src={avatarUrl} alt={userName} />
+                  ) : (
+                    <AvatarFallback>{getInitials(userName)}</AvatarFallback>
+                  )}
                 </Avatar>
-                <div className="absolute -bottom-1 -right-1 bg-nativo-green text-white p-1 rounded-full cursor-pointer"
-                  onClick={handleAvatarClick}>
-                  <Camera className="h-4 w-4" />
+                <div 
+                  className="absolute -bottom-1 -right-1 bg-nativo-green text-white p-1 rounded-full cursor-pointer"
+                  onClick={handleAvatarClick}
+                >
+                  {isUploading ? (
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-t-transparent border-white" />
+                  ) : (
+                    <Camera className="h-4 w-4" />
+                  )}
                 </div>
                 <input 
                   type="file" 
@@ -190,6 +203,7 @@ const Profile = () => {
                   className="hidden" 
                   accept="image/*" 
                   onChange={handleAvatarChange}
+                  disabled={isUploading}
                 />
               </div>
               <div className="flex-1">
@@ -201,7 +215,9 @@ const Profile = () => {
                     variant="ghost" 
                     size="icon" 
                     className="h-8 w-8 rounded-full" 
-                    onClick={handleEditNameClick}>
+                    onClick={handleEditNameClick}
+                    disabled={isLoading}
+                  >
                     <Edit className="h-4 w-4" />
                   </Button>
                 </div>
