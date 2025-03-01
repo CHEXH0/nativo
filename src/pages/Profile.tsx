@@ -1,5 +1,5 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,17 +11,51 @@ import { Settings, CreditCard, Film, Package } from "lucide-react";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState("Usuario NATIVO");
+  const [userEmail, setUserEmail] = useState("usuario@example.com");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
+      setIsLoading(true);
       const { data: { session } } = await supabase.auth.getSession();
+      
       if (!session) {
         navigate('/login');
+        return;
       }
+      
+      // Get user details from the session
+      const user = session.user;
+      if (user) {
+        const email = user.email || "usuario@example.com";
+        setUserEmail(email);
+        
+        // Get user's name from metadata or user email
+        const fullName = user.user_metadata?.full_name || user.user_metadata?.name;
+        if (fullName) {
+          setUserName(fullName);
+        } else {
+          // If no name is found, use the first part of the email
+          const nameFromEmail = email.split('@')[0];
+          setUserName(nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1));
+        }
+      }
+      
+      setIsLoading(false);
     };
 
     checkAuth();
   }, [navigate]);
+
+  // Function to get initials for avatar fallback
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(part => part.charAt(0).toUpperCase())
+      .slice(0, 2)
+      .join('');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
@@ -32,11 +66,15 @@ const Profile = () => {
             <CardContent className="flex items-center gap-6 py-6">
               <Avatar className="h-24 w-24">
                 <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>UN</AvatarFallback>
+                <AvatarFallback>{getInitials(userName)}</AvatarFallback>
               </Avatar>
               <div>
-                <h2 className="text-2xl font-bold text-nativo-green">Usuario NATIVO</h2>
-                <p className="text-nativo-sage">usuario@example.com</p>
+                <h2 className="text-2xl font-bold text-nativo-green">
+                  {isLoading ? "Cargando..." : userName}
+                </h2>
+                <p className="text-nativo-sage">
+                  {isLoading ? "Cargando..." : userEmail}
+                </p>
               </div>
             </CardContent>
           </Card>
