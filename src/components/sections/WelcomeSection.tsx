@@ -1,5 +1,6 @@
 
 import { Card } from "@/components/ui/card";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export const WelcomeSection = () => {
   return (
@@ -10,15 +11,19 @@ export const WelcomeSection = () => {
         </h2>
         
         <div className="grid md:grid-cols-2 gap-8 items-center">
-          {/* Video Card */}
+          {/* Video Card with improved dimensions */}
           <Card className="overflow-hidden shadow-lg animate-fadeIn" style={{ animationDelay: "0.2s" }}>
-            <div className="aspect-video bg-nativo-sage/20 flex items-center justify-center">
-              <video className="w-full h-auto" controls>
+            <AspectRatio ratio={16/9} className="bg-nativo-sage/20">
+              <video 
+                className="w-full h-full object-cover" 
+                controls
+                preload="metadata"
+                poster="/laptop-uploads/NativaCasa.jpg"
+              >
                 <source src="/laptop-uploads/NativoIntro.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
+                Tu navegador no soporta la etiqueta de video.
               </video>
-
-            </div>
+            </AspectRatio>
           </Card>
 
           {/* Welcome Message */}
