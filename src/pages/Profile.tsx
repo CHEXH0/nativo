@@ -1,15 +1,16 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
-import { Settings, CreditCard, Film, Package } from "lucide-react";
+import { Package, CreditCard, Settings } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { PlanSection } from "@/components/profile/PlanSection";
 import { ContentSection } from "@/components/profile/ContentSection";
+import { PaymentSection } from "@/components/profile/PaymentSection";
+import { SettingsSection } from "@/components/profile/SettingsSection";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -70,6 +71,23 @@ const Profile = () => {
     checkAuth();
   }, [navigate]);
 
+  // Check URL parameters for plan upgrade success/failure
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const success = queryParams.get('success');
+    const plan = queryParams.get('plan');
+    
+    if (success === 'true' && plan) {
+      toast.success(`Plan actualizado a ${plan}`);
+      // Clear URL parameters
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (queryParams.get('canceled') === 'true') {
+      toast.info("Pago cancelado");
+      // Clear URL parameters
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
       <Navbar />
@@ -118,30 +136,11 @@ const Profile = () => {
               </TabsContent>
 
               <TabsContent value="payment">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Métodos de Pago</CardTitle>
-                    <CardDescription>Gestiona tus métodos de pago</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <Button className="w-full">Agregar Método de Pago</Button>
-                  </CardContent>
-                </Card>
+                <PaymentSection />
               </TabsContent>
 
               <TabsContent value="settings">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Ajustes de Cuenta</CardTitle>
-                    <CardDescription>Administra tu cuenta NATIVO</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <Button variant="outline" className="w-full">Cambiar Contraseña</Button>
-                    <Button variant="outline" className="w-full text-red-600 hover:text-red-700">
-                      Eliminar Cuenta
-                    </Button>
-                  </CardContent>
-                </Card>
+                <SettingsSection />
               </TabsContent>
             </Tabs>
           </div>
