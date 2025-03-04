@@ -2,6 +2,13 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
+interface Instructor {
+  name: string;
+  role: string;
+  image: string;
+  bio: string;
+}
+
 type Program = {
   title: string;
   description: string;
@@ -10,7 +17,7 @@ type Program = {
   details: {
     overview: string;
     schedule: string;
-    instructors: string;
+    instructors: Instructor[];
     includes: string[];
   };
 };
