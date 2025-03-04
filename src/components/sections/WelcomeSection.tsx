@@ -11,9 +11,9 @@ export const WelcomeSection = () => {
         </h2>
         
         <div className="grid md:grid-cols-2 gap-8 items-center">
-          {/* Video Card with improved dimensions */}
+          {/* Video Card with square dimensions */}
           <Card className="overflow-hidden shadow-lg animate-fadeIn" style={{ animationDelay: "0.2s" }}>
-            <AspectRatio ratio={16/9} className="bg-nativo-sage/20">
+            <AspectRatio ratio={1/1} className="bg-nativo-sage/20">
               <video 
                 className="w-full h-full object-cover" 
                 controls
