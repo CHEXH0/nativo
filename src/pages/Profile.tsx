@@ -83,8 +83,12 @@ const Profile = () => {
             isLoading={isLoading}
           />
 
-          <Tabs defaultValue="subscription" className="space-y-6">
+          <Tabs defaultValue="content" className="space-y-6">
             <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <TabsTrigger value="content" className="flex items-center gap-2">
+                <Film className="h-4 w-4" />
+                <span>Contenido</span>
+              </TabsTrigger>
               <TabsTrigger value="subscription" className="flex items-center gap-2">
                 <Package className="h-4 w-4" />
                 <span>Suscripción</span>
@@ -93,15 +97,18 @@ const Profile = () => {
                 <CreditCard className="h-4 w-4" />
                 <span>Pagos</span>
               </TabsTrigger>
-              <TabsTrigger value="content" className="flex items-center gap-2">
-                <Film className="h-4 w-4" />
-                <span>Contenido</span>
-              </TabsTrigger>
               <TabsTrigger value="settings" className="flex items-center gap-2">
                 <Settings className="h-4 w-4" />
                 <span>Ajustes</span>
               </TabsTrigger>
             </TabsList>
+
+            <TabsContent value="content">
+              <ContentSection 
+                userPlan={userPlan} 
+                onUpgrade={() => setUpgradeDialogOpen(true)} 
+              />
+            </TabsContent>
 
             <TabsContent value="subscription">
               <PlanSection userPlan={userPlan} />
@@ -117,13 +124,6 @@ const Profile = () => {
                   <Button className="w-full">Agregar Método de Pago</Button>
                 </CardContent>
               </Card>
-            </TabsContent>
-
-            <TabsContent value="content">
-              <ContentSection 
-                userPlan={userPlan} 
-                onUpgrade={() => setUpgradeDialogOpen(true)} 
-              />
             </TabsContent>
 
             <TabsContent value="settings">
