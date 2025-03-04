@@ -41,8 +41,9 @@ export const PaymentHistory = () => {
           
         if (fetchError) throw fetchError;
         
-        // Type assertion to handle null data
-        setPayments(data as PaymentRecord[] || []);
+        // Convert the data to PaymentRecord[] type
+        const paymentRecords = data as PaymentRecord[] || [];
+        setPayments(paymentRecords);
       } catch (err: any) {
         console.error("Error fetching payment history:", err);
         setError("No se pudieron cargar los pagos. Por favor intenta más tarde.");
