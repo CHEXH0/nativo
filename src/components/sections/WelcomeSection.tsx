@@ -11,23 +11,21 @@ export const WelcomeSection = () => {
         </h2>
         
         <div className="grid md:grid-cols-2 gap-8 items-center">
-          {/* Video Card with square dimensions and bottom view */}
+          {/* Redesigned Video Card */}
           <Card className="overflow-hidden shadow-lg animate-fadeIn" style={{ animationDelay: "0.2s" }}>
-            <AspectRatio ratio={1/1} className="bg-nativo-sage/20">
-              <div className="relative w-full h-full">
-                <video 
-                  className="absolute inset-0 w-full h-full object-cover" 
-                  style={{ objectPosition: "center bottom" }}
-                  autoPlay={false}
-                  playsInline
-                  controls
-                  preload="metadata"
-                  poster="/laptop-uploads/NativaCasa.jpg"
-                >
-                  <source src="/laptop-uploads/NativoIntro.mp4" type="video/mp4" />
-                  Tu navegador no soporta la etiqueta de video.
-                </video>
-              </div>
+            <AspectRatio ratio={16/9} className="bg-nativo-sage/20">
+              <video 
+                className="w-full h-full object-cover"
+                autoPlay={false}
+                muted
+                playsInline
+                controls
+                preload="metadata"
+                poster="/laptop-uploads/NativaCasa.jpg"
+              >
+                <source src="/laptop-uploads/NativoIntro.mp4" type="video/mp4" />
+                Tu navegador no soporta la etiqueta de video.
+              </video>
             </AspectRatio>
           </Card>
 
