@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useState, useRef } from "react";
+import { AvatarCropper } from "./AvatarCropper";
 
 interface ProfileHeaderProps {
   userName: string;
@@ -30,6 +31,8 @@ export const ProfileHeader = ({
   const [editNameOpen, setEditNameOpen] = useState(false);
   const [newName, setNewName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [cropperOpen, setCropperOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const getInitials = (name: string) => {
@@ -71,7 +74,7 @@ export const ProfileHeader = ({
     fileInputRef.current?.click();
   };
 
-  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -80,6 +83,13 @@ export const ProfileHeader = ({
       return;
     }
 
+    setSelectedFile(file);
+    setCropperOpen(true);
+  };
+
+  const handleCropComplete = async (croppedBlob: Blob) => {
+    setCropperOpen(false);
+    
     try {
       setIsUploading(true);
       toast.info("Subiendo imagen...");
@@ -91,12 +101,18 @@ export const ProfileHeader = ({
       }
 
       const userId = session.user.id;
-      const fileExt = file.name.split('.').pop();
+      // Create a new file from the blob with the original extension
+      const fileExt = selectedFile?.name.split('.').pop() || 'jpg';
       const fileName = `${userId}-avatar-${Date.now()}.${fileExt}`;
+      
+      // Convert blob to File for upload
+      const croppedFile = new File([croppedBlob], fileName, { 
+        type: selectedFile?.type || 'image/jpeg' 
+      });
 
       const { error: uploadError } = await supabase.storage
         .from('avatars')
-        .upload(fileName, file);
+        .upload(fileName, croppedFile);
 
       if (uploadError) throw uploadError;
 
@@ -117,6 +133,15 @@ export const ProfileHeader = ({
       toast.error(`No se pudo actualizar el avatar: ${error.message || 'Error desconocido'}`);
     } finally {
       setIsUploading(false);
+      setSelectedFile(null);
+    }
+  };
+
+  const handleCropCancel = () => {
+    setCropperOpen(false);
+    setSelectedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
     }
   };
 
@@ -207,6 +232,15 @@ export const ProfileHeader = ({
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {selectedFile && (
+        <AvatarCropper
+          imageFile={selectedFile}
+          onCropComplete={handleCropComplete}
+          onCancel={handleCropCancel}
+          isOpen={cropperOpen}
+        />
+      )}
     </Card>
   );
 };
