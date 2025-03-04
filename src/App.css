@@ -1,4 +1,3 @@
-
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -32,22 +31,6 @@
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-}
-
-/* Video display fixes for all devices */
-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-}
-
-/* Force correct orientation on mobile */
-video::-webkit-media-controls,
-video::-webkit-media-controls-panel {
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
 }
 
 .card {
