@@ -1,11 +1,12 @@
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { useEffect } from "react";
 import { programs } from "@/components/program-details/programsData";
 import { ProgramList } from "@/components/program-details/ProgramList";
 import { ProgramHeader } from "@/components/program-details/ProgramHeader";
 import { ProgramTabs } from "@/components/program-details/ProgramTabs";
+import { ProgramNotFound } from "@/components/program-details/ProgramNotFound";
 
 const ProgramDetails = () => {
   const { programId } = useParams();
@@ -16,14 +17,7 @@ const ProgramDetails = () => {
   }, [programId]);
 
   if (!program) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
-        <Navbar />
-        <div className="container mx-auto px-4 py-8 mt-16">
-          <div>Programa no encontrado</div>
-        </div>
-      </div>
-    );
+    return <ProgramNotFound />;
   }
 
   return (
