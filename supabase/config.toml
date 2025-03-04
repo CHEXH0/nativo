@@ -1,1 +1,13 @@
+
 project_id = "trdkzlndbvtsyihiphsa"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage"]
+
+[functions.create-checkout]
+verify_jwt = true
+
+[functions.stripe-webhook]
+verify_jwt = false
