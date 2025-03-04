@@ -16,7 +16,7 @@ export const WelcomeSection = () => {
             <AspectRatio ratio={1/1} className="bg-nativo-sage/20">
               <div className="relative w-full h-full">
                 <video 
-                  className="absolute inset-x-0 bottom-0 w-full object-cover" 
+                  className="absolute inset-0 w-full h-full object-cover" 
                   style={{ objectPosition: "center bottom" }}
                   controls
                   preload="metadata"
