@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
@@ -33,29 +32,26 @@ export const PaymentHistory = () => {
           throw new Error("Usuario no autenticado");
         }
         
-        // Using any to break the type instantiation chain
-        const response = await supabase
+        // Break the type chain by using explicit any and runtime type conversion
+        const { data, error: fetchError } = await supabase
           .from('Subscriptions')
           .select('id, created, amount, currency, status, description')
           .eq('user_id', session.user.id)
-          .order('created', { ascending: false });
+          .order('created', { ascending: false }) as { data: any[], error: any };
           
-        if (response.error) throw response.error;
+        if (fetchError) throw fetchError;
         
         // Manually convert the data to our PaymentRecord type
-        const records: PaymentRecord[] = [];
-        
-        if (response.data) {
-          for (const item of response.data) {
-            records.push({
-              id: item.id || '',
-              created: item.created || '',
-              amount: Number(item.amount) || 0,
-              currency: item.currency || 'MXN',
-              status: item.status || '',
-              description: item.description || ''
-            });
-          }
+        if (data) {
+          const records: PaymentRecord[] = data.map(item => ({
+            id: item.id || '',
+            created: item.created || '',
+            amount: Number(item.amount) || 0,
+            currency: item.currency || 'MXN',
+            status: item.status || '',
+            description: item.description || ''
+          }));
+          
           setPayments(records);
         } else {
           setPayments([]);
