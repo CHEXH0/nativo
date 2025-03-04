@@ -32,16 +32,17 @@ export const PaymentHistory = () => {
           throw new Error("Usuario no autenticado");
         }
         
-        // Fetch payment history from subscriptions table
-        const { data, error } = await supabase
-          .from('subscriptions')
+        // Fetch payment history from Subscriptions table (note the capital S to match Supabase types)
+        const { data, error: fetchError } = await supabase
+          .from('Subscriptions')
           .select('id, created, amount, currency, status, description')
           .eq('user_id', session.user.id)
           .order('created', { ascending: false });
           
-        if (error) throw error;
+        if (fetchError) throw fetchError;
         
-        setPayments(data || []);
+        // Type assertion to handle null data
+        setPayments(data as PaymentRecord[] || []);
       } catch (err: any) {
         console.error("Error fetching payment history:", err);
         setError("No se pudieron cargar los pagos. Por favor intenta más tarde.");
@@ -69,13 +70,13 @@ export const PaymentHistory = () => {
       case 'complete':
       case 'active':
       case 'paid':
-        return <Badge className="bg-green-500">Pagado</Badge>;
+        return <Badge variant="default" className="bg-green-500">Pagado</Badge>;
       case 'pending':
-        return <Badge className="bg-yellow-500">Pendiente</Badge>;
+        return <Badge variant="default" className="bg-yellow-500">Pendiente</Badge>;
       case 'failed':
-        return <Badge className="bg-red-500">Fallido</Badge>;
+        return <Badge variant="default" className="bg-red-500">Fallido</Badge>;
       default:
-        return <Badge className="bg-gray-500">{status}</Badge>;
+        return <Badge variant="default" className="bg-gray-500">{status}</Badge>;
     }
   };
 

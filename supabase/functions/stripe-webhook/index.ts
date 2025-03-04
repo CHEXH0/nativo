@@ -61,9 +61,9 @@ serve(async (req) => {
           console.log(`Successfully updated plan for user ${userId} to ${planId}`);
         }
         
-        // Store payment information in the subscriptions table
+        // Store payment information in the Subscriptions table (note the capital S)
         const { error: paymentError } = await supabase
-          .from('subscriptions')
+          .from('Subscriptions')
           .insert({
             id: session.id,
             user_id: userId,
