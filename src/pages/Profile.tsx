@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -71,7 +70,6 @@ const Profile = () => {
     checkAuth();
   }, [navigate]);
 
-  // Check URL parameters for plan upgrade success/failure
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const success = queryParams.get('success');
@@ -79,11 +77,9 @@ const Profile = () => {
     
     if (success === 'true' && plan) {
       toast.success(`Plan actualizado a ${plan}`);
-      // Clear URL parameters
       window.history.replaceState({}, document.title, window.location.pathname);
     } else if (queryParams.get('canceled') === 'true') {
       toast.info("Pago cancelado");
-      // Clear URL parameters
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
