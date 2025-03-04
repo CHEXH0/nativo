@@ -111,7 +111,7 @@ export const MembershipsSection = ({ inDialog = false }: MembershipsSectionProps
       if (!session) {
         toast.error("Debes iniciar sesión para suscribirte");
         setIsLoading(false);
-        navigate('/login');
+        navigate('/login', { state: { returnUrl: window.location.pathname } });
         return;
       }
       
