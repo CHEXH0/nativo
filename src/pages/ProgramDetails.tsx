@@ -138,20 +138,20 @@ const ProgramDetails = () => {
         </div>
 
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <TabsTrigger value="overview" className="flex items-center gap-2">
+          <TabsList className="flex flex-wrap w-full md:grid md:grid-cols-4 gap-2">
+            <TabsTrigger value="overview" className="flex-1 min-w-[150px] flex items-center gap-2">
               <BookOpen className="h-4 w-4" />
               <span>Descripción</span>
             </TabsTrigger>
-            <TabsTrigger value="details" className="flex items-center gap-2">
+            <TabsTrigger value="details" className="flex-1 min-w-[150px] flex items-center gap-2">
               <Package className="h-4 w-4" />
               <span>Detalles</span>
             </TabsTrigger>
-            <TabsTrigger value="schedule" className="flex items-center gap-2">
+            <TabsTrigger value="schedule" className="flex-1 min-w-[150px] flex items-center gap-2">
               <Calendar className="h-4 w-4" />
               <span>Horarios</span>
             </TabsTrigger>
-            <TabsTrigger value="instructors" className="flex items-center gap-2">
+            <TabsTrigger value="instructors" className="flex-1 min-w-[150px] flex items-center gap-2">
               <Users className="h-4 w-4" />
               <span>Instructores</span>
             </TabsTrigger>
