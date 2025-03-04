@@ -50,35 +50,20 @@ serve(async (req) => {
       
       if (userId && planId) {
         // Update the user's plan in the database
-        const { error: planError } = await supabase.rpc('update_user_plan', {
+        const { error } = await supabase.rpc('update_user_plan', {
           user_id: userId,
           new_plan: planId
         });
         
-        if (planError) {
-          console.error('Error updating user plan:', planError);
-        } else {
-          console.log(`Successfully updated plan for user ${userId} to ${planId}`);
+        if (error) {
+          console.error('Error updating user plan:', error);
+          return new Response(JSON.stringify({ error: 'Failed to update user plan' }), {
+            status: 500,
+            headers: { "Content-Type": "application/json" },
+          });
         }
         
-        // Store payment information in the Subscriptions table (note the capital S)
-        const { error: paymentError } = await supabase
-          .from('Subscriptions')
-          .insert({
-            id: session.id,
-            user_id: userId,
-            amount: session.amount_total,
-            currency: session.currency,
-            status: session.status,
-            created: new Date(session.created * 1000).toISOString(),
-            description: `Suscripción Plan ${planId.charAt(0).toUpperCase() + planId.slice(1)}`,
-          });
-          
-        if (paymentError) {
-          console.error('Error storing payment record:', paymentError);
-        } else {
-          console.log(`Successfully stored payment record for session ${session.id}`);
-        }
+        console.log(`Successfully updated plan for user ${userId} to ${planId}`);
       }
     }
     
