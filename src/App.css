@@ -33,6 +33,22 @@
   }
 }
 
+/* Fix for video orientation issues on mobile devices */
+video {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+/* Force correct aspect ratio and prevent rotation issues on iOS */
+video::-webkit-media-controls {
+  transform: translateZ(0);
+}
+
+video::-webkit-media-controls-panel {
+  transform: translateZ(0);
+}
+
 .card {
   padding: 2em;
 }

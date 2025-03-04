@@ -17,7 +17,8 @@ export const WelcomeSection = () => {
               <div className="relative w-full h-full">
                 <video 
                   className="absolute inset-0 w-full h-full object-cover" 
-                  style={{ objectPosition: "center bottom" }}
+                  autoPlay={false}
+                  playsInline
                   controls
                   preload="metadata"
                   poster="/laptop-uploads/NativaCasa.jpg"
