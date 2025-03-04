@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Badge } from "@/components/ui/badge";
 
+// Simple interface for payment records
 interface PaymentRecord {
   id: string;
   created: string;
@@ -13,16 +14,6 @@ interface PaymentRecord {
   currency: string;
   status: string;
   description: string;
-}
-
-// Define a type for the raw data that comes from Supabase
-interface SubscriptionData {
-  id: string | null;
-  created: string | null;
-  amount: number | null;
-  currency: string | null;
-  status: string | null;
-  description: string | null;
 }
 
 export const PaymentHistory = () => {
@@ -42,27 +33,30 @@ export const PaymentHistory = () => {
           throw new Error("Usuario no autenticado");
         }
         
-        // Explicitly type the query result to avoid deep type instantiation
-        const { data, error: fetchError } = await supabase
+        // Using any to break the type instantiation chain
+        const response = await supabase
           .from('Subscriptions')
           .select('id, created, amount, currency, status, description')
           .eq('user_id', session.user.id)
           .order('created', { ascending: false });
           
-        if (fetchError) throw fetchError;
+        if (response.error) throw response.error;
         
-        if (data) {
-          // Safely map the data to our PaymentRecord type to avoid the deep type instantiation
-          const paymentRecords: PaymentRecord[] = (data as SubscriptionData[]).map(item => ({
-            id: item.id || '',
-            created: item.created || '',
-            amount: Number(item.amount) || 0,
-            currency: item.currency || 'MXN',
-            status: item.status || '',
-            description: item.description || ''
-          }));
-          
-          setPayments(paymentRecords);
+        // Manually convert the data to our PaymentRecord type
+        const records: PaymentRecord[] = [];
+        
+        if (response.data) {
+          for (const item of response.data) {
+            records.push({
+              id: item.id || '',
+              created: item.created || '',
+              amount: Number(item.amount) || 0,
+              currency: item.currency || 'MXN',
+              status: item.status || '',
+              description: item.description || ''
+            });
+          }
+          setPayments(records);
         } else {
           setPayments([]);
         }
