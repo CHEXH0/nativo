@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
@@ -32,7 +31,6 @@ export const PaymentHistory = () => {
           throw new Error("Usuario no autenticado");
         }
         
-        // Fetch payment history from Subscriptions table (note the capital S to match Supabase types)
         const { data, error: fetchError } = await supabase
           .from('Subscriptions')
           .select('id, created, amount, currency, status, description')
@@ -41,9 +39,20 @@ export const PaymentHistory = () => {
           
         if (fetchError) throw fetchError;
         
-        // Convert the data to PaymentRecord[] type
-        const paymentRecords = data as PaymentRecord[] || [];
-        setPayments(paymentRecords);
+        if (data) {
+          const paymentRecords: PaymentRecord[] = data.map(item => ({
+            id: item.id || '',
+            created: item.created || '',
+            amount: Number(item.amount) || 0,
+            currency: item.currency || 'MXN',
+            status: item.status || '',
+            description: item.description || ''
+          }));
+          
+          setPayments(paymentRecords);
+        } else {
+          setPayments([]);
+        }
       } catch (err: any) {
         console.error("Error fetching payment history:", err);
         setError("No se pudieron cargar los pagos. Por favor intenta más tarde.");
@@ -56,10 +65,8 @@ export const PaymentHistory = () => {
   }, []);
 
   const formatAmount = (amount: number, currency: string) => {
-    // Stripe stores amounts in cents, convert to dollars/pesos
     const value = amount / 100;
     
-    // Format based on currency
     return new Intl.NumberFormat('es-MX', {
       style: 'currency',
       currency: currency || 'MXN'
