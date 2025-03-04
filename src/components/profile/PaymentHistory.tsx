@@ -33,18 +33,29 @@ export const PaymentHistory = () => {
           throw new Error("Usuario no autenticado");
         }
         
-        // Use a type assertion to avoid deep type instantiation
-        const result = await supabase
+        // Explicitly type the result to avoid deep type instantiation
+        interface SubscriptionResult {
+          data: {
+            id: string | null;
+            created: string | null;
+            amount: number | null;
+            currency: string | null;
+            status: string | null;
+            description: string | null;
+          }[] | null;
+          error: any;
+        }
+        
+        const { data, error } = await supabase
           .from('Subscriptions')
           .select('id, created, amount, currency, status, description')
           .eq('user_id', session.user.id)
-          .order('created', { ascending: false });
+          .order('created', { ascending: false }) as SubscriptionResult;
           
-        if (result.error) throw result.error;
+        if (error) throw error;
         
-        // Transform the data safely
-        if (result.data) {
-          const records: PaymentRecord[] = result.data.map(item => ({
+        if (data) {
+          const records: PaymentRecord[] = data.map(item => ({
             id: String(item.id || ''),
             created: String(item.created || ''),
             amount: Number(item.amount || 0),
