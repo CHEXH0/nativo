@@ -15,22 +15,34 @@ interface ProgramTabsProps {
 export const ProgramTabs = ({ details }: ProgramTabsProps) => {
   return (
     <Tabs defaultValue="overview" className="space-y-6">
-      <TabsList className="flex flex-wrap w-full md:grid md:grid-cols-4 gap-2">
-        <TabsTrigger value="overview" className="flex-1 min-w-[150px] flex items-center gap-2">
+      <TabsList className="w-full flex flex-wrap gap-2 p-1 h-auto">
+        <TabsTrigger 
+          value="overview" 
+          className="flex items-center gap-2 flex-1 min-w-[120px] h-10 data-[state=active]:bg-background"
+        >
           <BookOpen className="h-4 w-4" />
-          <span>Descripción</span>
+          <span className="whitespace-nowrap">Descripción</span>
         </TabsTrigger>
-        <TabsTrigger value="details" className="flex-1 min-w-[150px] flex items-center gap-2">
+        <TabsTrigger 
+          value="details" 
+          className="flex items-center gap-2 flex-1 min-w-[120px] h-10 data-[state=active]:bg-background"
+        >
           <Package className="h-4 w-4" />
-          <span>Detalles</span>
+          <span className="whitespace-nowrap">Detalles</span>
         </TabsTrigger>
-        <TabsTrigger value="schedule" className="flex-1 min-w-[150px] flex items-center gap-2">
+        <TabsTrigger 
+          value="schedule" 
+          className="flex items-center gap-2 flex-1 min-w-[120px] h-10 data-[state=active]:bg-background"
+        >
           <Calendar className="h-4 w-4" />
-          <span>Horarios</span>
+          <span className="whitespace-nowrap">Horarios</span>
         </TabsTrigger>
-        <TabsTrigger value="instructors" className="flex-1 min-w-[150px] flex items-center gap-2">
+        <TabsTrigger 
+          value="instructors" 
+          className="flex items-center gap-2 flex-1 min-w-[120px] h-10 data-[state=active]:bg-background"
+        >
           <Users className="h-4 w-4" />
-          <span>Instructores</span>
+          <span className="whitespace-nowrap">Instructores</span>
         </TabsTrigger>
       </TabsList>
 
