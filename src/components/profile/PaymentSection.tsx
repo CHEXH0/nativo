@@ -1,6 +1,6 @@
 
-import { useState } from "react";
-import {
+import { useState, useEffect } from "react";
+import { 
   Card,
   CardHeader,
   CardTitle,
@@ -12,59 +12,122 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { PaymentMethodsList } from "./payment/PaymentMethodsList";
 import { AddPaymentDialog, CardDetails } from "./payment/AddPaymentDialog";
-import { determineBrand } from "./payment/utils";
+import { validateCardDetails } from "./payment/utils";
 
 export const PaymentSection = () => {
   const [paymentMethods, setPaymentMethods] = useState<Array<{id: string, last4: string, brand: string}>>([]);
   const [addPaymentDialogOpen, setAddPaymentDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [stripeCustomerId, setStripeCustomerId] = useState<string | null>(null);
   const [newCardDetails, setNewCardDetails] = useState<CardDetails>({
     cardNumber: "",
     cardName: "",
     expiry: "",
     cvc: ""
   });
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  
+  // Get current user session and load payment methods
+  useEffect(() => {
+    const loadUserData = async () => {
+      try {
+        // Get current user session
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) return;
+        
+        const userEmail = session.user.email;
+        if (!userEmail) return;
+        
+        // Create or retrieve Stripe customer for current user
+        const { data, error } = await supabase.functions.invoke('payment-methods', {
+          body: { 
+            action: 'create_customer',
+            email: userEmail
+          }
+        });
+        
+        if (error) {
+          console.error("Error creating/getting Stripe customer:", error);
+          return;
+        }
+        
+        if (data?.customerId) {
+          setStripeCustomerId(data.customerId);
+          await loadPaymentMethods(data.customerId);
+        }
+      } catch (error) {
+        console.error("Error loading user data:", error);
+      }
+    };
+    
+    loadUserData();
+  }, []);
+  
+  // Load payment methods from Stripe
+  const loadPaymentMethods = async (customerId: string) => {
+    try {
+      setIsLoading(true);
+      
+      const { data, error } = await supabase.functions.invoke('payment-methods', {
+        body: { 
+          action: 'list_payment_methods',
+          customerId 
+        }
+      });
+      
+      if (error) {
+        console.error("Error loading payment methods:", error);
+        toast.error("Error al cargar los métodos de pago");
+        return;
+      }
+      
+      if (data?.paymentMethods) {
+        const formattedMethods = data.paymentMethods.map((method: any) => ({
+          id: method.id,
+          last4: method.card.last4,
+          brand: method.card.brand
+        }));
+        setPaymentMethods(formattedMethods);
+      }
+    } catch (error) {
+      console.error("Error loading payment methods:", error);
+      toast.error("Error al cargar los métodos de pago");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  // In a real implementation, we would use Stripe Elements to securely collect payment details
+  // For this example, we'll simulate the process with our existing UI
   const handleAddPaymentMethod = async () => {
     setIsLoading(true);
+    setValidationErrors({});
     
-    // Validate input (simplified validation)
-    if (
-      !newCardDetails.cardNumber.trim() || 
-      !newCardDetails.cardName.trim() || 
-      !newCardDetails.expiry.trim() || 
-      !newCardDetails.cvc.trim()
-    ) {
-      toast.error("Por favor completa todos los campos");
+    // Validate input
+    const validation = validateCardDetails(newCardDetails);
+    if (!validation.valid) {
+      setValidationErrors(validation.errors);
       setIsLoading(false);
       return;
     }
     
     try {
-      // Get the current user session
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        toast.error("Debes iniciar sesión para guardar un método de pago");
-        setIsLoading(false);
-        return;
-      }
-
-      // Create a mock payment method (in a real app, this would use Stripe API)
-      const last4 = newCardDetails.cardNumber.slice(-4);
+      // In a real implementation, we would use Stripe.js and Elements to securely collect 
+      // payment details and create a payment method or setup intent
+      // This is just a simulation
+      
+      toast.info("En una implementación real, esto usaría Stripe Elements");
+      
+      // Simulate successful payment method addition
       const mockPaymentMethod = {
         id: `pm_${Math.random().toString(36).substr(2, 9)}`,
-        last4,
-        brand: determineBrand(newCardDetails.cardNumber),
-        userId: session.user.id
+        last4: newCardDetails.cardNumber.slice(-4),
+        brand: newCardDetails.cardNumber.startsWith('4') ? 'visa' : 
+               newCardDetails.cardNumber.startsWith('5') ? 'mastercard' : 'unknown'
       };
       
-      // In a real app, this would be stored using the Stripe API
-      // For this demo, we'll simulate storing it locally
+      // Add to the list for demonstration
       setPaymentMethods([...paymentMethods, mockPaymentMethod]);
-      
-      // Store in localStorage to simulate persistence between page reloads
-      const storedMethods = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
-      localStorage.setItem('paymentMethods', JSON.stringify([...storedMethods, mockPaymentMethod]));
       
       setAddPaymentDialogOpen(false);
       setNewCardDetails({
@@ -73,7 +136,9 @@ export const PaymentSection = () => {
         expiry: "",
         cvc: ""
       });
-      toast.success("Método de pago añadido con éxito");
+      
+      toast.success("Método de pago añadido con éxito (simulado)");
+      toast.info("Para una integración real, necesitarás implementar Stripe Elements");
     } catch (error) {
       console.error("Error adding payment method:", error);
       toast.error("Hubo un error al guardar el método de pago");
@@ -82,15 +147,41 @@ export const PaymentSection = () => {
     }
   };
 
-  const handleRemovePaymentMethod = (id: string) => {
-    // Remove from state
-    setPaymentMethods(paymentMethods.filter(method => method.id !== id));
+  const handleRemovePaymentMethod = async (id: string) => {
+    if (!stripeCustomerId) {
+      toast.error("No se pudo identificar al cliente");
+      return;
+    }
     
-    // Remove from localStorage
-    const storedMethods = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
-    localStorage.setItem('paymentMethods', JSON.stringify(storedMethods.filter((method: any) => method.id !== id)));
-    
-    toast.success("Método de pago eliminado");
+    try {
+      setIsLoading(true);
+      
+      // In a real implementation, this would call the Stripe API
+      // For this demo, we'll just simulate it
+      toast.info("En una implementación real, esto llamaría a la API de Stripe");
+      
+      const { data, error } = await supabase.functions.invoke('payment-methods', {
+        body: { 
+          action: 'detach_payment_method',
+          paymentMethodId: id 
+        }
+      });
+      
+      if (error) {
+        console.error("Error removing payment method:", error);
+        toast.error("Error al eliminar el método de pago");
+        return;
+      }
+      
+      // Remove from state
+      setPaymentMethods(paymentMethods.filter(method => method.id !== id));
+      toast.success("Método de pago eliminado");
+    } catch (error) {
+      console.error("Error removing payment method:", error);
+      toast.error("Error al eliminar el método de pago");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,38 +190,44 @@ export const PaymentSection = () => {
       ...prev,
       [name]: value
     }));
+    
+    // Clear validation error when user starts typing
+    if (validationErrors[name]) {
+      setValidationErrors(prev => {
+        const updated = { ...prev };
+        delete updated[name];
+        return updated;
+      });
+    }
   };
-
-  // Load payment methods from localStorage on component mount
-  useState(() => {
-    const storedMethods = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
-    // Filter to only show methods belonging to the current user
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        const userMethods = storedMethods.filter((method: any) => method.userId === session.user.id);
-        setPaymentMethods(userMethods);
-      }
-    });
-  });
 
   // Format card number input with spaces
   const formatCardNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value.replace(/\D/g, '').substring(0, 16); // Remove non-digits and limit to 16 characters
+    const formattedValue = e.target.value.replace(/\D/g, '').substring(0, 16);
     const parts = [];
     
-    for (let i = 0; i < input.length; i += 4) {
-      parts.push(input.substring(i, i + 4));
+    for (let i = 0; i < formattedValue.length; i += 4) {
+      parts.push(formattedValue.substring(i, i + 4));
     }
     
     setNewCardDetails(prev => ({
       ...prev,
       cardNumber: parts.join(' ')
     }));
+    
+    // Clear validation error
+    if (validationErrors.cardNumber) {
+      setValidationErrors(prev => {
+        const updated = { ...prev };
+        delete updated.cardNumber;
+        return updated;
+      });
+    }
   };
 
   // Format expiration date input (MM/YY)
   const formatExpiryDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value.replace(/\D/g, '').substring(0, 4); // Remove non-digits and limit to 4 characters
+    const input = e.target.value.replace(/\D/g, '').substring(0, 4);
     
     if (input.length > 2) {
       setNewCardDetails(prev => ({
@@ -142,6 +239,15 @@ export const PaymentSection = () => {
         ...prev,
         expiry: input
       }));
+    }
+    
+    // Clear validation error
+    if (validationErrors.expiry) {
+      setValidationErrors(prev => {
+        const updated = { ...prev };
+        delete updated.expiry;
+        return updated;
+      });
     }
   };
 
@@ -156,10 +262,12 @@ export const PaymentSection = () => {
           <PaymentMethodsList 
             paymentMethods={paymentMethods} 
             onRemovePaymentMethod={handleRemovePaymentMethod} 
+            isLoading={isLoading}
           />
           <Button 
             className="w-full" 
             onClick={() => setAddPaymentDialogOpen(true)}
+            disabled={isLoading}
           >
             Agregar Método de Pago
           </Button>
@@ -175,6 +283,7 @@ export const PaymentSection = () => {
         formatCardNumber={formatCardNumber}
         formatExpiryDate={formatExpiryDate}
         isLoading={isLoading}
+        errors={validationErrors}
       />
     </>
   );

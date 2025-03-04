@@ -37,7 +37,7 @@ serve(async (req) => {
   }
 
   try {
-    const { planId, userId, paymentMethodId } = await req.json();
+    const { planId, userId, paymentMethodId, email } = await req.json();
     
     if (!planId || !PLAN_PRODUCTS[planId as keyof typeof PLAN_PRODUCTS]) {
       return new Response(
@@ -55,6 +55,25 @@ serve(async (req) => {
     
     // Use product ID instead of price ID and let Stripe determine the price
     const product = PLAN_PRODUCTS[planId as keyof typeof PLAN_PRODUCTS];
+    
+    // Create or get Stripe customer
+    let customerId;
+    
+    if (email) {
+      const customers = await stripe.customers.list({ email });
+      
+      if (customers.data.length > 0) {
+        customerId = customers.data[0].id;
+      } else {
+        const customer = await stripe.customers.create({
+          email,
+          metadata: {
+            supabaseUserId: userId,
+          },
+        });
+        customerId = customer.id;
+      }
+    }
     
     // Create session configuration
     const sessionConfig: any = {
@@ -82,12 +101,18 @@ serve(async (req) => {
       }
     };
 
+    // If a customer ID is available, attach it to the session
+    if (customerId) {
+      sessionConfig.customer = customerId;
+      sessionConfig.success_url += `&customer_id=${customerId}`;
+    }
+
     // If a payment method ID is provided, use it for the checkout
     if (paymentMethodId) {
       console.log(`Using payment method: ${paymentMethodId}`);
-      // In a real implementation, this would use the actual payment method ID
-      // Here we'll just pass it along in the success URL for demonstration
-      sessionConfig.success_url += `&payment_method=${paymentMethodId}&last4=1234&brand=visa`;
+      sessionConfig.payment_method = paymentMethodId;
+      // Store payment method in success URL for client-side processing
+      sessionConfig.success_url += `&payment_method=${paymentMethodId}`;
     }
 
     const session = await stripe.checkout.sessions.create(sessionConfig);
@@ -95,7 +120,7 @@ serve(async (req) => {
     console.log(`Checkout session created: ${session.id}`);
 
     return new Response(
-      JSON.stringify({ sessionId: session.id, url: session.url }),
+      JSON.stringify({ sessionId: session.id, url: session.url, customerId }),
       {
         status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
