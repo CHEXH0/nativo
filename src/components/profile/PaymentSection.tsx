@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CreditCard, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 export const PaymentSection = () => {
   const [paymentMethods, setPaymentMethods] = useState<Array<{id: string, last4: string, brand: string}>>([]);
@@ -26,32 +27,47 @@ export const PaymentSection = () => {
     cvc: ""
   });
 
-  const handleAddPaymentMethod = () => {
+  const handleAddPaymentMethod = async () => {
     setIsLoading(true);
     
-    // Simulate adding payment method
-    setTimeout(() => {
-      // Validate input (simplified validation)
-      if (
-        !newCardDetails.cardNumber.trim() || 
-        !newCardDetails.cardName.trim() || 
-        !newCardDetails.expiry.trim() || 
-        !newCardDetails.cvc.trim()
-      ) {
-        toast.error("Por favor completa todos los campos");
+    // Validate input (simplified validation)
+    if (
+      !newCardDetails.cardNumber.trim() || 
+      !newCardDetails.cardName.trim() || 
+      !newCardDetails.expiry.trim() || 
+      !newCardDetails.cvc.trim()
+    ) {
+      toast.error("Por favor completa todos los campos");
+      setIsLoading(false);
+      return;
+    }
+    
+    try {
+      // Get the current user session
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error("Debes iniciar sesión para guardar un método de pago");
         setIsLoading(false);
         return;
       }
-      
-      // Create a mock payment method
+
+      // Create a mock payment method (in a real app, this would use Stripe API)
       const last4 = newCardDetails.cardNumber.slice(-4);
       const mockPaymentMethod = {
         id: `pm_${Math.random().toString(36).substr(2, 9)}`,
         last4,
-        brand: "visa",
+        brand: determineBrand(newCardDetails.cardNumber),
+        userId: session.user.id
       };
       
+      // In a real app, this would be stored using the Stripe API
+      // For this demo, we'll simulate storing it locally
       setPaymentMethods([...paymentMethods, mockPaymentMethod]);
+      
+      // Store in localStorage to simulate persistence between page reloads
+      const storedMethods = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
+      localStorage.setItem('paymentMethods', JSON.stringify([...storedMethods, mockPaymentMethod]));
+      
       setAddPaymentDialogOpen(false);
       setNewCardDetails({
         cardNumber: "",
@@ -60,12 +76,22 @@ export const PaymentSection = () => {
         cvc: ""
       });
       toast.success("Método de pago añadido con éxito");
+    } catch (error) {
+      console.error("Error adding payment method:", error);
+      toast.error("Hubo un error al guardar el método de pago");
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   const handleRemovePaymentMethod = (id: string) => {
+    // Remove from state
     setPaymentMethods(paymentMethods.filter(method => method.id !== id));
+    
+    // Remove from localStorage
+    const storedMethods = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
+    localStorage.setItem('paymentMethods', JSON.stringify(storedMethods.filter((method: any) => method.id !== id)));
+    
     toast.success("Método de pago eliminado");
   };
 
@@ -77,12 +103,68 @@ export const PaymentSection = () => {
     }));
   };
 
+  // Load payment methods from localStorage on component mount
+  useState(() => {
+    const storedMethods = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
+    // Filter to only show methods belonging to the current user
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        const userMethods = storedMethods.filter((method: any) => method.userId === session.user.id);
+        setPaymentMethods(userMethods);
+      }
+    });
+  });
+
+  // Function to determine card brand based on first digits
+  const determineBrand = (cardNumber: string): string => {
+    const firstDigit = cardNumber.charAt(0);
+    const firstTwoDigits = parseInt(cardNumber.substring(0, 2));
+    
+    if (firstDigit === '4') return 'visa';
+    if (firstDigit === '5') return 'mastercard';
+    if (firstDigit === '3' && (firstTwoDigits === 34 || firstTwoDigits === 37)) return 'amex';
+    if (firstDigit === '6') return 'discover';
+    return 'unknown';
+  };
+
+  // Format card number input with spaces
+  const formatCardNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value.replace(/\D/g, '').substring(0, 16); // Remove non-digits and limit to 16 characters
+    const parts = [];
+    
+    for (let i = 0; i < input.length; i += 4) {
+      parts.push(input.substring(i, i + 4));
+    }
+    
+    setNewCardDetails(prev => ({
+      ...prev,
+      cardNumber: parts.join(' ')
+    }));
+  };
+
+  // Format expiration date input (MM/YY)
+  const formatExpiryDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value.replace(/\D/g, '').substring(0, 4); // Remove non-digits and limit to 4 characters
+    
+    if (input.length > 2) {
+      setNewCardDetails(prev => ({
+        ...prev,
+        expiry: input.substring(0, 2) + '/' + input.substring(2)
+      }));
+    } else {
+      setNewCardDetails(prev => ({
+        ...prev,
+        expiry: input
+      }));
+    }
+  };
+
   return (
     <>
       <Card>
         <CardHeader>
           <CardTitle>Métodos de Pago</CardTitle>
-          <CardDescription>Gestiona tus métodos de pago</CardDescription>
+          <CardDescription>Gestiona tus métodos de pago para suscripciones y compras</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {paymentMethods.length === 0 ? (
@@ -149,7 +231,7 @@ export const PaymentSection = () => {
                 name="cardNumber"
                 placeholder="1234 5678 9012 3456" 
                 value={newCardDetails.cardNumber}
-                onChange={handleInputChange}
+                onChange={formatCardNumber}
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -160,7 +242,8 @@ export const PaymentSection = () => {
                   name="expiry"
                   placeholder="MM/AA" 
                   value={newCardDetails.expiry}
-                  onChange={handleInputChange}
+                  onChange={formatExpiryDate}
+                  maxLength={5}
                 />
               </div>
               <div className="space-y-2">
@@ -171,6 +254,7 @@ export const PaymentSection = () => {
                   placeholder="123" 
                   value={newCardDetails.cvc}
                   onChange={handleInputChange}
+                  maxLength={4}
                 />
               </div>
             </div>

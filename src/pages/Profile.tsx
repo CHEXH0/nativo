@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -77,12 +78,36 @@ const Profile = () => {
     
     if (success === 'true' && plan) {
       toast.success(`Plan actualizado a ${plan}`);
+      
+      // After successful payment, try to load payment method data
+      const paymentMethodId = queryParams.get('payment_method');
+      if (paymentMethodId) {
+        // In a real implementation, this would fetch the payment method details from Stripe
+        // For this demo, we'll simulate saving the payment method
+        const last4 = queryParams.get('last4') || '1234';
+        const brand = queryParams.get('brand') || 'visa';
+        
+        const paymentMethod = {
+          id: paymentMethodId,
+          last4,
+          brand,
+          userId: userId
+        };
+        
+        // Store in localStorage to simulate persistence
+        const storedMethods = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
+        const updatedMethods = [...storedMethods, paymentMethod];
+        localStorage.setItem('paymentMethods', JSON.stringify(updatedMethods));
+        
+        toast.success("Método de pago guardado");
+      }
+      
       window.history.replaceState({}, document.title, window.location.pathname);
     } else if (queryParams.get('canceled') === 'true') {
       toast.info("Pago cancelado");
       window.history.replaceState({}, document.title, window.location.pathname);
     }
-  }, []);
+  }, [userId]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
