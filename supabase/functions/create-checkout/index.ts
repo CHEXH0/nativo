@@ -11,19 +11,18 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// You need to create these price IDs in your Stripe dashboard
-// These are placeholder IDs that should be replaced with your actual Stripe price IDs
-const PLAN_PRICES = {
+// Updated to use product IDs since price IDs are not available
+const PLAN_PRODUCTS = {
   basic: {
-    priceId: "price_1OrdJbCE5f7WEyNvXnQVOtRp", // Replace with your actual Stripe price ID
+    productId: "prod_RsnTi3vnYdOLZw", // Basic/Básico plan
     amount: 900 // in cents = $9
   },
   gold: {
-    priceId: "price_1OrdKRCE5f7WEyNvXDNrY89x", // Replace with your actual Stripe price ID
+    productId: "prod_RsnURV3GymmmUX", // GOLD plan
     amount: 5900 // in cents = $59
   },
   vip: {
-    priceId: "price_1OrdL9CE5f7WEyNvprxKPkho", // Replace with your actual Stripe price ID
+    productId: "prod_RsnV4XA6NDM7kx", // VIP plan
     amount: 10900 // in cents = $109
   }
 };
@@ -40,7 +39,7 @@ serve(async (req) => {
   try {
     const { planId, userId } = await req.json();
     
-    if (!planId || !PLAN_PRICES[planId as keyof typeof PLAN_PRICES]) {
+    if (!planId || !PLAN_PRODUCTS[planId as keyof typeof PLAN_PRODUCTS]) {
       return new Response(
         JSON.stringify({ error: "Invalid plan ID" }),
         {
@@ -54,11 +53,21 @@ serve(async (req) => {
     
     console.log(`Creating checkout session for plan: ${planId}, user: ${userId}`);
     
+    // Use product ID instead of price ID and let Stripe determine the price
+    const product = PLAN_PRODUCTS[planId as keyof typeof PLAN_PRODUCTS];
+    
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
         {
-          price: PLAN_PRICES[planId as keyof typeof PLAN_PRICES].priceId,
+          price_data: {
+            currency: "usd",
+            product: product.productId,
+            unit_amount: product.amount,
+            recurring: {
+              interval: "month",
+            },
+          },
           quantity: 1,
         },
       ],
