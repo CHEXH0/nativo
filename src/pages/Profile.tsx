@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -21,6 +20,7 @@ const Profile = () => {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [userPlan, setUserPlan] = useState("none");
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("subscription");
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -83,64 +83,68 @@ const Profile = () => {
             isLoading={isLoading}
           />
 
-          <Tabs defaultValue="content" className="space-y-6">
-            <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <TabsTrigger value="content" className="flex items-center gap-2">
-                <Film className="h-4 w-4" />
-                <span>Contenido</span>
-              </TabsTrigger>
-              <TabsTrigger value="subscription" className="flex items-center gap-2">
-                <Package className="h-4 w-4" />
-                <span>Suscripción</span>
-              </TabsTrigger>
-              <TabsTrigger value="payment" className="flex items-center gap-2">
-                <CreditCard className="h-4 w-4" />
-                <span>Pagos</span>
-              </TabsTrigger>
-              <TabsTrigger value="settings" className="flex items-center gap-2">
-                <Settings className="h-4 w-4" />
-                <span>Ajustes</span>
-              </TabsTrigger>
-            </TabsList>
+          <div className="mb-8">
+            <ContentSection 
+              userPlan={userPlan} 
+              onUpgrade={() => setUpgradeDialogOpen(true)} 
+            />
+          </div>
 
-            <TabsContent value="content">
-              <ContentSection 
-                userPlan={userPlan} 
-                onUpgrade={() => setUpgradeDialogOpen(true)} 
-              />
-            </TabsContent>
+          <div className="border-t border-nativo-sage/20 pt-6 mt-8">
+            <h3 className="text-xl font-medium text-nativo-green mb-4">Ajustes de cuenta</h3>
+            
+            <Tabs 
+              value={activeTab} 
+              onValueChange={setActiveTab} 
+              className="space-y-6"
+            >
+              <TabsList className="grid grid-cols-3 gap-4 mb-6">
+                <TabsTrigger value="subscription" className="flex items-center gap-2">
+                  <Package className="h-4 w-4" />
+                  <span>Suscripción</span>
+                </TabsTrigger>
+                <TabsTrigger value="payment" className="flex items-center gap-2">
+                  <CreditCard className="h-4 w-4" />
+                  <span>Pagos</span>
+                </TabsTrigger>
+                <TabsTrigger value="settings" className="flex items-center gap-2">
+                  <Settings className="h-4 w-4" />
+                  <span>Ajustes</span>
+                </TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="subscription">
-              <PlanSection userPlan={userPlan} />
-            </TabsContent>
+              <TabsContent value="subscription">
+                <PlanSection userPlan={userPlan} />
+              </TabsContent>
 
-            <TabsContent value="payment">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Métodos de Pago</CardTitle>
-                  <CardDescription>Gestiona tus métodos de pago</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <Button className="w-full">Agregar Método de Pago</Button>
-                </CardContent>
-              </Card>
-            </TabsContent>
+              <TabsContent value="payment">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Métodos de Pago</CardTitle>
+                    <CardDescription>Gestiona tus métodos de pago</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <Button className="w-full">Agregar Método de Pago</Button>
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
-            <TabsContent value="settings">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Ajustes de Cuenta</CardTitle>
-                  <CardDescription>Administra tu cuenta NATIVO</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <Button variant="outline" className="w-full">Cambiar Contraseña</Button>
-                  <Button variant="outline" className="w-full text-red-600 hover:text-red-700">
-                    Eliminar Cuenta
-                  </Button>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+              <TabsContent value="settings">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Ajustes de Cuenta</CardTitle>
+                    <CardDescription>Administra tu cuenta NATIVO</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <Button variant="outline" className="w-full">Cambiar Contraseña</Button>
+                    <Button variant="outline" className="w-full text-red-600 hover:text-red-700">
+                      Eliminar Cuenta
+                    </Button>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </div>
     </div>
