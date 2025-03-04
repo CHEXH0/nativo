@@ -33,6 +33,45 @@ export type Database = {
         }
         Relationships: []
       }
+      Subscriptions: {
+        Row: {
+          amount: number | null
+          attrs: Json | null
+          created: string | null
+          currency: string | null
+          description: string | null
+          fee: number | null
+          id: string | null
+          net: number | null
+          status: string | null
+          type: string | null
+        }
+        Insert: {
+          amount?: number | null
+          attrs?: Json | null
+          created?: string | null
+          currency?: string | null
+          description?: string | null
+          fee?: number | null
+          id?: string | null
+          net?: number | null
+          status?: string | null
+          type?: string | null
+        }
+        Update: {
+          amount?: number | null
+          attrs?: Json | null
+          created?: string | null
+          currency?: string | null
+          description?: string | null
+          fee?: number | null
+          id?: string | null
+          net?: number | null
+          status?: string | null
+          type?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

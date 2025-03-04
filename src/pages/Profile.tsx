@@ -1,6 +1,5 @@
-
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -11,9 +10,11 @@ import { toast } from "sonner";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { PlanSection } from "@/components/profile/PlanSection";
 import { ContentSection } from "@/components/profile/ContentSection";
+import { PaymentHistory } from "@/components/profile/PaymentHistory";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [userName, setUserName] = useState("Usuario NATIVO");
   const [userEmail, setUserEmail] = useState("usuario@example.com");
   const [isLoading, setIsLoading] = useState(true);
@@ -108,15 +109,7 @@ const Profile = () => {
             </TabsContent>
 
             <TabsContent value="payment">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Métodos de Pago</CardTitle>
-                  <CardDescription>Gestiona tus métodos de pago</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <Button className="w-full">Agregar Método de Pago</Button>
-                </CardContent>
-              </Card>
+              <PaymentHistory />
             </TabsContent>
 
             <TabsContent value="content">
