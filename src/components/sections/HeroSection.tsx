@@ -6,8 +6,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { MembershipsSection } from "./MembershipsSection";
+import { useEffect } from "react";
 
 export const HeroSection = () => {
+  useEffect(() => {
+    // Preload the Jaguar image
+    const preloadImage = new Image();
+    preloadImage.src = "/laptop-uploads/Jaguar2.jpg";
+  }, []);
+
   return (
     <section id="inicio" className="h-screen pt-24 pb-12 md:pt-32 md:pb-24 relative overflow-hidden">
       <div 

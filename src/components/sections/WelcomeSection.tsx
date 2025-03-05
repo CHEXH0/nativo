@@ -1,8 +1,15 @@
 
 import { Card } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { useEffect } from "react";
 
 export const WelcomeSection = () => {
+  useEffect(() => {
+    // Preload the video thumbnail
+    const preloadImage = new Image();
+    preloadImage.src = "/laptop-uploads/Gold.jpg";
+  }, []);
+
   return (
     <section className="py-16 bg-gradient-to-b from-nativo-cream/50 to-nativo-beige/50">
       <div className="container px-4 mx-auto">
