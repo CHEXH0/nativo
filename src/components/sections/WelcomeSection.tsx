@@ -24,7 +24,7 @@ export const WelcomeSection = () => {
                   playsInline
                   autoPlay={false}
                 >
-                  <source src="/laptop-uploads/NATIVOIntro.mp4" type="video/mp4" />
+                  <source src="/laptop-uploads/NativoIntro.mp4" type="video/mp4" />
                   Tu navegador no soporta la etiqueta de video.
                 </video>
               </div>
