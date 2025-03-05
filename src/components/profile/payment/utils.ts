@@ -1,4 +1,3 @@
-
 // Utility functions for payment handling
 
 /**
@@ -81,15 +80,18 @@ export const validateCVC = (cvc: string): boolean => {
   return digits.length >= 3 && digits.length <= 4;
 };
 
-/**
- * Validate all card details
- */
-export const validateCardDetails = (cardDetails: {
+// Define the CardDetails interface
+export interface CardDetails {
   cardNumber: string;
   cardName: string;
   expiry: string;
   cvc: string;
-}): { valid: boolean; errors: Record<string, string> } => {
+}
+
+/**
+ * Validate all card details
+ */
+export const validateCardDetails = (cardDetails: CardDetails): { valid: boolean; errors: Record<string, string> } => {
   const errors: Record<string, string> = {};
   
   if (!cardDetails.cardName.trim()) {

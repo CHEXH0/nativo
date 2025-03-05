@@ -1,8 +1,14 @@
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { CardDetails, validateCardDetails } from "@/components/profile/payment/utils";
+import { validateCardDetails } from "@/components/profile/payment/utils";
+
+interface CardDetails {
+  cardNumber: string;
+  cardName: string;
+  expiry: string;
+  cvc: string;
+}
 
 export const usePaymentMethods = () => {
   const [paymentMethods, setPaymentMethods] = useState<Array<{id: string, last4: string, brand: string}>>([]);
@@ -16,18 +22,15 @@ export const usePaymentMethods = () => {
   });
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
-  // Get current user session and load payment methods
   useEffect(() => {
     const loadUserData = async () => {
       try {
-        // Get current user session
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) return;
         
         const userEmail = session.user.email;
         if (!userEmail) return;
         
-        // Create or retrieve Stripe customer for current user
         const { data, error } = await supabase.functions.invoke('payment-methods', {
           body: { 
             action: 'create_customer',
@@ -52,7 +55,6 @@ export const usePaymentMethods = () => {
     loadUserData();
   }, []);
   
-  // Load payment methods from Stripe
   const loadPaymentMethods = async (customerId: string) => {
     try {
       setIsLoading(true);
@@ -90,7 +92,6 @@ export const usePaymentMethods = () => {
     setIsLoading(true);
     setValidationErrors({});
     
-    // Validate input
     const validation = validateCardDetails(newCardDetails);
     if (!validation.valid) {
       setValidationErrors(validation.errors);
@@ -99,13 +100,8 @@ export const usePaymentMethods = () => {
     }
     
     try {
-      // In a real implementation, we would use Stripe.js and Elements to securely collect 
-      // payment details and create a payment method or setup intent
-      // This is just a simulation
-      
       toast.info("En una implementación real, esto usaría Stripe Elements");
       
-      // Simulate successful payment method addition
       const mockPaymentMethod = {
         id: `pm_${Math.random().toString(36).substr(2, 9)}`,
         last4: newCardDetails.cardNumber.slice(-4),
@@ -113,7 +109,6 @@ export const usePaymentMethods = () => {
                newCardDetails.cardNumber.startsWith('5') ? 'mastercard' : 'unknown'
       };
       
-      // Add to the list for demonstration
       setPaymentMethods([...paymentMethods, mockPaymentMethod]);
         
       setNewCardDetails({
@@ -145,8 +140,6 @@ export const usePaymentMethods = () => {
     try {
       setIsLoading(true);
       
-      // In a real implementation, this would call the Stripe API
-      // For this demo, we'll just simulate it
       toast.info("En una implementación real, esto llamaría a la API de Stripe");
       
       const { data, error } = await supabase.functions.invoke('payment-methods', {
@@ -162,7 +155,6 @@ export const usePaymentMethods = () => {
         return;
       }
       
-      // Remove from state
       setPaymentMethods(paymentMethods.filter(method => method.id !== id));
       toast.success("Método de pago eliminado");
     } catch (error) {
@@ -180,7 +172,6 @@ export const usePaymentMethods = () => {
       [name]: value
     }));
     
-    // Clear validation error when user starts typing
     if (validationErrors[name]) {
       setValidationErrors(prev => {
         const updated = { ...prev };
@@ -190,7 +181,6 @@ export const usePaymentMethods = () => {
     }
   };
 
-  // Format card number input with spaces
   const formatCardNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formattedValue = e.target.value.replace(/\D/g, '').substring(0, 16);
     const parts = [];
@@ -204,7 +194,6 @@ export const usePaymentMethods = () => {
       cardNumber: parts.join(' ')
     }));
     
-    // Clear validation error
     if (validationErrors.cardNumber) {
       setValidationErrors(prev => {
         const updated = { ...prev };
@@ -214,7 +203,6 @@ export const usePaymentMethods = () => {
     }
   };
 
-  // Format expiration date input (MM/YY)
   const formatExpiryDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value.replace(/\D/g, '').substring(0, 4);
     
@@ -230,7 +218,6 @@ export const usePaymentMethods = () => {
       }));
     }
     
-    // Clear validation error
     if (validationErrors.expiry) {
       setValidationErrors(prev => {
         const updated = { ...prev };
