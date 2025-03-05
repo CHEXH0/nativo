@@ -20,9 +20,8 @@ export const WelcomeSection = () => {
                   style={{ objectPosition: "center bottom" }}
                   controls
                   preload="metadata"
-                  poster="/laptop-uploads/NativaCasa.jpg"
+                  poster="/laptop-uploads/Gold.jpg"
                   playsInline
-                  muted
                   autoPlay={false}
                 >
                   <source src="/laptop-uploads/NATIVOIntro.mp4" type="video/mp4" />

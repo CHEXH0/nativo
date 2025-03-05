@@ -7,20 +7,20 @@ const testimonials = [
   {
     name: "Brenda Cruz",
     role: "Participante del Programa de Bienestar",
-    quote: "Fui acompañada respetuosamente hacia lograr mis objetivos tanto físicos como en nutrición, además en secciones personalizadas de sanacion interna, lo que hacen de este programa algo muy completo en todas las áreas de la vida.",
-    image: ""
+    quote: "Fui acompañada respetuosamente hacia lograr mis objetivos. Hacen de este programa algo muy completo en todas las áreas de la vida.",
+    image: "../laptop-uploads/BrendaTest.jpg"
   },
   {
-    name: "Carlos Rodríguez",
-    role: "Miembro de Casa NATIVO",
-    quote: "La conexión con la naturaleza y la comunidad que encontré aquí es invaluable. Un espacio único para el crecimiento personal.",
-    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=400&fit=crop"
+    name: "Vilma",
+    role: "Miembro de NATIVO Holistico",
+    quote: "Me encanta que es un programa bien completo. Estoy feliz de los resultados que estoy viendo con mi programa personalizada.",
+    image: "../laptop-uploads/VilmaTest.jpg"
   },
   {
     name: "Ana Valencia",
     role: "Estudiante de Talleres Holísticos",
-    quote: "Los facilitadores son increíbles. Su conocimiento y dedicación han sido fundamentales en mi proceso de transformación.",
-    image: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&h=400&fit=crop"
+    quote: "De verdad aprecié la tenacidad y el compromiso por parte de Juan Manuel porque eso me ayudó a lograr mis objetivos.",
+    image: "../laptop-uploads/SenoraTest.jpg"
   },
 ];
 
