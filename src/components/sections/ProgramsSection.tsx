@@ -5,13 +5,13 @@ const programs = [
   {
     title: "Talleres Holisticos",
     description: "",
-    image: "/laptop-uploads/Equal.jpg",
+    image: "/laptop-uploads/Vida.jpg",
     slug: "talleres-holisticos"
   },
   {
     title: "Programa De Bienestar",
     description: "",
-    image: "/laptop-uploads/Muscle_Man.jpg",
+    image: "/laptop-uploads/Equal.jpg",
     slug: "programa-bienestar"
   },
   {

@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const testimonials = [
   {
-    name: "Brenda Cruz",
+    name: "Brenda",
     role: "Participante del Programa de Bienestar",
     quote: "Fui acompañada respetuosamente hacia lograr mis objetivos. Hacen de este programa algo muy completo en todas las áreas de la vida.",
     image: "../laptop-uploads/BrendaTest.jpg"
@@ -17,7 +17,7 @@ const testimonials = [
     image: "../laptop-uploads/VilmaTest.jpg"
   },
   {
-    name: "Ana Valencia",
+    name: "Priscilla",
     role: "Estudiante de Talleres Holísticos",
     quote: "De verdad aprecié la tenacidad y el compromiso por parte de Juan Manuel porque eso me ayudó a lograr mis objetivos.",
     image: "../laptop-uploads/SenoraTest.jpg"
