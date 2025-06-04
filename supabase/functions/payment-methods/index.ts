@@ -1,6 +1,7 @@
 
 import { serve } from "https://deno.land/std@0.170.0/http/server.ts";
 import { Stripe } from "https://esm.sh/stripe@13.6.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.47.0";
 
 const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
   apiVersion: "2023-10-16",
@@ -11,8 +12,12 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Create Supabase client for auth verification
+const supabaseUrl = Deno.env.get("SUPABASE_URL") || "";
+const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY") || "";
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, {
       status: 204,
@@ -21,9 +26,8 @@ serve(async (req) => {
   }
 
   try {
-    const { action, customerId, paymentMethodId, email } = await req.json();
+    // Verify authentication
     const authHeader = req.headers.get('authorization');
-    
     if (!authHeader) {
       return new Response(
         JSON.stringify({ error: "No authorization header" }),
@@ -34,12 +38,28 @@ serve(async (req) => {
       );
     }
 
-    console.log(`Processing payment method action: ${action}`);
+    // Get user from JWT
+    const { data: { user }, error: authError } = await supabase.auth.getUser(
+      authHeader.replace('Bearer ', '')
+    );
 
-    // Handle different actions
+    if (authError || !user) {
+      console.error("Authentication error:", authError);
+      return new Response(
+        JSON.stringify({ error: "Invalid authentication" }),
+        {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    const { action, customerId, paymentMethodId, email } = await req.json();
+
+    console.log(`Processing payment method action: ${action} for user: ${user.id}`);
+
     switch (action) {
       case "setup_intent":
-        // Create a SetupIntent to securely collect payment details
         const setupIntent = await stripe.setupIntents.create({
           usage: "off_session",
           customer: customerId || undefined,
@@ -55,8 +75,8 @@ serve(async (req) => {
         );
 
       case "create_customer":
-        // Create or retrieve a Stripe customer for the user
-        if (!email) {
+        const userEmail = email || user.email;
+        if (!userEmail) {
           return new Response(
             JSON.stringify({ error: "Email is required to create a customer" }),
             {
@@ -67,18 +87,16 @@ serve(async (req) => {
         }
 
         let customer;
-        // Check if customer already exists
-        const customers = await stripe.customers.list({ email });
+        const customers = await stripe.customers.list({ email: userEmail, limit: 1 });
         
         if (customers.data.length > 0) {
           customer = customers.data[0];
           console.log(`Found existing customer: ${customer.id}`);
         } else {
-          // Create a new customer
           customer = await stripe.customers.create({
-            email,
+            email: userEmail,
             metadata: {
-              supabaseUserId: email.split('@')[0], // Simplified for demo
+              supabaseUserId: user.id,
             },
           });
           console.log(`Created new customer: ${customer.id}`);
@@ -93,7 +111,6 @@ serve(async (req) => {
         );
 
       case "list_payment_methods":
-        // List all payment methods for a customer
         if (!customerId) {
           return new Response(
             JSON.stringify({ error: "Customer ID is required" }),
@@ -118,7 +135,6 @@ serve(async (req) => {
         );
 
       case "detach_payment_method":
-        // Remove a payment method
         if (!paymentMethodId) {
           return new Response(
             JSON.stringify({ error: "Payment method ID is required" }),
@@ -153,7 +169,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ error: error.message }),
       {
-        status: 500,
+      status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       }
     );

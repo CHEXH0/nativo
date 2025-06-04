@@ -11,6 +11,7 @@ import { PlanSection } from "@/components/profile/PlanSection";
 import { ContentSection } from "@/components/profile/ContentSection";
 import { PaymentSection } from "@/components/profile/PaymentSection";
 import { SettingsSection } from "@/components/profile/SettingsSection";
+import type { Session, User } from "@supabase/supabase-js";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -22,54 +23,112 @@ const Profile = () => {
   const [userPlan, setUserPlan] = useState("none");
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("subscription");
+  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
       setIsLoading(true);
-      const { data: { session } } = await supabase.auth.getSession();
       
-      if (!session) {
-        navigate('/login');
-        return;
-      }
-      
-      const user = session.user;
-      if (user) {
-        setUserId(user.id);
-        const email = user.email || "usuario@example.com";
-        setUserEmail(email);
+      try {
+        // Set up auth state listener first
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(
+          async (event, session) => {
+            console.log('Auth state changed:', event, session?.user?.id);
+            setSession(session);
+            setUser(session?.user ?? null);
+            
+            if (!session) {
+              navigate('/login');
+              return;
+            }
+            
+            // Update user data when session changes
+            if (session.user) {
+              await updateUserData(session.user);
+            }
+            
+            setIsLoading(false);
+          }
+        );
+
+        // Check for existing session
+        const { data: { session: currentSession }, error } = await supabase.auth.getSession();
         
-        const fullName = user.user_metadata?.full_name || user.user_metadata?.name;
-        if (fullName) {
-          setUserName(fullName);
-        } else {
-          const nameFromEmail = email.split('@')[0];
-          setUserName(nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1));
+        if (error) {
+          console.error("Error getting session:", error);
+          navigate('/login');
+          return;
         }
-
-        const avatarUrlFromMeta = user.user_metadata?.avatar_url;
-        if (avatarUrlFromMeta) {
-          setAvatarUrl(avatarUrlFromMeta);
+        
+        if (!currentSession) {
+          navigate('/login');
+          return;
         }
+        
+        setSession(currentSession);
+        setUser(currentSession.user);
+        await updateUserData(currentSession.user);
+        setIsLoading(false);
 
-        const { data: profileData, error: profileError } = await supabase
-          .from('profiles')
-          .select('plan')
-          .eq('id', user.id)
-          .single();
-
-        if (profileError) {
-          console.error("Error fetching user profile:", profileError);
-        } else if (profileData) {
-          setUserPlan(profileData.plan);
-        }
+        return () => {
+          subscription.unsubscribe();
+        };
+      } catch (error) {
+        console.error("Error in checkAuth:", error);
+        setIsLoading(false);
+        navigate('/login');
       }
-      
-      setIsLoading(false);
     };
 
     checkAuth();
   }, [navigate]);
+
+  const updateUserData = async (user: User) => {
+    try {
+      setUserId(user.id);
+      const email = user.email || "usuario@example.com";
+      setUserEmail(email);
+      
+      const fullName = user.user_metadata?.full_name || user.user_metadata?.name;
+      if (fullName) {
+        setUserName(fullName);
+      } else {
+        const nameFromEmail = email.split('@')[0];
+        setUserName(nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1));
+      }
+
+      const avatarUrlFromMeta = user.user_metadata?.avatar_url;
+      if (avatarUrlFromMeta) {
+        setAvatarUrl(avatarUrlFromMeta);
+      }
+
+      // Fetch user profile with proper error handling
+      const { data: profileData, error: profileError } = await supabase
+        .from('profiles')
+        .select('plan')
+        .eq('id', user.id)
+        .maybeSingle();
+
+      if (profileError) {
+        console.error("Error fetching user profile:", profileError);
+        // Create profile if it doesn't exist
+        const { error: insertError } = await supabase
+          .from('profiles')
+          .insert({ id: user.id, plan: 'none' });
+        
+        if (insertError) {
+          console.error("Error creating profile:", insertError);
+        } else {
+          setUserPlan('none');
+        }
+      } else if (profileData) {
+        setUserPlan(profileData.plan);
+      }
+    } catch (error) {
+      console.error("Error updating user data:", error);
+    }
+  };
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -79,11 +138,8 @@ const Profile = () => {
     if (success === 'true' && plan) {
       toast.success(`Plan actualizado a ${plan}`);
       
-      // After successful payment, try to load payment method data
       const paymentMethodId = queryParams.get('payment_method');
       if (paymentMethodId) {
-        // In a real implementation, this would fetch the payment method details from Stripe
-        // For this demo, we'll simulate saving the payment method
         const last4 = queryParams.get('last4') || '1234';
         const brand = queryParams.get('brand') || 'visa';
         
@@ -94,7 +150,6 @@ const Profile = () => {
           userId: userId
         };
         
-        // Store in localStorage to simulate persistence
         const storedMethods = JSON.parse(localStorage.getItem('paymentMethods') || '[]');
         const updatedMethods = [...storedMethods, paymentMethod];
         localStorage.setItem('paymentMethods', JSON.stringify(updatedMethods));
@@ -108,6 +163,19 @@ const Profile = () => {
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, [userId]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
+        <Navbar />
+        <div className="container mx-auto px-4 py-8 mt-16">
+          <div className="flex items-center justify-center h-64">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-nativo-green"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">

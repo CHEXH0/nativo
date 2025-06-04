@@ -7,15 +7,21 @@ const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
   apiVersion: "2023-10-16",
 });
 
-// Create a Supabase client
-const supabaseUrl = Deno.env.get("SUPABASE_URL") || "https://trdkzlndbvtsyihiphsa.supabase.co";
-const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Create a Supabase client with service role key
+const supabaseUrl = Deno.env.get("SUPABASE_URL") || "";
+const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+
+if (!supabaseUrl || !supabaseServiceKey) {
+  console.error("Missing required environment variables");
+}
+
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 serve(async (req) => {
   const signature = req.headers.get("stripe-signature");
   
   if (!signature) {
+    console.error("Missing Stripe signature");
     return new Response(JSON.stringify({ error: "Missing signature" }), {
       status: 400,
       headers: { "Content-Type": "application/json" },
@@ -28,6 +34,15 @@ serve(async (req) => {
     
     // Verify and construct the webhook event
     const webhookSecret = Deno.env.get("STRIPE_WEBHOOK_SECRET") || "";
+    
+    if (!webhookSecret) {
+      console.error("Missing webhook secret");
+      return new Response(JSON.stringify({ error: "Configuration error" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+    
     let event;
     
     try {
@@ -48,23 +63,36 @@ serve(async (req) => {
       const userId = session.metadata?.userId;
       const planId = session.metadata?.planId;
       
-      if (userId && planId) {
-        // Update the user's plan in the database
-        const { error } = await supabase.rpc('update_user_plan', {
-          user_id: userId,
-          new_plan: planId
+      if (!userId || !planId) {
+        console.error("Missing userId or planId in session metadata");
+        return new Response(JSON.stringify({ error: "Missing required metadata" }), {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
         });
-        
-        if (error) {
-          console.error('Error updating user plan:', error);
-          return new Response(JSON.stringify({ error: 'Failed to update user plan' }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-          });
-        }
-        
-        console.log(`Successfully updated plan for user ${userId} to ${planId}`);
       }
+      
+      console.log(`Updating plan for user ${userId} to ${planId}`);
+      
+      // Update the user's plan in the database using direct query instead of RPC
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({ 
+          id: userId, 
+          plan: planId,
+          created_at: new Date().toISOString()
+        }, { 
+          onConflict: 'id' 
+        });
+      
+      if (error) {
+        console.error('Error updating user plan:', error);
+        return new Response(JSON.stringify({ error: 'Failed to update user plan' }), {
+          status: 500,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+      
+      console.log(`Successfully updated plan for user ${userId} to ${planId}`);
     }
     
     return new Response(JSON.stringify({ received: true }), {

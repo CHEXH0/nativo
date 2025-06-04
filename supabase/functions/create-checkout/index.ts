@@ -1,6 +1,7 @@
 
 import { serve } from "https://deno.land/std@0.170.0/http/server.ts";
 import { Stripe } from "https://esm.sh/stripe@13.6.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.47.0";
 
 const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
   apiVersion: "2023-10-16",
@@ -11,24 +12,27 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Updated to use product IDs since price IDs are not available
+// Create Supabase client for auth verification
+const supabaseUrl = Deno.env.get("SUPABASE_URL") || "";
+const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY") || "";
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
 const PLAN_PRODUCTS = {
   basic: {
-    productId: "prod_RsnTi3vnYdOLZw", // Basic/Básico plan
-    amount: 900 // in cents = $9
+    productId: "prod_RsnTi3vnYdOLZw",
+    amount: 900
   },
   gold: {
-    productId: "prod_RsnURV3GymmmUX", // GOLD plan
-    amount: 5900 // in cents = $59
+    productId: "prod_RsnURV3GymmmUX",
+    amount: 5900
   },
   vip: {
-    productId: "prod_RsnV4XA6NDM7kx", // VIP plan
-    amount: 10900 // in cents = $109
+    productId: "prod_RsnV4XA6NDM7kx",
+    amount: 10900
   }
 };
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, {
       status: 204,
@@ -37,7 +41,35 @@ serve(async (req) => {
   }
 
   try {
-    const { planId, userId, paymentMethodId, email } = await req.json();
+    // Verify authentication
+    const authHeader = req.headers.get('authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: "No authorization header" }),
+        {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    // Get user from JWT
+    const { data: { user }, error: authError } = await supabase.auth.getUser(
+      authHeader.replace('Bearer ', '')
+    );
+
+    if (authError || !user) {
+      console.error("Authentication error:", authError);
+      return new Response(
+        JSON.stringify({ error: "Invalid authentication" }),
+        {
+          status: 401,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    const { planId, paymentMethodId } = await req.json();
     
     if (!planId || !PLAN_PRODUCTS[planId as keyof typeof PLAN_PRODUCTS]) {
       return new Response(
@@ -49,18 +81,19 @@ serve(async (req) => {
       );
     }
 
-    const baseUrl = req.headers.get("origin") || "http://localhost:5173";
+    const baseUrl = req.headers.get("origin") || "https://your-app-domain.com";
+    const userId = user.id;
+    const email = user.email;
     
     console.log(`Creating checkout session for plan: ${planId}, user: ${userId}`);
     
-    // Use product ID instead of price ID and let Stripe determine the price
     const product = PLAN_PRODUCTS[planId as keyof typeof PLAN_PRODUCTS];
     
     // Create or get Stripe customer
     let customerId;
     
     if (email) {
-      const customers = await stripe.customers.list({ email });
+      const customers = await stripe.customers.list({ email, limit: 1 });
       
       if (customers.data.length > 0) {
         customerId = customers.data[0].id;
@@ -94,24 +127,21 @@ serve(async (req) => {
       mode: "subscription",
       success_url: `${baseUrl}/profile?success=true&plan=${planId}`,
       cancel_url: `${baseUrl}/profile?canceled=true`,
-      client_reference_id: userId, // Store user ID for webhook processing
+      client_reference_id: userId,
       metadata: {
         userId: userId,
         planId: planId
       }
     };
 
-    // If a customer ID is available, attach it to the session
     if (customerId) {
       sessionConfig.customer = customerId;
       sessionConfig.success_url += `&customer_id=${customerId}`;
     }
 
-    // If a payment method ID is provided, use it for the checkout
     if (paymentMethodId) {
       console.log(`Using payment method: ${paymentMethodId}`);
       sessionConfig.payment_method = paymentMethodId;
-      // Store payment method in success URL for client-side processing
       sessionConfig.success_url += `&payment_method=${paymentMethodId}`;
     }
 
