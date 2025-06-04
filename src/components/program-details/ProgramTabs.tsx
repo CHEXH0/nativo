@@ -1,21 +1,12 @@
 
-import { BookOpen, Calendar, Users, Award, Package } from "lucide-react";
+import { BookOpen, Calendar, Award, Package } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-interface Instructor {
-  name: string;
-  role: string;
-  image: string;
-  bio: string;
-}
 
 interface ProgramTabsProps {
   details: {
     overview: string;
     schedule: string;
-    instructors: Instructor[];
     includes: string[];
   };
 }
@@ -44,13 +35,6 @@ export const ProgramTabs = ({ details }: ProgramTabsProps) => {
         >
           <Calendar className="h-4 w-4" />
           <span className="whitespace-nowrap">Horarios</span>
-        </TabsTrigger>
-        <TabsTrigger 
-          value="instructors" 
-          className="flex items-center gap-2 flex-1 min-w-[120px] h-10 data-[state=active]:bg-background"
-        >
-          <Users className="h-4 w-4" />
-          <span className="whitespace-nowrap">Instructores</span>
         </TabsTrigger>
       </TabsList>
 
@@ -90,31 +74,6 @@ export const ProgramTabs = ({ details }: ProgramTabsProps) => {
           </CardHeader>
           <CardContent>
             <p className="text-gray-600">{details.schedule}</p>
-          </CardContent>
-        </Card>
-      </TabsContent>
-
-      <TabsContent value="instructors">
-        <Card>
-          <CardHeader>
-            <CardTitle>Nuestros Instructores</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {details.instructors.map((instructor, index) => (
-                <div key={index} className="flex flex-col md:flex-row gap-4 p-4 rounded-lg bg-muted/50">
-                  <Avatar className="h-16 w-16">
-                    <AvatarImage src={instructor.image} alt={instructor.name} />
-                    <AvatarFallback>{instructor.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <div className="space-y-2">
-                    <h3 className="font-medium text-nativo-green">{instructor.name}</h3>
-                    <p className="text-sm font-medium text-muted-foreground">{instructor.role}</p>
-                    <p className="text-sm text-gray-600">{instructor.bio}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </CardContent>
         </Card>
       </TabsContent>
