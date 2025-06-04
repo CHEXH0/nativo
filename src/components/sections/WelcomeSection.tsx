@@ -21,15 +21,14 @@ export const WelcomeSection = () => {
           {/* Video Card with strict 1:1 aspect ratio */}
           <Card className="overflow-hidden shadow-lg animate-fadeIn" style={{ animationDelay: "0.2s" }}>
             <AspectRatio ratio={1/1} className="bg-nativo-sage/20">
-              <div className="relative w-full h-full video-container">
+              <div className="relative w-full h-full">
                 <video 
-                  className="absolute inset-0 w-full h-full object-cover"
-                  style={{ objectPosition: "center bottom" }}
+                  className="w-full h-full object-cover"
                   controls
                   preload="metadata"
                   poster="/laptop-uploads/Gold.jpg"
                   playsInline
-                  autoPlay={false}
+                  muted
                 >
                   <source src="/laptop-uploads/NativoIntro.mp4" type="video/mp4" />
                   Tu navegador no soporta la etiqueta de video.
