@@ -16,18 +16,6 @@ const instructors = [
     role: "Especialista en Terapias Holísticas",
     image: "/laptop-uploads/Muscle_Man.jpg",
     bio: "Terapeuta certificado en medicina alternativa y sanación energética, Carlos combina técnicas ancestrales con enfoques modernos."
-  },
-  {
-    name: "María Silva",
-    role: "Coach de Bienestar Integral",
-    image: "/laptop-uploads/BrendaTest.jpg",
-    bio: "Especialista en coaching de vida y nutrición consciente, María ayuda a crear hábitos saludables y transformaciones duraderas."
-  },
-  {
-    name: "David Ruiz",
-    role: "Instructor de Movimiento Consciente",
-    image: "/laptop-uploads/VilmaTest.jpg",
-    bio: "Experto en técnicas de movimiento terapéutico y danza consciente, David facilita la conexión cuerpo-mente a través del movimiento."
   }
 ];
 
