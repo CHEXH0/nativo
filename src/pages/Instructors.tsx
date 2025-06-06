@@ -6,16 +6,16 @@ import { useEffect } from "react";
 
 const instructors = [
   {
-    name: "Ana García",
-    role: "Instructora de Yoga y Meditación",
-    image: "/laptop-uploads/SenoraTest.jpg",
-    bio: "Con más de 10 años de experiencia en yoga y mindfulness, Ana guía a nuestros estudiantes hacia un estado de paz interior y bienestar físico."
+    name: "Juan Manuel Fonseca",
+    role: "Facilitador Principal",
+    image: "/laptop-uploads/JuanMa-Profile.png",
+    bio: "Especialista en medicina tradicional y fitness holistico, con más de 10 años de experiencia."
   },
   {
-    name: "Carlos Mendoza",
-    role: "Especialista en Terapias Holísticas",
-    image: "/laptop-uploads/Muscle_Man.jpg",
-    bio: "Terapeuta certificado en medicina alternativa y sanación energética, Carlos combina técnicas ancestrales con enfoques modernos."
+    name: "Reyna Sanchez Chaidez",
+    role: "Facilitadora de Holistica",
+    image: "/laptop-uploads/Reynita.jpg",
+    bio: "Terapeuta especializada en Theta Healing, meditación y sanación enfocada en los espacios de los animales."
   }
 ];
 

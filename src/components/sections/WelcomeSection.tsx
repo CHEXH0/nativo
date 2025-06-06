@@ -26,11 +26,11 @@ export const WelcomeSection = () => {
                   className="w-full h-full object-cover"
                   controls
                   preload="metadata"
-                  poster="/laptop-uploads/Nativo-2025.jpg"
+                  poster="/laptop-uploads/Nativo-2025.png"
                   playsInline
                   muted
                 >
-                  <source src="/laptop-uploads/NativoIntro.mp4" type="video/mp4" />
+                  <source src="/laptop-uploads/NATIVOIntro.mp4" type="video/mp4" />
                   Tu navegador no soporta la etiqueta de video.
                 </video>
               </div>
