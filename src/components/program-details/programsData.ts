@@ -4,7 +4,7 @@ export const programs = {
     title: "Talleres Holisticos",
     description: "Descubre tu camino hacia una vida más equilibrada y consciente con nuestros talleres.",
     image: "/laptop-uploads/Vida.jpg",
-    video: "https://player.vimeo.com/video/824906699",
+    video: "/laptop-uploads/Talleres-Hol.mp4",
     details: {
       overview: "Nuestros talleres holísticos están diseñados para ayudarte a encontrar el equilibrio en todas las áreas de tu vida. A través de prácticas ancestrales y modernas, te guiaremos en un viaje de autodescubrimiento y crecimiento personal.",
       schedule: "Talleres disponibles los 24 horas. Duracion proximada 12 minutos por taller.",
@@ -68,8 +68,8 @@ export const programs = {
   "casa-nativo": {
     title: "Casa NATIVA",
     description: "Es un lugar donde podras conectar contigomismo, con las plantas, con los animales, y con la espiritualidad.",
-    image: "/laptop-uploads/Casa_Nativa.jpg",
-    video: "https://player.vimeo.com/video/824906699",
+    image: "/laptop-uploads/Casa-Nativa.jpg",
+    video: "/laptop-uploads/CasaNativa.mp4",
     details: {
       overview: "Un espacio sagrado diseñado para reconectar con tu esencia natural. Casa NATIVO te ofrece un ambiente único donde podrás experimentar la conexión con la naturaleza, las prácticas ancestrales y la sabiduría tradicional.",
       schedule: "Retiros de fin de semana | Experiencias diarias",

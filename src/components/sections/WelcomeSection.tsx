@@ -27,7 +27,7 @@ export const WelcomeSection = () => {
                   style={{ objectPosition: "center bottom" }}
                   controls
                   preload="metadata"
-                  poster="/laptop-uploads/Gold.jpg"
+                  poster="/laptop-uploads/Nativo-2025.jpg"
                   playsInline
                   autoPlay={false}
                 >

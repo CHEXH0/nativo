@@ -164,7 +164,7 @@ export const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link to="/" onClick={handleHomeClick} className="flex items-center space-x-2">
-            <img src="/lovable-uploads/4ce2f22a-9027-492f-9194-5ccea4d31a29.png" alt="NATIVO Logo" className="h-12" />
+            <img src="/laptop-uploads/Nativo-2025.jpg" alt="NATIVO Logo" className="h-12" />
           </Link>
 
           {/* Desktop Navigation */}

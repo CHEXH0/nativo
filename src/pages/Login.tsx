@@ -57,7 +57,7 @@ const Login = () => {
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
         <div className="mb-8 text-center">
           <img
-            src="/lovable-uploads/4ce2f22a-9027-492f-9194-5ccea4d31a29.png"
+            src="/laptop-uploads/Nativo-2025.jpg"
             alt="NATIVO Logo"
             className="h-16 mx-auto mb-4"
           />
