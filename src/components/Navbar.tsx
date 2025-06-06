@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, LogOut, LogIn, User } from "lucide-react";
@@ -47,6 +46,10 @@ export const Navbar = () => {
     { 
       href: "/program/talleres-holisticos", 
       label: "Programas"
+    },
+    { 
+      href: "/instructors", 
+      label: "Instructores"
     },
     { 
       href: "#", 

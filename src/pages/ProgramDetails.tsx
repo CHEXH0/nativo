@@ -31,7 +31,11 @@ const ProgramDetails = () => {
           image={program.image}
           video={program.video}
         />
-        <ProgramTabs details={program.details} />
+        <ProgramTabs details={{
+          overview: program.details.overview,
+          schedule: program.details.schedule,
+          includes: program.details.includes
+        }} />
       </div>
     </div>
   );

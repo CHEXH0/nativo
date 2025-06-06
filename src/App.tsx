@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import ProgramDetails from "./pages/ProgramDetails";
+import Instructors from "./pages/Instructors";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/program/:programId" element={<ProgramDetails />} />
+          <Route path="/instructors" element={<Instructors />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
