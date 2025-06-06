@@ -21,22 +21,6 @@ export const HeroSection = () => {
         className="absolute inset-0 bg-black bg-opacity-50 bg-cover bg-center" 
         style={{ backgroundImage: "url('/laptop-uploads/Jaguar2.jpg')" }} 
       />
-      
-      {/* Video overlay */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <video 
-          className="w-full max-w-2xl h-auto object-contain opacity-90"
-          controls
-          preload="metadata"
-          poster="/laptop-uploads/Nativo-2025.png"
-          playsInline
-          muted
-        >
-          <source src="/laptop-uploads/NativoIntro.mp4" type="video/mp4" />
-          Tu navegador no soporta la etiqueta de video.
-        </video>
-      </div>
-
       <div className="container px-4 mx-auto relative">
         <div className="max-w-4xl mx-auto flex flex-col items-center justify-center h-full text-center mt-28">
           <h1 className="text-4xl md:text-6xl font-bold text-nativo-green mb-8 animate-fadeIn bg-nativo-cream/80 bg-opacity-85 p-4 rounded">
