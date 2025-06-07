@@ -1,4 +1,5 @@
 
+
 import { Navbar } from "@/components/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -38,13 +39,13 @@ const Instructors = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {instructors.map((instructor, index) => (
-            <Card key={index} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardContent className="p-0">
-                <div className="flex flex-col md:flex-row">
-                  <div className="md:w-1/3">
-                    <div className="w-full aspect-square overflow-hidden">
+            <Card key={index} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 aspect-square">
+              <CardContent className="p-0 h-full">
+                <div className="flex flex-col h-full">
+                  <div className="flex-1">
+                    <div className="w-full h-full overflow-hidden">
                       <img 
                         src={instructor.image} 
                         alt={instructor.name}
@@ -52,14 +53,14 @@ const Instructors = () => {
                       />
                     </div>
                   </div>
-                  <div className="md:w-2/3 p-6">
+                  <div className="p-6 bg-white">
                     <h3 className="text-xl font-semibold text-nativo-green mb-2">
                       {instructor.name}
                     </h3>
                     <p className="text-sm font-medium text-nativo-sage mb-3">
                       {instructor.role}
                     </p>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-gray-600 leading-relaxed text-sm">
                       {instructor.bio}
                     </p>
                   </div>
@@ -96,3 +97,4 @@ const Instructors = () => {
 };
 
 export default Instructors;
+
