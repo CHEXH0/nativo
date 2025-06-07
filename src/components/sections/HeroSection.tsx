@@ -12,31 +12,17 @@ import { useEffect } from "react";
 
 export const HeroSection = () => {
   useEffect(() => {
-    // Preload the Jaguar image as fallback
+    // Preload the Jaguar image
     const preloadImage = new Image();
     preloadImage.src = "/laptop-uploads/Jaguar2.jpg";
   }, []);
 
   return (
     <section id="inicio" className="h-screen pt-24 pb-12 md:pt-32 md:pb-24 relative overflow-hidden">
-      {/* Video Background */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-      >
-        <source src="/laptop-uploads/NativoIntro.mp4" type="video/mp4" />
-        {/* Fallback image if video doesn't load */}
-        <div 
-          className="absolute inset-0 bg-gradient-to-b from-nativo-charcoal/40 via-nativo-green/30 to-nativo-brown/40 bg-cover bg-center" 
-          style={{ backgroundImage: "url('/laptop-uploads/Jaguar2.jpg')" }} 
-        />
-      </video>
-      
-      {/* Overlay for better text readability */}
-      <div className="absolute inset-0 bg-nativo-charcoal/30" />
+      <div 
+        className="absolute inset-0 bg-gradient-to-b from-nativo-charcoal/40 via-nativo-green/30 to-nativo-brown/40 bg-cover bg-center" 
+        style={{ backgroundImage: "url('/laptop-uploads/Jaguar2.jpg')" }} 
+      />
       <div className="absolute inset-0 bg-natural-texture" />
       
       <div className="container px-4 mx-auto relative z-10">

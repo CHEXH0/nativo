@@ -7,7 +7,7 @@ export const WelcomeSection = () => {
   useEffect(() => {
     // Preload the video thumbnail
     const preloadImage = new Image();
-    preloadImage.src = "/laptop-uploads/Gold.jpg";
+    preloadImage.src = "/laptop-uploads/Nativo-2025.png";
   }, []);
 
   return (
@@ -30,7 +30,7 @@ export const WelcomeSection = () => {
                   playsInline
                   muted
                 >
-                  <source src="/laptop-uploads/NATIVOIntro.mp4" type="video/mp4" />
+                  <source src="/laptop-uploads/NativoIntro.mp4" type="video/mp4" />
                   Tu navegador no soporta la etiqueta de video.
                 </video>
               </div>
