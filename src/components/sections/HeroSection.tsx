@@ -23,15 +23,15 @@ export const HeroSection = () => {
         className="absolute inset-0 bg-gradient-to-b from-nativo-charcoal/40 via-nativo-green/30 to-nativo-brown/40 bg-cover bg-center" 
         style={{ backgroundImage: "url('/laptop-uploads/Jaguar2.jpg')" }} 
       />
-      <div className="absolute inset-0 bg-natural-texture" />
+      <div className="absolute inset-0" />
       
       <div className="container px-4 mx-auto relative z-10">
         <div className="max-w-4xl mx-auto flex flex-col items-center justify-center h-full text-center mt-28">
-          <h1 className="text-4xl md:text-6xl font-bold text-nativo-cream mb-8 animate-fadeIn backdrop-blur-sm bg-nativo-green/20 border border-nativo-gold/30 p-6 rounded-2xl shadow-2xl">
+          <h1 className="text-4xl md:text-6xl font-bold text-nativo-cream mb-8 animate-fadeIn backdrop-blur-sm bg-nativo-green/20 p-6 rounded-2xl">
             Tu Camino Hacia el Bienestar Holístico
           </h1>
           <p 
-            className="text-xl text-nativo-cream mb-8 animate-fadeIn backdrop-blur-sm bg-nativo-sage/20 border border-nativo-gold/20 p-4 rounded-xl shadow-xl" 
+            className="text-xl text-nativo-cream mb-8 animate-fadeIn backdrop-blur-sm bg-nativo-sage/20 p-4 rounded-xl shadow-xl" 
             style={{ animationDelay: "0.2s" }}
           >
             Descubre el equilibrio perfecto entre cuerpo, mente y espíritu con NATIVO Holístico
@@ -39,7 +39,7 @@ export const HeroSection = () => {
           <Dialog>
             <DialogTrigger asChild>
               <Button 
-                className="bg-gradient-to-r from-nativo-gold to-nativo-brown text-nativo-cream px-8 py-4 text-lg rounded-full hover:from-nativo-brown hover:to-nativo-gold transition-all duration-300 animate-fadeIn shadow-2xl border-2 border-nativo-gold/50 hover:border-nativo-gold hover:scale-105 transform" 
+                className="bg-nativo-green text-nativo-cream px-8 py-3 rounded-md hover:bg-nativo-brown transition-colors duration-300 animate-fadeIn shadow-lg" 
                 style={{ animationDelay: "0.4s" }}
               >
                 Comienza Tu Viaje
