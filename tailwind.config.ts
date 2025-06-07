@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -22,9 +23,11 @@ export default {
         nativo: {
           brown: "#8B4513",    // Rich earth brown
           beige: "#F5F5DC",    // Natural beige
-          sage: "#8B8B6B",     // Muted sage
-          green: "#2F4F4F",    // Deep forest green
-          cream: "#FFFAF0",    // Soft cream
+          sage: "#9CAF88",     // Softer sage green to match logo
+          green: "#4A5D23",    // Deeper forest green from logo
+          cream: "#FFFEF7",    // Warmer cream tone
+          gold: "#D4AF37",     // Gold accent from logo
+          charcoal: "#2C2C2C", // Deep charcoal for text
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -78,11 +81,20 @@ export default {
           "0%": { opacity: "0", transform: "translateY(10px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        shimmer: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         fadeIn: "fadeIn 0.5s ease-out forwards",
+        shimmer: "shimmer 2s infinite",
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'natural-texture': 'linear-gradient(135deg, rgba(156, 175, 136, 0.1) 0%, rgba(245, 245, 220, 0.3) 100%)',
       },
     },
   },
