@@ -1,3 +1,4 @@
+
 import { Navbar } from "@/components/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -43,7 +44,7 @@ const Instructors = () => {
               <CardContent className="p-0">
                 <div className="flex flex-col md:flex-row">
                   <div className="md:w-1/3">
-                    <div className="w-full h-48 md:h-full overflow-hidden">
+                    <div className="w-full aspect-square overflow-hidden">
                       <img 
                         src={instructor.image} 
                         alt={instructor.name}
