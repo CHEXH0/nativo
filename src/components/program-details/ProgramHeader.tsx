@@ -15,7 +15,10 @@ export const ProgramHeader = ({ title, description, image, video }: ProgramHeade
     // Preload the video thumbnail
     const preloadImage = new Image();
     preloadImage.src = image;
-  }, [image]);
+    console.log(`Loading program: ${title}`);
+    console.log(`Video path: ${video}`);
+    console.log(`Image path: ${image}`);
+  }, [image, title, video]);
 
   return (
     <div className="grid md:grid-cols-2 gap-8 items-start mb-8">
@@ -31,9 +34,14 @@ export const ProgramHeader = ({ title, description, image, video }: ProgramHeade
               poster={image}
               playsInline
               controlsList="nodownload"
-              onError={(e) => console.log('Program video error:', e)}
-              onLoadStart={() => console.log('Program video loading started')}
-              onCanPlay={() => console.log('Program video can play')}
+              onError={(e) => {
+                console.error(`Video error for ${title}:`, e);
+                console.error(`Failed video path: ${video}`);
+              }}
+              onLoadStart={() => console.log(`${title} video loading started`)}
+              onCanPlay={() => console.log(`${title} video can play`)}
+              onLoadedData={() => console.log(`${title} video data loaded`)}
+              onLoadedMetadata={() => console.log(`${title} video metadata loaded`)}
             >
               <source src={video} type="video/mp4" />
               Tu navegador no soporta la etiqueta de video.

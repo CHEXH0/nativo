@@ -78,7 +78,7 @@ export type Database = {
     }
     Functions: {
       update_user_plan: {
-        Args: { user_id: string; new_plan: string }
+        Args: Record<PropertyKey, never> | { user_id: string; new_plan: string }
         Returns: undefined
       }
     }
