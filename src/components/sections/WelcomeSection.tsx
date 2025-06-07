@@ -28,7 +28,10 @@ export const WelcomeSection = () => {
                   preload="metadata"
                   poster="/laptop-uploads/Nativo-2025.png"
                   playsInline
-                  muted
+                  controlsList="nodownload"
+                  onError={(e) => console.log('Video error:', e)}
+                  onLoadStart={() => console.log('Video loading started')}
+                  onCanPlay={() => console.log('Video can play')}
                 >
                   <source src="/laptop-uploads/NativoIntro.mp4" type="video/mp4" />
                   Tu navegador no soporta la etiqueta de video.
