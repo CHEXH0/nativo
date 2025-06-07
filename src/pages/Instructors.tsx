@@ -1,5 +1,3 @@
-
-
 import { Navbar } from "@/components/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -41,26 +39,24 @@ const Instructors = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {instructors.map((instructor, index) => (
-            <Card key={index} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 aspect-square">
+            <Card key={index} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 aspect-square relative">
               <CardContent className="p-0 h-full">
-                <div className="flex flex-col h-full">
-                  <div className="flex-1">
-                    <div className="w-full h-full overflow-hidden">
-                      <img 
-                        src={instructor.image} 
-                        alt={instructor.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                  <div className="p-6 bg-white">
-                    <h3 className="text-xl font-semibold text-nativo-green mb-2">
+                <div 
+                  className="relative w-full h-full bg-cover bg-center bg-no-repeat"
+                  style={{ backgroundImage: `url(${instructor.image})` }}
+                >
+                  {/* Dark overlay for better text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                  
+                  {/* Text content overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 className="text-xl font-bold mb-2 text-shadow">
                       {instructor.name}
                     </h3>
-                    <p className="text-sm font-medium text-nativo-sage mb-3">
+                    <p className="text-sm font-medium mb-3 text-nativo-gold">
                       {instructor.role}
                     </p>
-                    <p className="text-gray-600 leading-relaxed text-sm">
+                    <p className="text-sm leading-relaxed text-white/90">
                       {instructor.bio}
                     </p>
                   </div>
@@ -97,4 +93,3 @@ const Instructors = () => {
 };
 
 export default Instructors;
-
