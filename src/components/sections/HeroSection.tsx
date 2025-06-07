@@ -12,18 +12,33 @@ import { useEffect } from "react";
 
 export const HeroSection = () => {
   useEffect(() => {
-    // Preload the Jaguar image
+    // Preload the Jaguar image as fallback
     const preloadImage = new Image();
     preloadImage.src = "/laptop-uploads/Jaguar2.jpg";
   }, []);
 
   return (
     <section id="inicio" className="h-screen pt-24 pb-12 md:pt-32 md:pb-24 relative overflow-hidden">
-      <div 
-        className="absolute inset-0 bg-gradient-to-b from-nativo-charcoal/40 via-nativo-green/30 to-nativo-brown/40 bg-cover bg-center" 
-        style={{ backgroundImage: "url('/laptop-uploads/Jaguar2.jpg')" }} 
-      />
+      {/* Video Background */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/laptop-uploads/NativoIntro.mp4" type="video/mp4" />
+        {/* Fallback image if video doesn't load */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-b from-nativo-charcoal/40 via-nativo-green/30 to-nativo-brown/40 bg-cover bg-center" 
+          style={{ backgroundImage: "url('/laptop-uploads/Jaguar2.jpg')" }} 
+        />
+      </video>
+      
+      {/* Overlay for better text readability */}
+      <div className="absolute inset-0 bg-nativo-charcoal/30" />
       <div className="absolute inset-0 bg-natural-texture" />
+      
       <div className="container px-4 mx-auto relative z-10">
         <div className="max-w-4xl mx-auto flex flex-col items-center justify-center h-full text-center mt-28">
           <h1 className="text-4xl md:text-6xl font-bold text-nativo-cream mb-8 animate-fadeIn backdrop-blur-sm bg-nativo-green/20 border border-nativo-gold/30 p-6 rounded-2xl shadow-2xl">
