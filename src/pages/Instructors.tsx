@@ -1,4 +1,3 @@
-
 import { Navbar } from "@/components/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -44,16 +43,13 @@ const Instructors = () => {
               <CardContent className="p-0">
                 <div className="flex flex-col md:flex-row">
                   <div className="md:w-1/3">
-                    <Avatar className="w-full h-48 md:h-full rounded-none">
-                      <AvatarImage 
+                    <div className="w-full h-48 md:h-full overflow-hidden">
+                      <img 
                         src={instructor.image} 
                         alt={instructor.name}
-                        className="object-cover"
+                        className="w-full h-full object-cover"
                       />
-                      <AvatarFallback className="rounded-none">
-                        {instructor.name.split(' ').map(n => n[0]).join('')}
-                      </AvatarFallback>
-                    </Avatar>
+                    </div>
                   </div>
                   <div className="md:w-2/3 p-6">
                     <h3 className="text-xl font-semibold text-nativo-green mb-2">
