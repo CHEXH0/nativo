@@ -1,6 +1,9 @@
+
 import { Navbar } from "@/components/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Phone, Mail } from "lucide-react";
 import { useEffect } from "react";
 
 const instructors = [
@@ -78,12 +81,47 @@ const Instructors = () => {
                 Si eres un profesional del bienestar y compartes nuestra visión holística, 
                 nos encantaría conocerte.
               </p>
-              <a 
-                href="mailto:info@nativo.com" 
-                className="inline-block bg-nativo-green text-white px-6 py-3 rounded-lg hover:bg-nativo-green/90 transition-colors"
-              >
-                Contáctanos
-              </a>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button className="inline-block bg-nativo-green text-white px-6 py-3 rounded-lg hover:bg-nativo-green/90 transition-colors">
+                    Contáctanos
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle className="text-nativo-green text-center mb-4">
+                      Información de Contacto
+                    </DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-6">
+                    <div className="flex items-center space-x-4 p-4 bg-nativo-cream/50 rounded-lg">
+                      <div className="flex-shrink-0">
+                        <Phone className="h-6 w-6 text-nativo-green" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-nativo-charcoal">Teléfono</p>
+                        <p className="text-lg text-nativo-green font-semibold">+52 123 456 7890</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center space-x-4 p-4 bg-nativo-cream/50 rounded-lg">
+                      <div className="flex-shrink-0">
+                        <Mail className="h-6 w-6 text-nativo-green" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-nativo-charcoal">Email</p>
+                        <p className="text-lg text-nativo-green font-semibold">info@nativo.com</p>
+                      </div>
+                    </div>
+                    
+                    <div className="text-center pt-4">
+                      <p className="text-sm text-gray-600">
+                        Estamos aquí para ayudarte en tu viaje hacia el bienestar integral
+                      </p>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </CardContent>
           </Card>
         </div>
