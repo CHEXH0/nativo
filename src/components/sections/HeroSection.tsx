@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { MembershipsSection } from "./MembershipsSection";
@@ -43,6 +45,12 @@ export const HeroSection = () => {
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-nativo-cream border-2 border-nativo-gold/30">
+              <DialogTitle className="text-2xl font-bold text-nativo-green mb-4">
+                Nuestras Membresías
+              </DialogTitle>
+              <DialogDescription className="text-nativo-charcoal/70 mb-6">
+                Elige el plan que mejor se adapte a tu viaje hacia el bienestar holístico
+              </DialogDescription>
               <MembershipsSection inDialog={true} />
             </DialogContent>
           </Dialog>
