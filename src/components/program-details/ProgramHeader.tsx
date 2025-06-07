@@ -24,6 +24,7 @@ export const ProgramHeader = ({ title, description, image, video }: ProgramHeade
         <AspectRatio ratio={1/1} className="bg-nativo-sage/20">
           <div className="relative w-full h-full">
             <video 
+              key={video}
               className="w-full h-full object-cover rounded-lg"
               controls
               preload="metadata"
