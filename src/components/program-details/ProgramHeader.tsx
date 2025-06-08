@@ -20,32 +20,44 @@ export const ProgramHeader = ({ title, description, image, video }: ProgramHeade
     console.log(`Image path: ${image}`);
   }, [image, title, video]);
 
+  const isVimeoEmbed = video.includes('player.vimeo.com');
+
   return (
     <div className="grid md:grid-cols-2 gap-8 items-start mb-8">
       {/* Video Card with square aspect ratio */}
       <Card className="overflow-hidden shadow-2xl border-2 border-nativo-gold/30 bg-gradient-to-br from-nativo-cream to-nativo-beige">
         <AspectRatio ratio={1/1} className="bg-nativo-sage/20">
           <div className="relative w-full h-full">
-            <video 
-              key={video}
-              className="w-full h-full object-cover rounded-lg"
-              controls
-              preload="metadata"
-              poster={image}
-              playsInline
-              controlsList="nodownload"
-              onError={(e) => {
-                console.error(`Video error for ${title}:`, e);
-                console.error(`Failed video path: ${video}`);
-              }}
-              onLoadStart={() => console.log(`${title} video loading started`)}
-              onCanPlay={() => console.log(`${title} video can play`)}
-              onLoadedData={() => console.log(`${title} video data loaded`)}
-              onLoadedMetadata={() => console.log(`${title} video metadata loaded`)}
-            >
-              <source src={video} type="video/mp4" />
-              Tu navegador no soporta la etiqueta de video.
-            </video>
+            {isVimeoEmbed ? (
+              <iframe
+                src={video}
+                className="w-full h-full rounded-lg"
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                title={title}
+              />
+            ) : (
+              <video 
+                key={video}
+                className="w-full h-full object-cover rounded-lg"
+                controls
+                preload="metadata"
+                poster={image}
+                playsInline
+                controlsList="nodownload"
+                onError={(e) => {
+                  console.error(`Video error for ${title}:`, e);
+                  console.error(`Failed video path: ${video}`);
+                }}
+                onLoadStart={() => console.log(`${title} video loading started`)}
+                onCanPlay={() => console.log(`${title} video can play`)}
+                onLoadedData={() => console.log(`${title} video data loaded`)}
+                onLoadedMetadata={() => console.log(`${title} video metadata loaded`)}
+              >
+                <source src={video} type="video/mp4" />
+                Tu navegador no soporta la etiqueta de video.
+              </video>
+            )}
           </div>
         </AspectRatio>
       </Card>

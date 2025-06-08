@@ -4,7 +4,7 @@ export const programs = {
     title: "Talleres Holisticos",
     description: "Descubre tu camino hacia una vida más equilibrada y consciente con nuestros talleres.",
     image: "/laptop-uploads/Vida.jpg",
-    video: "/laptop-uploads/Talleres-Hol.mp4",
+    video: "https://player.vimeo.com/video/1091659998?h=26f8a831b8&badge=0&autopause=0&player_id=0&app_id=58479",
     details: {
       overview: "Nuestros talleres holísticos están diseñados para ayudarte a encontrar el equilibrio en todas las áreas de tu vida. A través de prácticas ancestrales y modernas, te guiaremos en un viaje de autodescubrimiento y crecimiento personal.",
       schedule: "Talleres disponibles los 24 horas. Duracion proximada 12 minutos por taller.",
