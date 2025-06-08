@@ -21,6 +21,7 @@ export const ProgramHeader = ({ title, description, image, video }: ProgramHeade
   }, [image, title, video]);
 
   const isVimeoEmbed = video.includes('player.vimeo.com');
+  const isProgramaBienestar = title === "Programa De Bienestar";
 
   return (
     <div className="grid md:grid-cols-2 gap-8 items-start mb-8">
@@ -40,10 +41,13 @@ export const ProgramHeader = ({ title, description, image, video }: ProgramHeade
               <video 
                 key={video}
                 className="w-full h-full object-cover rounded-lg"
-                controls
+                controls={!isProgramaBienestar}
                 preload="metadata"
                 poster={image}
                 playsInline
+                autoPlay={isProgramaBienestar}
+                loop={isProgramaBienestar}
+                muted={isProgramaBienestar}
                 controlsList="nodownload"
                 onError={(e) => {
                   console.error(`Video error for ${title}:`, e);
