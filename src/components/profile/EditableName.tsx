@@ -20,6 +20,7 @@ export const EditableName = ({
 }: EditableNameProps) => {
   const [editNameOpen, setEditNameOpen] = useState(false);
   const [newName, setNewName] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleEditNameClick = () => {
     setNewName(userName);
@@ -32,23 +33,32 @@ export const EditableName = ({
       return;
     }
 
+    setIsSaving(true);
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error("Debes iniciar sesión para actualizar el nombre");
+        return;
+      }
+
       const { error } = await supabase.auth.updateUser({
-        data: { full_name: newName }
+        data: { full_name: newName.trim() }
       });
 
       if (error) throw error;
 
       toast.success("Nombre actualizado con éxito");
       setEditNameOpen(false);
+      
+      // Call the callback to refresh data
       if (onNameUpdated) {
         onNameUpdated();
-      } else {
-        window.location.reload();
       }
     } catch (error) {
       console.error("Error updating name:", error);
       toast.error("No se pudo actualizar el nombre");
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -79,14 +89,15 @@ export const EditableName = ({
               value={newName} 
               onChange={(e) => setNewName(e.target.value)} 
               placeholder="Tu nombre"
+              disabled={isSaving}
             />
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancelar</Button>
+              <Button variant="outline" disabled={isSaving}>Cancelar</Button>
             </DialogClose>
-            <Button onClick={handleNameSave}>
-              Guardar
+            <Button onClick={handleNameSave} disabled={isSaving}>
+              {isSaving ? "Guardando..." : "Guardar"}
             </Button>
           </DialogFooter>
         </DialogContent>

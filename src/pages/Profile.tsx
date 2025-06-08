@@ -11,7 +11,8 @@ const Profile = () => {
     isLoading,
     userId,
     avatarUrl,
-    userPlan
+    userPlan,
+    refreshUserData
   } = useProfileData();
 
   if (isLoading) {
@@ -27,6 +28,7 @@ const Profile = () => {
         avatarUrl={avatarUrl}
         userPlan={userPlan}
         isLoading={isLoading}
+        onProfileUpdate={refreshUserData}
       />
     </>
   );

@@ -15,6 +15,7 @@ interface ProfileContentProps {
   avatarUrl: string | null;
   userPlan: string;
   isLoading: boolean;
+  onProfileUpdate?: () => void;
 }
 
 export const ProfileContent = ({
@@ -22,7 +23,8 @@ export const ProfileContent = ({
   userEmail,
   avatarUrl,
   userPlan,
-  isLoading
+  isLoading,
+  onProfileUpdate
 }: ProfileContentProps) => {
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("subscription");
@@ -38,6 +40,7 @@ export const ProfileContent = ({
             avatarUrl={avatarUrl}
             userPlan={userPlan}
             isLoading={isLoading}
+            onProfileUpdate={onProfileUpdate}
           />
 
           <div className="mb-8">

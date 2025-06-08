@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session, User } from "@supabase/supabase-js";
@@ -15,7 +15,7 @@ export const useProfileData = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
 
-  const updateUserData = async (user: User) => {
+  const updateUserData = useCallback(async (user: User) => {
     try {
       setUserId(user.id);
       const email = user.email || "usuario@example.com";
@@ -54,12 +54,29 @@ export const useProfileData = () => {
           setUserPlan('none');
         }
       } else if (profileData) {
-        setUserPlan(profileData.plan);
+        setUserPlan(profileData.plan || 'none');
+      } else {
+        // Profile doesn't exist, create it
+        const { error: insertError } = await supabase
+          .from('profiles')
+          .insert({ id: user.id, plan: 'none' });
+        
+        if (insertError) {
+          console.error("Error creating profile:", insertError);
+        }
+        setUserPlan('none');
       }
     } catch (error) {
       console.error("Error updating user data:", error);
     }
-  };
+  }, []);
+
+  const refreshUserData = useCallback(async () => {
+    const { data: { session: currentSession } } = await supabase.auth.getSession();
+    if (currentSession?.user) {
+      await updateUserData(currentSession.user);
+    }
+  }, [updateUserData]);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -117,7 +134,7 @@ export const useProfileData = () => {
     };
 
     checkAuth();
-  }, [navigate]);
+  }, [navigate, updateUserData]);
 
   return {
     userName,
@@ -127,6 +144,7 @@ export const useProfileData = () => {
     avatarUrl,
     userPlan,
     session,
-    user
+    user,
+    refreshUserData
   };
 };
