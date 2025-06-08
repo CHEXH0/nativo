@@ -41,7 +41,7 @@ export const programs = {
     title: "Casa NATIVA",
     description: "Es un lugar donde podras conectar contigomismo, con las plantas, con los animales, y con la espiritualidad.",
     image: "/laptop-uploads/Casa-Nativa.jpg",
-    video: "/laptop-uploads/Casa-Nativa.mp4",
+    video: "https://player.vimeo.com/video/1091659773?h=8ff58471ab&badge=0&autopause=0&player_id=0&app_id=58479",
     details: {
       overview: "Un espacio sagrado diseñado para reconectar con tu esencia natural. Casa NATIVO te ofrece un ambiente único donde podrás experimentar la conexión con la naturaleza, las prácticas ancestrales y la sabiduría tradicional.",
       schedule: "Retiros de fin de semana | Experiencias diarias",
