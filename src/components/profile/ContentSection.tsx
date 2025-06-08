@@ -17,12 +17,22 @@ import { MembershipsDialog } from "./content/MembershipsDialog";
 
 interface ContentSectionProps {
   userPlan: string;
+  userEmail: string;
   onUpgrade: () => void;
 }
 
-export const ContentSection = ({ userPlan, onUpgrade }: ContentSectionProps) => {
+export const ContentSection = ({ userPlan, userEmail, onUpgrade }: ContentSectionProps) => {
   const [showMemberships, setShowMemberships] = useState(false);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
+  // Admin emails with full access
+  const adminEmails = [
+    'sergio.ramrz21@gmail.com',
+    'nativoholisticomedia@gmail.com'
+  ];
+
+  const isAdmin = adminEmails.includes(userEmail);
+  const effectivePlan = isAdmin ? 'vip' : userPlan;
 
   const previewVideos = [
     {
@@ -50,7 +60,7 @@ export const ContentSection = ({ userPlan, onUpgrade }: ContentSectionProps) => 
   };
 
   const renderContent = () => {
-    switch(userPlan) {
+    switch(effectivePlan) {
       case "none":
         return (
           <LockedContent
@@ -84,7 +94,14 @@ export const ContentSection = ({ userPlan, onUpgrade }: ContentSectionProps) => 
 
       <Card className="border-nativo-sage/30 shadow-lg">
         <CardHeader className="bg-nativo-cream/30 border-b border-nativo-sage/20">
-          <CardTitle className="text-nativo-green text-2xl">Contenido Premium</CardTitle>
+          <CardTitle className="text-nativo-green text-2xl">
+            Contenido Premium
+            {isAdmin && (
+              <span className="ml-2 text-sm bg-nativo-gold text-white px-2 py-1 rounded">
+                Acceso Completo
+              </span>
+            )}
+          </CardTitle>
           <CardDescription className="text-nativo-sage/80 text-base">
             Accede a tu contenido exclusivo según tu plan
           </CardDescription>

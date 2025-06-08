@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
@@ -193,6 +192,7 @@ const Profile = () => {
           <div className="mb-8">
             <ContentSection 
               userPlan={userPlan} 
+              userEmail={userEmail}
               onUpgrade={() => setUpgradeDialogOpen(true)} 
             />
           </div>
