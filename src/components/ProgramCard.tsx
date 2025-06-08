@@ -24,7 +24,7 @@ export const ProgramCard = ({ title, description, image, slug }: ProgramCardProp
         <CardContent className="p-6 relative">
           <div className="absolute top-0 left-6 w-12 h-1 bg-gradient-to-r from-nativo-gold to-nativo-brown -mt-3 rounded-full"></div>
           <h3 className="text-2xl font-bold text-nativo-green mb-2 mt-2">{title}</h3>
-          <p className="text-nativo-charcoal/70">{description}</p>
+          <p className="text-lg text-nativo-charcoal/70">{description}</p>
         </CardContent>
       </Card>
     </Link>
