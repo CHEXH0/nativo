@@ -30,14 +30,14 @@ export const ContentSection = ({ userPlan, onUpgrade }: ContentSectionProps) => 
       title: "Introducción a Nativo",
       description: "Conoce nuestra filosofía y propuesta de valor",
       thumbnail: "/laptop-uploads/Jaguar.jpg",
-      videoUrl: "/laptop-uploads/NativoIntro.mp4",
+      videoUrl: "https://player.vimeo.com/video/1091659873?h=59873e941b&badge=0&autopause=0&player_id=0&app_id=58479",
     },
     {
       id: "preview2",
       title: "Meditación guiada",
       description: "Ejercicio básico de respiración y conexión",
       thumbnail: "/laptop-uploads/Copal.jpg",
-      videoUrl: "/laptop-uploads/NativoIntro.mp4",
+      videoUrl: "https://player.vimeo.com/video/1091659873?h=59873e941b&badge=0&autopause=0&player_id=0&app_id=58479",
     }
   ];
 

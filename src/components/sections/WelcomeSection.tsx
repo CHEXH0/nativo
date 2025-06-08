@@ -18,24 +18,17 @@ export const WelcomeSection = () => {
         </h2>
         
         <div className="grid md:grid-cols-2 gap-8 items-center">
-          {/* Video Card with elegant border */}
+          {/* Vimeo Video Card with elegant border */}
           <Card className="overflow-hidden shadow-2xl animate-fadeIn border-2 border-nativo-gold/30 bg-gradient-to-br from-nativo-cream to-nativo-beige" style={{ animationDelay: "0.2s" }}>
             <AspectRatio ratio={1/1} className="bg-nativo-sage/20">
               <div className="relative w-full h-full">
-                <video 
-                  className="w-full h-full object-cover rounded-lg"
-                  controls
-                  preload="metadata"
-                  poster="/laptop-uploads/Nativo-2025.png"
-                  playsInline
-                  controlsList="nodownload"
-                  onError={(e) => console.log('Video error:', e)}
-                  onLoadStart={() => console.log('Video loading started')}
-                  onCanPlay={() => console.log('Video can play')}
-                >
-                  <source src="/laptop-uploads/NativoIntro.mp4" type="video/mp4" />
-                  Tu navegador no soporta la etiqueta de video.
-                </video>
+                <iframe
+                  src="https://player.vimeo.com/video/1091659873?h=59873e941b&badge=0&autopause=0&player_id=0&app_id=58479"
+                  className="w-full h-full rounded-lg"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+                  title="NATIVO Intro"
+                />
               </div>
             </AspectRatio>
           </Card>
