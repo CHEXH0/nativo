@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import type { AuthError, Session } from "@supabase/supabase-js";
+import type { AuthError } from "@supabase/supabase-js";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,55 +15,57 @@ const Login = () => {
   useEffect(() => {
     let mounted = true;
 
-    const checkInitialAuth = async () => {
+    const checkAuthAndSetupListener = async () => {
       try {
+        // Check for existing session first
         const { data: { session }, error } = await supabase.auth.getSession();
         
         if (error) {
-          console.error("Error checking initial session:", error);
+          console.error("Error checking session:", error);
           setErrorMessage("Error al verificar la sesión");
         } else if (session && mounted) {
           navigate("/profile");
           return;
         }
+
+        // Set up auth state listener
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(
+          async (event, session) => {
+            console.log('Auth event:', event);
+            
+            if (!mounted) return;
+
+            if (event === 'SIGNED_IN' && session) {
+              navigate("/profile");
+            } else if (event === 'SIGNED_OUT') {
+              setErrorMessage("");
+            } else if (event === 'USER_UPDATED') {
+              // Handle auth errors from user updates
+              const { error } = await supabase.auth.getSession();
+              if (error) {
+                handleAuthError(error);
+              }
+            }
+            
+            setIsLoading(false);
+          }
+        );
+
+        if (mounted) {
+          setIsLoading(false);
+        }
+
+        return () => {
+          subscription.unsubscribe();
+        };
       } catch (error) {
-        console.error("Error in checkInitialAuth:", error);
-      } finally {
+        console.error("Error in auth setup:", error);
         if (mounted) {
           setIsLoading(false);
         }
       }
     };
 
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log('Auth event:', event);
-        
-        if (!mounted) return;
-
-        if (event === 'SIGNED_IN' && session) {
-          navigate("/profile");
-        } else if (event === 'SIGNED_OUT') {
-          setErrorMessage("");
-        } else if (event === 'TOKEN_REFRESHED') {
-          console.log('Token refreshed successfully');
-        }
-        
-        setIsLoading(false);
-      }
-    );
-
-    checkInitialAuth();
-
-    return () => {
-      mounted = false;
-      subscription.unsubscribe();
-    };
-  }, [navigate]);
-
-  // Handle auth errors
-  useEffect(() => {
     const handleAuthError = (error: AuthError) => {
       switch (error.message) {
         case "User already registered":
@@ -83,17 +85,12 @@ const Login = () => {
       }
     };
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'USER_UPDATED') {
-        const { error } = await supabase.auth.getSession();
-        if (error) {
-          handleAuthError(error);
-        }
-      }
-    });
+    checkAuthAndSetupListener();
 
-    return () => subscription.unsubscribe();
-  }, []);
+    return () => {
+      mounted = false;
+    };
+  }, [navigate]);
 
   if (isLoading) {
     return (
