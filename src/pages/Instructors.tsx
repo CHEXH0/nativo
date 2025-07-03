@@ -69,7 +69,6 @@ const Instructors = () => {
                     <p className="text-sm leading-relaxed text-white/90 group-hover:text-white transition-colors duration-200">
                       {instructor.bio}
                     </p>
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-nativo-green via-nativo-gold to-nativo-brown transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                   </div>
                 </div>
               </CardContent>
