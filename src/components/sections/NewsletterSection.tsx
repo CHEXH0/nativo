@@ -24,7 +24,7 @@ export const NewsletterSection = () => {
           }}
         >
           {duplicatedImages.map((image, index) => (
-            <div key={index} className="flex-shrink-0 w-80 h-60 mx-4">
+            <div key={index} className="flex-shrink-0 w-60 h-60 mx-4">
               <img
                 src={image}
                 alt={`Product ${(index % productImages.length) + 1}`}
