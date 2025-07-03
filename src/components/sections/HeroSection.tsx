@@ -30,14 +30,12 @@ export const HeroSection = () => {
       
       <div className="container px-4 mx-auto relative z-10">
         <div className="max-w-4xl mx-auto flex flex-col items-center justify-center h-full text-center mt-28">
-          <h1 className="text-4xl md:text-6xl font-bold mb-8 animate-fade-in backdrop-blur-sm bg-white/10 p-6 rounded-2xl border border-white/20">
-            <span className="bg-gradient-to-r from-nativo-cream via-nativo-gold to-nativo-cream bg-clip-text text-transparent">
-              {t('hero.title')}
-            </span>
+          <h1 className="text-4xl md:text-6xl font-bold text-nativo-cream mb-8 animate-fadeIn backdrop-blur-sm bg-nativo-green/20 p-6 rounded-2xl">
+            {t('hero.title')}
           </h1>
           <p 
-            className="text-xl text-nativo-cream mb-8 animate-fade-in backdrop-blur-sm bg-white/10 p-4 rounded-xl shadow-xl border border-white/20" 
-            style={{ animationDelay: "150ms" }}
+            className="text-xl text-nativo-cream mb-8 animate-fadeIn backdrop-blur-sm bg-nativo-sage/20 p-4 rounded-xl shadow-xl" 
+            style={{ animationDelay: "0.2s" }}
           >
             {t('hero.subtitle')}
           </p>
