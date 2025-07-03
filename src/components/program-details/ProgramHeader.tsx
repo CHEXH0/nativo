@@ -2,6 +2,7 @@
 import { Card } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProgramHeaderProps {
   title: string;
@@ -11,6 +12,8 @@ interface ProgramHeaderProps {
 }
 
 export const ProgramHeader = ({ title, description, image, video }: ProgramHeaderProps) => {
+  const { t } = useLanguage();
+  
   useEffect(() => {
     // Preload the video thumbnail
     const preloadImage = new Image();
@@ -59,7 +62,7 @@ export const ProgramHeader = ({ title, description, image, video }: ProgramHeade
                 onLoadedMetadata={() => console.log(`${title} video metadata loaded`)}
               >
                 <source src={video} type="video/mp4" />
-                Tu navegador no soporta la etiqueta de video.
+                {t('program.video.unsupported')}
               </video>
             )}
           </div>

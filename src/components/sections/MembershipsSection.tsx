@@ -8,43 +8,6 @@ import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const memberships = [
-  {
-    id: "basic",
-    title: "Básico",
-    price: "$9/mes",
-    features: [
-      "Acceso a contenido básico",
-      "Comunidad en línea",
-      "Newsletter mensual",
-      "Acesoria virtual al mes",
-    ],
-  },
-  {
-    id: "gold",
-    title: "GOLD",
-    price: "$59/mes",
-    features: [
-      "Todo lo del plan Básico",
-      "Acceso a dos talleres grupales al mes",
-      "Seguimiento personalizado por Chat",
-      "2 acesorias en vivo al mes",
-    ],
-    isPopular: true,
-  },
-  {
-    id: "vip",
-    title: "VIP",
-    price: "$109/mes",
-    features: [
-      "Todo lo del plan GOLD",
-      "Acesorias privadas",
-      "Talleres virtuales ilimitadas",
-      "Limpieza energetica medicina tradicional"
-    ],
-  },
-];
-
 interface MembershipsSectionProps {
   inDialog?: boolean;
 }
@@ -55,6 +18,43 @@ export const MembershipsSection = ({ inDialog = false }: MembershipsSectionProps
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const getMemberships = () => [
+    {
+      id: "basic",
+      title: "Básico",
+      price: "$9/mes",
+      features: [
+        t('membership.basic.features.0'),
+        t('membership.basic.features.1'),
+        t('membership.basic.features.2'),
+        t('membership.basic.features.3'),
+      ],
+    },
+    {
+      id: "gold",
+      title: "GOLD",
+      price: "$59/mes",
+      features: [
+        t('membership.gold.features.0'),
+        t('membership.gold.features.1'),
+        t('membership.gold.features.2'),
+        t('membership.gold.features.3'),
+      ],
+      isPopular: true,
+    },
+    {
+      id: "vip",
+      title: "VIP",
+      price: "$109/mes",
+      features: [
+        t('membership.vip.features.0'),
+        t('membership.vip.features.1'),
+        t('membership.vip.features.2'),
+        t('membership.vip.features.3'),
+      ],
+    },
+  ];
 
   // Check for successful payment from URL parameters
   useEffect(() => {
@@ -151,7 +151,7 @@ export const MembershipsSection = ({ inDialog = false }: MembershipsSectionProps
           </h2>
         )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {memberships.map((membership, index) => (
+          {getMemberships().map((membership, index) => (
             <div key={index} className="animate-fadeIn" style={{ animationDelay: `${index * 0.2}s` }}>
               <PricingCard 
                 {...membership} 

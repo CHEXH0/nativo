@@ -1,4 +1,68 @@
 
+import { useLanguage } from "@/contexts/LanguageContext";
+
+export const usePrograms = () => {
+  const { t } = useLanguage();
+  
+  return {
+    "talleres-holisticos": {
+      title: t('program.talleres.title'),
+      description: t('program.talleres.description'),
+      image: "/laptop-uploads/Vida.jpg",
+      video: "https://player.vimeo.com/video/1091659998?h=26f8a831b8&badge=0&autopause=0&player_id=0&app_id=58479",
+      details: {
+        overview: t('program.talleres.overview'),
+        schedule: t('program.talleres.schedule'),
+        includes: [
+          "Taller 1: La importancia de llevar una vida Consciente y Saludable",
+          "Taller 2: Crear tu Plan de Vida",
+          "Taller 3: Detoxificación de Cuerpo y Mente",
+          "Taller 4: Ejercicio fisico para el salud y la longevidad",
+          "Taller 5: Alimentacion consciente y saludable",
+          "Taller 6: Limpieza energetica de tu casa y tu cuerpo",
+          "Taller 7: Conecta con la energia de tu mascota",
+          "Taller 8: Meditacion y Alinacion de Chakras",
+          "Taller 9: Territorio Ancestral y Calendario Natural",
+        ]
+      }
+    },
+    "programa-bienestar": {
+      title: t('program.bienestar.title'),
+      description: t('program.bienestar.description'),
+      image: "/laptop-uploads/Equal.jpg",
+      video: "/laptop-uploads/Bienestar.mp4",
+      details: {
+        overview: t('program.bienestar.overview'),
+        schedule: t('program.bienestar.schedule'),
+        includes: [
+          "Plan de nutrición personalizado",
+          "Rutinas de ejercicio adaptadas",
+          "Sesiones de coaching emocional",
+          "Seguimiento continuo"
+        ]
+      }
+    },
+    "casa-nativo": {
+      title: t('program.casa.title'),
+      description: t('program.casa.description'),
+      image: "/laptop-uploads/Casa-Nativa.jpg",
+      video: "https://player.vimeo.com/video/1091659773?h=8ff58471ab&badge=0&autopause=0&player_id=0&app_id=58479",
+      details: {
+        overview: t('program.casa.overview'),
+        schedule: t('program.casa.schedule'),
+        includes: [
+          "Ceremonias tradicionales",
+          "Talleres de conexión con la naturaleza",
+          "Meditaciones guiadas",
+          "Experiencias de sanación",
+          "Limpiezas energéticas"
+        ]
+      }
+    }
+  };
+};
+
+// Fallback static export for backward compatibility
 export const programs = {
   "talleres-holisticos": {
     title: "Talleres Holisticos",
@@ -7,7 +71,7 @@ export const programs = {
     video: "https://player.vimeo.com/video/1091659998?h=26f8a831b8&badge=0&autopause=0&player_id=0&app_id=58479",
     details: {
       overview: "Nuestros talleres holísticos están diseñados para ayudarte a encontrar el equilibrio en todas las áreas de tu vida. A través de prácticas ancestrales y modernas, te guiaremos en un viaje de autodescubrimiento y crecimiento personal.",
-      schedule: "Talleres disponibles los 24 horas. Duracion proximada 12 minutos por taller.",
+      schedule: "Talleres disponibles las 24 horas. Duración aproximada 12 minutos por taller.",
       includes: [
         "Taller 1: La importancia de llevar una vida Consciente y Saludable",
         "Taller 2: Crear tu Plan de Vida",

@@ -84,6 +84,43 @@ const translations = {
     'program.notfound.title': 'Programa no encontrado',
     'program.notfound.message': 'Lo sentimos, el programa que buscas no está disponible.',
 
+    // Program Details
+    'program.tabs.overview': 'Descripción',
+    'program.tabs.details': 'Detalles',
+    'program.tabs.schedule': 'Horarios',
+    'program.overview.title': 'Descripción General',
+    'program.details.title': 'Incluye',
+    'program.schedule.title': 'Horarios y Disponibilidad',
+    'program.video.unsupported': 'Tu navegador no soporta la etiqueta de video.',
+
+    // Program Data
+    'program.talleres.title': 'Talleres Holisticos',
+    'program.talleres.description': 'Descubre tu camino hacia una vida más equilibrada y consciente con nuestros talleres.',
+    'program.talleres.overview': 'Nuestros talleres holísticos están diseñados para ayudarte a encontrar el equilibrio en todas las áreas de tu vida. A través de prácticas ancestrales y modernas, te guiaremos en un viaje de autodescubrimiento y crecimiento personal.',
+    'program.talleres.schedule': 'Talleres disponibles las 24 horas. Duración aproximada 12 minutos por taller.',
+    'program.bienestar.title': 'Programa De Bienestar',
+    'program.bienestar.description': 'Lleva una vida saludable integrando el ejercicio la nutrición, las emociones, y la espiritualidad mediante asesorías personalizadas.',
+    'program.bienestar.overview': 'Un programa integral que combina ejercicio físico, nutrición personalizada y apoyo emocional para alcanzar un estado óptimo de bienestar. Trabajamos con un enfoque personalizado para ayudarte a alcanzar tus objetivos de salud.',
+    'program.bienestar.schedule': 'Planes personalizados | Seguimiento semanal',
+    'program.casa.title': 'Casa NATIVA',
+    'program.casa.description': 'Es un lugar donde podrás conectar contigo mismo, con las plantas, con los animales, y con la espiritualidad.',
+    'program.casa.overview': 'Un espacio sagrado diseñado para reconectar con tu esencia natural. Casa NATIVO te ofrece un ambiente único donde podrás experimentar la conexión con la naturaleza, las prácticas ancestrales y la sabiduría tradicional.',
+    'program.casa.schedule': 'Retiros de fin de semana | Experiencias diarias',
+
+    // Membership Features
+    'membership.basic.features.0': 'Acceso a contenido básico',
+    'membership.basic.features.1': 'Comunidad en línea',
+    'membership.basic.features.2': 'Newsletter mensual',
+    'membership.basic.features.3': 'Acesoria virtual al mes',
+    'membership.gold.features.0': 'Todo lo del plan Básico',
+    'membership.gold.features.1': 'Acceso a dos talleres grupales al mes',
+    'membership.gold.features.2': 'Seguimiento personalizado por Chat',
+    'membership.gold.features.3': '2 acesorias en vivo al mes',
+    'membership.vip.features.0': 'Todo lo del plan GOLD',
+    'membership.vip.features.1': 'Acesorias privadas',
+    'membership.vip.features.2': 'Talleres virtuales ilimitadas',
+    'membership.vip.features.3': 'Limpieza energetica medicina tradicional',
+
     // Profile Page
     'profile.account.settings': 'Ajustes de cuenta',
     'profile.tabs.subscription': 'Suscripción',
@@ -190,6 +227,43 @@ const translations = {
     // Programs
     'program.notfound.title': 'Program not found',
     'program.notfound.message': 'Sorry, the program you are looking for is not available.',
+
+    // Program Details
+    'program.tabs.overview': 'Overview',
+    'program.tabs.details': 'Details',
+    'program.tabs.schedule': 'Schedule',
+    'program.overview.title': 'General Overview',
+    'program.details.title': 'Includes',
+    'program.schedule.title': 'Schedule and Availability',
+    'program.video.unsupported': 'Your browser does not support the video tag.',
+
+    // Program Data
+    'program.talleres.title': 'Holistic Workshops',
+    'program.talleres.description': 'Discover your path to a more balanced and conscious life with our workshops.',
+    'program.talleres.overview': 'Our holistic workshops are designed to help you find balance in all areas of your life. Through ancestral and modern practices, we will guide you on a journey of self-discovery and personal growth.',
+    'program.talleres.schedule': 'Workshops available 24 hours. Approximate duration 12 minutes per workshop.',
+    'program.bienestar.title': 'Wellness Program',
+    'program.bienestar.description': 'Live a healthy life by integrating exercise, nutrition, emotions, and spirituality through personalized consultations.',
+    'program.bienestar.overview': 'A comprehensive program that combines physical exercise, personalized nutrition and emotional support to achieve optimal wellness. We work with a personalized approach to help you achieve your health goals.',
+    'program.bienestar.schedule': 'Personalized plans | Weekly follow-up',
+    'program.casa.title': 'Casa NATIVA',
+    'program.casa.description': 'It is a place where you can connect with yourself, with plants, with animals, and with spirituality.',
+    'program.casa.overview': 'A sacred space designed to reconnect with your natural essence. Casa NATIVO offers you a unique environment where you can experience connection with nature, ancestral practices and traditional wisdom.',
+    'program.casa.schedule': 'Weekend retreats | Daily experiences',
+
+    // Membership Features
+    'membership.basic.features.0': 'Access to basic content',
+    'membership.basic.features.1': 'Online community',
+    'membership.basic.features.2': 'Monthly newsletter',
+    'membership.basic.features.3': 'Virtual consultation per month',
+    'membership.gold.features.0': 'Everything from Basic plan',
+    'membership.gold.features.1': 'Access to two group workshops per month',
+    'membership.gold.features.2': 'Personalized chat follow-up',
+    'membership.gold.features.3': '2 live consultations per month',
+    'membership.vip.features.0': 'Everything from GOLD plan',
+    'membership.vip.features.1': 'Private consultations',
+    'membership.vip.features.2': 'Unlimited virtual workshops',
+    'membership.vip.features.3': 'Traditional medicine energy cleansing',
 
     // Profile Page
     'profile.account.settings': 'Account Settings',
