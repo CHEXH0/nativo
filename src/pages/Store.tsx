@@ -92,23 +92,20 @@ const Store = () => {
             {products.map((product, index) => (
               <Card 
                 key={product.id} 
-                className="group overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl border-2 border-nativo-gold/20 hover:border-nativo-gold/60 bg-white/90 backdrop-blur-sm animate-fade-in"
-                style={{ animationDelay: `${index * 150}ms` }}
+                className="group overflow-hidden transform transition-all duration-200 hover:scale-105 hover:shadow-2xl border-2 border-nativo-gold/20 hover:border-nativo-gold/60 bg-white/90 backdrop-blur-sm animate-fade-in"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="relative overflow-hidden">
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute top-4 right-4 bg-nativo-gold text-white px-3 py-1 rounded-full text-sm font-semibold transform translate-y-[-100px] group-hover:translate-y-0 transition-transform duration-300">
-                    ¡Nuevo!
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                 </div>
                 <div className="p-6 relative">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-nativo-green via-nativo-gold to-nativo-brown transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                  <h3 className="text-2xl font-bold text-nativo-green mb-3 group-hover:text-nativo-brown transition-colors duration-300">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-nativo-green via-nativo-gold to-nativo-brown transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200" />
+                  <h3 className="text-2xl font-bold text-nativo-green mb-3 group-hover:text-nativo-brown transition-colors duration-200">
                     {product.name}
                   </h3>
                   <p className="text-gray-600 mb-6 leading-relaxed">{product.description}</p>
@@ -119,7 +116,7 @@ const Store = () => {
                     <Button
                       onClick={() => handleBuyNow(product)}
                       disabled={loading === product.id}
-                      className="relative overflow-hidden bg-gradient-to-r from-nativo-green to-nativo-brown hover:from-nativo-brown hover:to-nativo-gold text-white font-semibold px-6 py-3 rounded-full transform transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed group/btn"
+                      className="relative overflow-hidden bg-gradient-to-r from-nativo-green to-nativo-brown hover:from-nativo-brown hover:to-nativo-gold text-white font-semibold px-6 py-3 rounded-full transform transition-all duration-150 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed group/btn"
                     >
                       <span className="relative z-10">
                         {loading === product.id ? (
@@ -131,7 +128,7 @@ const Store = () => {
                           t('store.buy')
                         )}
                       </span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-nativo-gold to-nativo-brown opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-nativo-gold to-nativo-brown opacity-0 group-hover/btn:opacity-100 transition-opacity duration-150" />
                     </Button>
                   </div>
                 </div>
