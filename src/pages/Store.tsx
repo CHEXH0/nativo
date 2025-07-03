@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Product {
   id: string;
@@ -37,6 +38,7 @@ const products: Product[] = [
 
 const Store = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [loading, setLoading] = useState<string | null>(null);
 
   const handleBuyNow = async (product: Product) => {
@@ -63,8 +65,8 @@ const Store = () => {
     } catch (error) {
       console.error("Error:", error);
       toast({
-        title: "Error",
-        description: "Hubo un problema al procesar tu compra. Por favor intenta de nuevo.",
+        title: t('store.error.title'),
+        description: t('store.error.description'),
         variant: "destructive",
       });
     } finally {
@@ -75,7 +77,7 @@ const Store = () => {
   return (
     <div className="min-h-screen bg-nativo-beige py-12">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-nativo-green text-center mb-12">Nuestra Tienda</h1>
+        <h1 className="text-4xl font-bold text-nativo-green text-center mb-12">{t('store.title')}</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
             <Card key={product.id} className="overflow-hidden">
@@ -94,7 +96,7 @@ const Store = () => {
                     disabled={loading === product.id}
                     className="bg-nativo-green hover:bg-nativo-brown text-white"
                   >
-                    {loading === product.id ? "Procesando..." : "Comprar Ahora"}
+                    {loading === product.id ? t('store.processing') : t('store.buy')}
                   </Button>
                 </div>
               </div>

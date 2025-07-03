@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Phone, Mail } from "lucide-react";
 import { useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const instructors = [
   {
@@ -22,6 +23,8 @@ const instructors = [
 ];
 
 const Instructors = () => {
+  const { t } = useLanguage();
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -32,11 +35,10 @@ const Instructors = () => {
       <div className="container mx-auto px-4 py-8 mt-16">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-nativo-green mb-4">
-            Nuestros Instructores
+            {t('instructors.title')}
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Conoce a nuestro equipo de instructores especializados, cada uno comprometido 
-            con guiarte en tu viaje hacia el bienestar integral y la transformación personal.
+            {t('instructors.description')}
           </p>
         </div>
 
@@ -73,24 +75,23 @@ const Instructors = () => {
           <Card className="bg-nativo-cream/50 border-nativo-sage/20">
             <CardHeader>
               <CardTitle className="text-nativo-green">
-                ¿Quieres formar parte de nuestro equipo?
+                {t('instructors.join.title')}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 mb-4">
-                Si eres un profesional del bienestar y compartes nuestra visión holística, 
-                nos encantaría conocerte.
+                {t('instructors.join.description')}
               </p>
               <Dialog>
                 <DialogTrigger asChild>
                   <button className="inline-block bg-nativo-green text-white px-6 py-3 rounded-lg hover:bg-nativo-green/90 transition-colors">
-                    Contáctanos
+                    {t('instructors.contact')}
                   </button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-md">
                   <DialogHeader>
                     <DialogTitle className="text-nativo-green text-center mb-4">
-                      Información de Contacto
+                      {t('instructors.contact.title')}
                     </DialogTitle>
                   </DialogHeader>
                   <div className="space-y-6">
@@ -99,7 +100,7 @@ const Instructors = () => {
                         <Phone className="h-6 w-6 text-nativo-green" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-nativo-charcoal">Teléfono</p>
+                        <p className="text-sm font-medium text-nativo-charcoal">{t('instructors.contact.phone')}</p>
                         <p className="text-lg text-nativo-green font-semibold">+52 123 456 7890</p>
                       </div>
                     </div>
@@ -109,14 +110,14 @@ const Instructors = () => {
                         <Mail className="h-6 w-6 text-nativo-green" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-nativo-charcoal">Email</p>
+                        <p className="text-sm font-medium text-nativo-charcoal">{t('instructors.contact.email')}</p>
                         <p className="text-lg text-nativo-green font-semibold">info@nativo.com</p>
                       </div>
                     </div>
                     
                     <div className="text-center pt-4">
                       <p className="text-sm text-gray-600">
-                        Estamos aquí para ayudarte en tu viaje hacia el bienestar integral
+                        {t('instructors.contact.message')}
                       </p>
                     </div>
                   </div>

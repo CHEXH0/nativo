@@ -62,6 +62,7 @@ const translations = {
     'login.title': 'Bienvenido a NATIVO',
     'login.subtitle': 'Inicia sesión para continuar',
     'login.loading': 'Cargando...',
+    'login.error.session': 'Error al verificar la sesión',
     'login.error.registered': 'Este correo ya está registrado. Por favor inicia sesión.',
     'login.error.credentials': 'Correo o contraseña incorrectos. Por favor verifica tus credenciales e intenta de nuevo.',
     'login.error.confirm': 'Por favor confirma tu correo electrónico antes de iniciar sesión.',
@@ -83,6 +84,24 @@ const translations = {
     // Programs
     'program.notfound.title': 'Programa no encontrado',
     'program.notfound.message': 'Lo sentimos, el programa que buscas no está disponible.',
+
+    // Instructors Page
+    'instructors.title': 'Nuestros Instructores',
+    'instructors.description': 'Conoce a nuestro equipo de instructores especializados, cada uno comprometido con guiarte en tu viaje hacia el bienestar integral y la transformación personal.',
+    'instructors.join.title': '¿Quieres formar parte de nuestro equipo?',
+    'instructors.join.description': 'Si eres un profesional del bienestar y compartes nuestra visión holística, nos encantaría conocerte.',
+    'instructors.contact': 'Contáctanos',
+    'instructors.contact.title': 'Información de Contacto',
+    'instructors.contact.phone': 'Teléfono',
+    'instructors.contact.email': 'Email',
+    'instructors.contact.message': 'Estamos aquí para ayudarte en tu viaje hacia el bienestar integral',
+
+    // Store Page
+    'store.title': 'Nuestra Tienda',
+    'store.buy': 'Comprar Ahora',
+    'store.processing': 'Procesando...',
+    'store.error.title': 'Error',
+    'store.error.description': 'Hubo un problema al procesar tu compra. Por favor intenta de nuevo.',
 
     // Common
     'common.error': 'Error',
@@ -131,6 +150,7 @@ const translations = {
     'login.title': 'Welcome to NATIVO',
     'login.subtitle': 'Sign in to continue',
     'login.loading': 'Loading...',
+    'login.error.session': 'Error checking session',
     'login.error.registered': 'This email is already registered. Please sign in.',
     'login.error.credentials': 'Incorrect email or password. Please verify your credentials and try again.',
     'login.error.confirm': 'Please confirm your email before signing in.',
@@ -152,6 +172,24 @@ const translations = {
     // Programs
     'program.notfound.title': 'Program not found',
     'program.notfound.message': 'Sorry, the program you are looking for is not available.',
+
+    // Instructors Page
+    'instructors.title': 'Our Instructors',
+    'instructors.description': 'Meet our team of specialized instructors, each committed to guiding you on your journey toward integral wellness and personal transformation.',
+    'instructors.join.title': 'Want to be part of our team?',
+    'instructors.join.description': 'If you are a wellness professional who shares our holistic vision, we would love to meet you.',
+    'instructors.contact': 'Contact Us',
+    'instructors.contact.title': 'Contact Information',
+    'instructors.contact.phone': 'Phone',
+    'instructors.contact.email': 'Email',
+    'instructors.contact.message': 'We are here to help you on your journey toward integral wellness',
+
+    // Store Page
+    'store.title': 'Our Store',
+    'store.buy': 'Buy Now',
+    'store.processing': 'Processing...',
+    'store.error.title': 'Error',
+    'store.error.description': 'There was a problem processing your purchase. Please try again.',
 
     // Common
     'common.error': 'Error',

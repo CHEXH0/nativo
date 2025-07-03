@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { AuthError } from "@supabase/supabase-js";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,7 +24,7 @@ const Login = () => {
         
         if (error) {
           console.error("Error checking session:", error);
-          setErrorMessage("Error al verificar la sesión");
+          setErrorMessage(t('login.error.session'));
         } else if (session && mounted) {
           navigate("/profile");
           return;
@@ -69,19 +71,19 @@ const Login = () => {
     const handleAuthError = (error: AuthError) => {
       switch (error.message) {
         case "User already registered":
-          setErrorMessage("Este correo ya está registrado. Por favor inicia sesión.");
+          setErrorMessage(t('login.error.registered'));
           break;
         case "Invalid login credentials":
-          setErrorMessage("Correo o contraseña incorrectos. Por favor verifica tus credenciales e intenta de nuevo.");
+          setErrorMessage(t('login.error.credentials'));
           break;
         case "Email not confirmed":
-          setErrorMessage("Por favor confirma tu correo electrónico antes de iniciar sesión.");
+          setErrorMessage(t('login.error.confirm'));
           break;
         case "Too many requests":
-          setErrorMessage("Demasiados intentos. Por favor espera unos minutos antes de intentar de nuevo.");
+          setErrorMessage(t('login.error.requests'));
           break;
         default:
-          setErrorMessage(`Error de autenticación: ${error.message}`);
+          setErrorMessage(`${t('common.error')}: ${error.message}`);
       }
     };
 
@@ -97,7 +99,7 @@ const Login = () => {
       <div className="min-h-screen bg-nativo-beige flex items-center justify-center p-4">
         <div className="flex items-center gap-2">
           <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-nativo-green"></div>
-          <span className="text-nativo-green">Cargando...</span>
+          <span className="text-nativo-green">{t('common.loading')}</span>
         </div>
       </div>
     );
@@ -112,8 +114,8 @@ const Login = () => {
             alt="NATIVO Logo"
             className="h-16 mx-auto mb-4"
           />
-          <h1 className="text-2xl font-bold text-nativo-green">Bienvenido a NATIVO</h1>
-          <p className="text-gray-600">Inicia sesión para continuar</p>
+          <h1 className="text-2xl font-bold text-nativo-green">{t('login.title')}</h1>
+          <p className="text-gray-600">{t('login.subtitle')}</p>
         </div>
         
         {errorMessage && (
