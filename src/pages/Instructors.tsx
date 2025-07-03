@@ -17,7 +17,7 @@ const instructors = [
   {
     name: "Reyna Sanchez Chaidez",
     role: "Facilitadora de Holistica",
-    image: "/laptop-uploads/Reynita.jpg",
+    image: "/lovable-uploads/24efda63-28a3-4e80-bb2c-597a21a96a3a.png",
     bio: "Terapeuta especializada en Theta Healing, meditación y sanación enfocada en los espacios de los animales."
   }
 ];
