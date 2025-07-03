@@ -41,7 +41,7 @@ export const NewsletterSection = () => {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-2880px);
+            transform: translateX(-2448px);
           }
         }
       `}</style>
