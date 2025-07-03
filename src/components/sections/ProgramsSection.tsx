@@ -1,5 +1,6 @@
 
 import { ProgramCard } from "@/components/ProgramCard";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const programs = [
   {
@@ -23,12 +24,13 @@ const programs = [
 ];
 
 export const ProgramsSection = () => {
+  const { t } = useLanguage();
   return (
     <section id="programas" className="py-12 md:py-24 bg-gradient-to-b from-nativo-sage/10 via-nativo-cream to-nativo-beige/50">
       <div className="container px-4 mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-nativo-green mb-4">
-            Nuestros Programas
+            {t('programs.title')}
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-nativo-gold to-nativo-brown mx-auto rounded-full"></div>
         </div>

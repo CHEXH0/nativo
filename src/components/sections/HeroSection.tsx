@@ -9,8 +9,11 @@ import {
 } from "@/components/ui/dialog";
 import { MembershipsSection } from "./MembershipsSection";
 import { useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const HeroSection = () => {
+  const { t } = useLanguage();
+  
   useEffect(() => {
     // Preload the Jaguar image
     const preloadImage = new Image();
@@ -28,13 +31,13 @@ export const HeroSection = () => {
       <div className="container px-4 mx-auto relative z-10">
         <div className="max-w-4xl mx-auto flex flex-col items-center justify-center h-full text-center mt-28">
           <h1 className="text-4xl md:text-6xl font-bold text-nativo-cream mb-8 animate-fadeIn backdrop-blur-sm bg-nativo-green/20 p-6 rounded-2xl">
-            Tu Camino Hacia el Bienestar Holístico
+            {t('hero.title')}
           </h1>
           <p 
             className="text-xl text-nativo-cream mb-8 animate-fadeIn backdrop-blur-sm bg-nativo-sage/20 p-4 rounded-xl shadow-xl" 
             style={{ animationDelay: "0.2s" }}
           >
-            Descubre el equilibrio perfecto entre cuerpo, mente y espíritu con NATIVO Holístico
+            {t('hero.subtitle')}
           </p>
           <Dialog>
             <DialogTrigger asChild>
@@ -42,15 +45,15 @@ export const HeroSection = () => {
                 className="bg-nativo-green text-nativo-cream px-8 py-3 rounded-md hover:bg-nativo-brown transition-colors duration-300 animate-fadeIn shadow-lg" 
                 style={{ animationDelay: "0.4s" }}
               >
-                Comienza Tu Viaje
+                {t('hero.cta')}
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-nativo-cream border-2 border-nativo-gold/30">
               <DialogTitle className="text-2xl font-bold text-nativo-green mb-4">
-                Nuestras Membresías
+                {t('hero.memberships.title')}
               </DialogTitle>
               <DialogDescription className="text-nativo-charcoal/70 mb-6">
-                Elige el plan que mejor se adapte a tu viaje hacia el bienestar holístico
+                {t('hero.memberships.subtitle')}
               </DialogDescription>
               <MembershipsSection inDialog={true} />
             </DialogContent>

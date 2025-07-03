@@ -7,6 +7,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "./ui/use-toast";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { MembershipsSection } from "./sections/MembershipsSection";
+import { LanguageSwitcher } from "./ui/language-switcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +17,7 @@ export const Navbar = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const location = useLocation();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
@@ -40,25 +43,25 @@ export const Navbar = () => {
   const menuItems = [
     { 
       href: "/", 
-      label: "Inicio",
+      label: t('nav.home'),
       action: handleHomeClick
     },
     { 
       href: "/program/talleres-holisticos", 
-      label: "Programas"
+      label: t('nav.programs')
     },
     { 
       href: "/instructors", 
-      label: "Instructores"
+      label: t('nav.instructors')
     },
     { 
       href: "#", 
-      label: "Membresías",
+      label: t('nav.memberships'),
       action: () => setShowMemberships(true)
     },
     { 
       href: "https://www.etsy.com/es/shop/TiendaNativa", 
-      label: "Tienda",
+      label: t('nav.store'),
       external: true 
     },
   ];
@@ -83,13 +86,13 @@ export const Navbar = () => {
     try {
       await supabase.auth.signOut();
       toast({
-        title: "Sesión cerrada",
-        description: "Has cerrado sesión exitosamente",
+        title: t('login.session.closed'),
+        description: t('login.session.success'),
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "No se pudo cerrar la sesión",
+        title: t('common.error'),
+        description: t('login.session.error'),
         variant: "destructive",
       });
     }
@@ -114,7 +117,7 @@ export const Navbar = () => {
             onClick={handleProfile}
           >
             <User className="h-4 w-4 mr-2" />
-            Perfil
+            {t('nav.profile')}
           </Button>
           <Button
             variant="ghost"
@@ -123,7 +126,7 @@ export const Navbar = () => {
             onClick={handleLogout}
           >
             <LogOut className="h-4 w-4 mr-2" />
-            Cerrar sesión
+            {t('nav.logout')}
           </Button>
         </div>
       );
@@ -136,7 +139,7 @@ export const Navbar = () => {
         onClick={handleLogin}
       >
         <LogIn className="h-4 w-4 mr-2" />
-        Iniciar sesión
+        {t('nav.login')}
       </Button>
     );
   };
@@ -152,6 +155,7 @@ export const Navbar = () => {
           {item.label}
         </button>
       ))}
+      <LanguageSwitcher />
       <AuthButton />
     </>
   );

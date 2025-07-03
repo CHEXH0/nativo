@@ -2,8 +2,11 @@
 import { Card } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const WelcomeSection = () => {
+  const { t } = useLanguage();
+  
   useEffect(() => {
     // Preload the video thumbnail
     const preloadImage = new Image();
@@ -14,7 +17,7 @@ export const WelcomeSection = () => {
     <section className="py-16 bg-gradient-to-b from-nativo-cream via-nativo-beige/80 to-nativo-sage/20">
       <div className="container px-4 mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-nativo-green text-center mb-8 animate-fadeIn">
-          Bienvenido a NATIVO
+          {t('welcome.title')}
         </h2>
         
         <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -39,17 +42,13 @@ export const WelcomeSection = () => {
             style={{ animationDelay: "0.4s" }}
           >
             <h3 className="text-2xl font-semibold text-nativo-green border-b-2 border-nativo-gold/30 pb-2">
-              Tu Viaje Hacia el Bienestar Comienza Aquí
+              {t('welcome.subtitle')}
             </h3>
             <p className="text-lg leading-relaxed text-nativo-charcoal/80">
-              En NATIVO, creemos en un enfoque holístico del bienestar que nutre el cuerpo, 
-              la mente y el espíritu. Nuestro espacio está diseñado para ser tu santuario, 
-              donde podrás reconectar con tu esencia natural y descubrir un camino hacia 
-              una vida más equilibrada y consciente.
+              {t('welcome.description1')}
             </p>
             <p className="text-lg leading-relaxed text-nativo-charcoal/80">
-              Te invitamos a ser parte de nuestra comunidad, donde cada persona es 
-              valorada en su individualidad y apoyada en su viaje hacia el bienestar integral.
+              {t('welcome.description2')}
             </p>
           </div>
         </div>
