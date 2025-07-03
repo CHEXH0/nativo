@@ -56,7 +56,6 @@ const translations = {
     'testimonials.priscilla.quote': 'De verdad aprecié la tenacidad y el compromiso por parte de Juan Manuel porque eso me ayudó a lograr mis objetivos.',
 
     // Memberships Section
-    'memberships.title': 'Membresías',
 
     // Login Page
     'login.title': 'Bienvenido a NATIVO',
@@ -84,6 +83,26 @@ const translations = {
     // Programs
     'program.notfound.title': 'Programa no encontrado',
     'program.notfound.message': 'Lo sentimos, el programa que buscas no está disponible.',
+
+    // Profile Page
+    'profile.account.settings': 'Ajustes de cuenta',
+    'profile.tabs.subscription': 'Suscripción',
+    'profile.tabs.payment': 'Pagos',
+    'profile.tabs.settings': 'Ajustes',
+    'profile.content.title': 'Contenido Premium',
+    'profile.content.description': 'Accede a tu contenido exclusivo según tu plan',
+    'profile.admin.access': 'Acceso Completo',
+
+    // Memberships
+    'memberships.title': 'Membresías',
+    'memberships.popular': 'Más Popular',
+    'memberships.select': 'Seleccionar Plan',
+    'memberships.start': 'Empezar Ahora',
+    'memberships.login.required': 'Debes iniciar sesión para suscribirte',
+    'memberships.payment.error': 'No se pudo procesar el pago. Intenta nuevamente.',
+    'memberships.plan.updated': 'Plan actualizado a',
+    'memberships.plan.update.error': 'No se pudo actualizar el plan',
+    'memberships.payment.cancelled': 'Pago cancelado. No se ha realizado ningún cargo.',
 
     // Instructors Page
     'instructors.title': 'Nuestros Instructores',
@@ -144,7 +163,6 @@ const translations = {
     'testimonials.priscilla.quote': 'I really appreciated the tenacity and commitment from Juan Manuel because that helped me achieve my goals.',
 
     // Memberships Section
-    'memberships.title': 'Memberships',
 
     // Login Page
     'login.title': 'Welcome to NATIVO',
@@ -172,6 +190,26 @@ const translations = {
     // Programs
     'program.notfound.title': 'Program not found',
     'program.notfound.message': 'Sorry, the program you are looking for is not available.',
+
+    // Profile Page
+    'profile.account.settings': 'Account Settings',
+    'profile.tabs.subscription': 'Subscription',
+    'profile.tabs.payment': 'Payments',
+    'profile.tabs.settings': 'Settings',
+    'profile.content.title': 'Premium Content',
+    'profile.content.description': 'Access your exclusive content according to your plan',
+    'profile.admin.access': 'Full Access',
+
+    // Memberships
+    'memberships.title': 'Memberships',
+    'memberships.popular': 'Most Popular',
+    'memberships.select': 'Select Plan',
+    'memberships.start': 'Start Now',
+    'memberships.login.required': 'You must sign in to subscribe',
+    'memberships.payment.error': 'Payment could not be processed. Please try again.',
+    'memberships.plan.updated': 'Plan updated to',
+    'memberships.plan.update.error': 'Could not update plan',
+    'memberships.payment.cancelled': 'Payment cancelled. No charges have been made.',
 
     // Instructors Page
     'instructors.title': 'Our Instructors',

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const memberships = [
   {
@@ -49,6 +50,7 @@ interface MembershipsSectionProps {
 }
 
 export const MembershipsSection = ({ inDialog = false }: MembershipsSectionProps) => {
+  const { t } = useLanguage();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -66,7 +68,7 @@ export const MembershipsSection = ({ inDialog = false }: MembershipsSectionProps
         try {
           const { data: { session } } = await supabase.auth.getSession();
           if (!session) {
-            toast.error("Debes iniciar sesión para actualizar tu plan");
+            toast.error(t('memberships.login.required'));
             return;
           }
           
@@ -79,7 +81,7 @@ export const MembershipsSection = ({ inDialog = false }: MembershipsSectionProps
           
           if (error) throw error;
           
-          toast.success(`Plan actualizado a ${plan}`);
+          toast.success(`${t('memberships.plan.updated')} ${plan}`);
           
           // Clean up URL parameters
           const cleanUrl = window.location.pathname;
@@ -89,13 +91,13 @@ export const MembershipsSection = ({ inDialog = false }: MembershipsSectionProps
           window.location.reload();
         } catch (error) {
           console.error("Error updating plan:", error);
-          toast.error("No se pudo actualizar el plan");
+          toast.error(t('memberships.plan.update.error'));
         }
       };
       
       updateUserPlan();
     } else if (queryParams.get('canceled') === 'true') {
-      toast.info("Pago cancelado. No se ha realizado ningún cargo.");
+      toast.info(t('memberships.payment.cancelled'));
       // Clean up URL parameters
       const cleanUrl = window.location.pathname;
       window.history.replaceState({}, document.title, cleanUrl);
@@ -109,7 +111,7 @@ export const MembershipsSection = ({ inDialog = false }: MembershipsSectionProps
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
-        toast.error("Debes iniciar sesión para suscribirte");
+        toast.error(t('memberships.login.required'));
         setIsLoading(false);
         navigate('/login');
         return;
@@ -131,7 +133,7 @@ export const MembershipsSection = ({ inDialog = false }: MembershipsSectionProps
       
     } catch (error) {
       console.error("Error creating checkout session:", error);
-      toast.error("No se pudo procesar el pago. Intenta nuevamente.");
+      toast.error(t('memberships.payment.error'));
       setIsLoading(false);
     }
   };
@@ -145,7 +147,7 @@ export const MembershipsSection = ({ inDialog = false }: MembershipsSectionProps
       <div className="container px-4 mx-auto">
         {!inDialog && (
           <h2 className="text-3xl md:text-4xl font-bold text-nativo-green text-center mb-12">
-            Membresías
+            {t('memberships.title')}
           </h2>
         )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">

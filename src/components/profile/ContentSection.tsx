@@ -14,6 +14,7 @@ import { VipContent } from "./content/VipContent";
 import { DefaultContent } from "./content/DefaultContent";
 import { VideoDialog } from "./content/VideoDialog";
 import { MembershipsDialog } from "./content/MembershipsDialog";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ContentSectionProps {
   userPlan: string;
@@ -22,6 +23,7 @@ interface ContentSectionProps {
 }
 
 export const ContentSection = ({ userPlan, userEmail, onUpgrade }: ContentSectionProps) => {
+  const { t } = useLanguage();
   const [showMemberships, setShowMemberships] = useState(false);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
@@ -95,15 +97,15 @@ export const ContentSection = ({ userPlan, userEmail, onUpgrade }: ContentSectio
       <Card className="border-nativo-sage/30 shadow-lg">
         <CardHeader className="bg-nativo-cream/30 border-b border-nativo-sage/20">
           <CardTitle className="text-nativo-green text-2xl">
-            Contenido Premium
+            {t('profile.content.title')}
             {isAdmin && (
               <span className="ml-2 text-sm bg-nativo-gold text-white px-2 py-1 rounded">
-                Acceso Completo
+                {t('profile.admin.access')}
               </span>
             )}
           </CardTitle>
           <CardDescription className="text-nativo-sage/80 text-base">
-            Accede a tu contenido exclusivo según tu plan
+            {t('profile.content.description')}
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6">

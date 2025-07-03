@@ -2,6 +2,7 @@
 import { Card } from "@/components/ui/card";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PricingCardProps {
   id?: string;
@@ -26,12 +27,13 @@ export const PricingCard = ({
   isLoading,
   inDialog 
 }: PricingCardProps) => {
+  const { t } = useLanguage();
   
   return (
     <Card className={`relative p-6 bg-white ${isPopular ? 'border-2 border-nativo-green' : ''} ${isSelected ? 'ring-2 ring-nativo-green ring-offset-2' : ''}`}>
       {isPopular && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-nativo-green text-white px-4 py-1 rounded-full text-sm">
-          Más Popular
+          {t('memberships.popular')}
         </div>
       )}
       <div className="text-center mb-6">
@@ -54,9 +56,9 @@ export const PricingCard = ({
         {isLoading ? (
           <div className="h-5 w-5 animate-spin rounded-full border-2 border-t-transparent border-white mx-auto" />
         ) : inDialog ? (
-          "Seleccionar Plan"
+          t('memberships.select')
         ) : (
-          "Empezar Ahora"
+          t('memberships.start')
         )}
       </Button>
     </Card>
