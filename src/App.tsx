@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import ProgramDetails from "./pages/ProgramDetails";
 import Instructors from "./pages/Instructors";
+import Store from "./pages/Store";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             <Route path="/program/:programId" element={<ProgramDetails />} />
             <Route path="/instructors" element={<Instructors />} />
+            <Route path="/store" element={<Store />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

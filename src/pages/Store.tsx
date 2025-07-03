@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Navbar } from "@/components/Navbar";
 
 interface Product {
   id: string;
@@ -75,7 +76,9 @@ const Store = () => {
   };
 
   return (
-    <div className="min-h-screen bg-nativo-beige py-12">
+    <div className="min-h-screen bg-nativo-beige">
+      <Navbar />
+      <div className="pt-20 pb-12">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-nativo-green text-center mb-12">{t('store.title')}</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -103,6 +106,7 @@ const Store = () => {
             </Card>
           ))}
         </div>
+      </div>
       </div>
     </div>
   );
