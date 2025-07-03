@@ -160,20 +160,8 @@ const translations = {
     'store.error.description': 'Hubo un problema al procesar tu compra. Por favor intenta de nuevo.',
 
     // Newsletter Section
-    'newsletter.title': 'Últimas Noticias y Actualizaciones',
-    'newsletter.subtitle': 'Mantente informado con nuestras últimas perspectivas, actualizaciones de productos y consejos de bienestar',
-    'newsletter.item1.title': 'Lanzamiento de Nuevos Programas de Bienestar Holístico',
-    'newsletter.item1.description': 'Descubre nuestra gama ampliada de programas de bienestar mente-cuerpo diseñados para la vida moderna.',
-    'newsletter.item1.date': 'Diciembre 2024',
-    'newsletter.item1.category': 'Programas',
-    'newsletter.item2.title': 'Mindfulness en la Práctica Diaria',
-    'newsletter.item2.description': 'Aprende cómo integrar técnicas de mindfulness en tu rutina diaria para mayor claridad mental.',
-    'newsletter.item2.date': 'Noviembre 2024',
-    'newsletter.item2.category': 'Consejos de Bienestar',
-    'newsletter.item3.title': 'Crecimiento de la Comunidad NATIVO',
-    'newsletter.item3.description': 'Celebrando nuestra creciente comunidad de practicantes de bienestar y sus historias de transformación.',
-    'newsletter.item3.date': 'Noviembre 2024',
-    'newsletter.item3.category': 'Comunidad',
+    'newsletter.title': 'Nuestros Productos',
+    'newsletter.subtitle': 'Descubre nuestra selección exclusiva de productos de bienestar holístico',
 
     // Common
     'common.error': 'Error',
@@ -320,20 +308,8 @@ const translations = {
     'store.error.description': 'There was a problem processing your purchase. Please try again.',
 
     // Newsletter Section
-    'newsletter.title': 'Latest News & Updates',
-    'newsletter.subtitle': 'Stay informed with our latest insights, product updates, and wellness tips',
-    'newsletter.item1.title': 'New Holistic Wellness Programs Launch',
-    'newsletter.item1.description': 'Discover our expanded range of mind-body wellness programs designed for modern living.',
-    'newsletter.item1.date': 'December 2024',
-    'newsletter.item1.category': 'Programs',
-    'newsletter.item2.title': 'Mindfulness in Daily Practice',
-    'newsletter.item2.description': 'Learn how to integrate mindfulness techniques into your everyday routine for better mental clarity.',
-    'newsletter.item2.date': 'November 2024',
-    'newsletter.item2.category': 'Wellness Tips',
-    'newsletter.item3.title': 'NATIVO Community Growth',
-    'newsletter.item3.description': 'Celebrating our growing community of wellness practitioners and their transformation stories.',
-    'newsletter.item3.date': 'November 2024',
-    'newsletter.item3.category': 'Community',
+    'newsletter.title': 'Our Products',
+    'newsletter.subtitle': 'Discover our exclusive selection of holistic wellness products',
 
     // Common
     'common.error': 'Error',
