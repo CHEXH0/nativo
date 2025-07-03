@@ -30,40 +30,46 @@ const Instructors = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
+    <div className="min-h-screen bg-gradient-to-br from-nativo-cream via-nativo-beige to-nativo-sage/20">
       <Navbar />
       <div className="container mx-auto px-4 py-8 mt-16">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-nativo-green mb-4">
+        <div className="text-center mb-16 animate-fade-in">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-nativo-green via-nativo-brown to-nativo-gold bg-clip-text text-transparent">
             {t('instructors.title')}
           </h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <div className="w-32 h-1 bg-gradient-to-r from-nativo-green via-nativo-gold to-nativo-brown mx-auto rounded-full mb-4"></div>
+          <p className="text-lg text-nativo-brown/80 max-w-3xl mx-auto">
             {t('instructors.description')}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {instructors.map((instructor, index) => (
-            <Card key={index} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 aspect-square relative">
+            <Card 
+              key={index} 
+              className="group overflow-hidden transform transition-all duration-200 hover:scale-105 hover:shadow-2xl aspect-square relative border-2 border-nativo-gold/20 hover:border-nativo-gold/60 animate-fade-in"
+              style={{ animationDelay: `${index * 150}ms` }}
+            >
               <CardContent className="p-0 h-full">
                 <div 
-                  className="relative w-full h-full bg-cover bg-center bg-no-repeat"
+                  className="relative w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-110"
                   style={{ backgroundImage: `url(${instructor.image})` }}
                 >
-                  {/* Dark overlay for better text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                  {/* Enhanced gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent group-hover:from-nativo-green/80 group-hover:via-nativo-brown/40 transition-all duration-300"></div>
                   
-                  {/* Text content overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                    <h3 className="text-xl font-bold mb-2 text-shadow">
+                  {/* Text content overlay with enhanced styling */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-200">
+                    <h3 className="text-2xl font-bold mb-2 text-shadow group-hover:text-nativo-gold transition-colors duration-200">
                       {instructor.name}
                     </h3>
-                    <p className="text-sm font-medium mb-3 text-nativo-gold">
+                    <p className="text-sm font-medium mb-3 text-nativo-gold group-hover:text-white transition-colors duration-200">
                       {instructor.role}
                     </p>
-                    <p className="text-sm leading-relaxed text-white/90">
+                    <p className="text-sm leading-relaxed text-white/90 group-hover:text-white transition-colors duration-200">
                       {instructor.bio}
                     </p>
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-nativo-green via-nativo-gold to-nativo-brown transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                   </div>
                 </div>
               </CardContent>
@@ -71,21 +77,22 @@ const Instructors = () => {
           ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <Card className="bg-nativo-cream/50 border-nativo-sage/20">
+        <div className="mt-16 text-center animate-fade-in" style={{ animationDelay: "400ms" }}>
+          <Card className="bg-white/90 backdrop-blur-sm border-2 border-nativo-gold/20 hover:border-nativo-gold/60 transition-all duration-200 group">
             <CardHeader>
-              <CardTitle className="text-nativo-green">
+              <CardTitle className="text-nativo-green group-hover:bg-gradient-to-r group-hover:from-nativo-green group-hover:to-nativo-brown group-hover:bg-clip-text group-hover:text-transparent transition-all duration-200">
                 {t('instructors.join.title')}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600 mb-4">
+              <p className="text-nativo-brown/80 mb-6">
                 {t('instructors.join.description')}
               </p>
               <Dialog>
                 <DialogTrigger asChild>
-                  <button className="inline-block bg-nativo-green text-white px-6 py-3 rounded-lg hover:bg-nativo-green/90 transition-colors">
-                    {t('instructors.contact')}
+                  <button className="relative overflow-hidden bg-gradient-to-r from-nativo-green to-nativo-brown hover:from-nativo-gold hover:to-nativo-brown text-white px-8 py-3 rounded-full font-semibold transform transition-all duration-200 hover:scale-105 group/btn">
+                    <span className="relative z-10">{t('instructors.contact')}</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-nativo-gold to-nativo-brown opacity-0 group-hover/btn:opacity-100 transition-opacity duration-200" />
                   </button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-md">
