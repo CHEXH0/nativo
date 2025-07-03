@@ -110,7 +110,7 @@ export const Navbar = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="text-nativo-sage hover:text-nativo-green hover:bg-nativo-cream/50"
+            className="text-nativo-green hover:text-nativo-green hover:bg-nativo-cream/50"
             onClick={handleProfile}
           >
             <User className="h-4 w-4 mr-2" />
@@ -119,7 +119,7 @@ export const Navbar = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="text-nativo-sage hover:text-nativo-green hover:bg-nativo-cream/50"
+            className="text-nativo-green hover:text-nativo-green hover:bg-nativo-cream/50"
             onClick={handleLogout}
           >
             <LogOut className="h-4 w-4 mr-2" />
@@ -132,7 +132,7 @@ export const Navbar = () => {
       <Button
         variant="ghost"
         size="sm"
-        className="text-nativo-sage hover:text-nativo-green hover:bg-nativo-cream/50"
+        className="text-nativo-green hover:text-nativo-green hover:bg-nativo-cream/50"
         onClick={handleLogin}
       >
         <LogIn className="h-4 w-4 mr-2" />
@@ -147,7 +147,7 @@ export const Navbar = () => {
         <button
           key={item.href}
           onClick={(e) => handleNavigation(item.href, item.external, item.action)}
-          className="text-nativo-sage hover:text-nativo-green transition-colors"
+          className="text-nativo-green hover:text-nativo-green transition-colors"
         >
           {item.label}
         </button>
@@ -179,7 +179,7 @@ export const Navbar = () => {
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild className="md:hidden">
               <button className="p-2">
-                <Menu className="h-6 w-6 text-nativo-sage" />
+                <Menu className="h-6 w-6 text-nativo-green" />
               </button>
             </SheetTrigger>
             <SheetContent className="bg-nativo-cream">
