@@ -23,7 +23,7 @@ export const MembershipsSection = ({ inDialog = false }: MembershipsSectionProps
     {
       id: "basic",
       title: "Básico",
-      price: "$9/mes",
+      price: "$19/mes",
       features: [
         t('membership.basic.features.0'),
         t('membership.basic.features.1'),

@@ -107,7 +107,7 @@ const Instructors = () => {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-nativo-charcoal">{t('instructors.contact.phone')}</p>
-                        <p className="text-lg text-nativo-green font-semibold">+52 123 456 7890</p>
+                        <p className="text-lg text-nativo-green font-semibold">+52 56 1055 1068</p>
                       </div>
                     </div>
                     
@@ -117,7 +117,7 @@ const Instructors = () => {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-nativo-charcoal">{t('instructors.contact.email')}</p>
-                        <p className="text-lg text-nativo-green font-semibold">info@nativo.com</p>
+                        <p className="text-lg text-nativo-green font-semibold">nativoholisticomedia@gmail.com</p>
                       </div>
                     </div>
                     

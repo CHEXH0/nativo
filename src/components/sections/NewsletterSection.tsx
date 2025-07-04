@@ -1,14 +1,17 @@
 export const NewsletterSection = () => {
   const productImages = [
-    "/laptop-uploads/Copal.jpg",
-    "/laptop-uploads/Detox.jpg", 
-    "/laptop-uploads/Equal.jpg",
-    "/laptop-uploads/Fitness.jpg",
-    "/laptop-uploads/Fluidos.jpg",
-    "/laptop-uploads/Gold.jpg",
-    "/laptop-uploads/Manias.jpg",
-    "/laptop-uploads/Muscle_Man.jpg",
-    "/laptop-uploads/PlanVida.jpg"
+    "/laptop-uploads/Banos.webp",
+    "/laptop-uploads/Repelente.webp", 
+    "/laptop-uploads/Fluidos.webp",
+    "/laptop-uploads/Pets.webp",
+    "/laptop-uploads/Ointment.webp",
+    "/laptop-uploads/CleaningFluid.webp",
+    "/laptop-uploads/Detox.jpeg",
+    "/laptop-uploads/PlanVida.jpg",
+    "/laptop-uploads/ManiaRB.webp",
+    "/laptop-uploads/ManiaRed.webp",
+    "/laptop-uploads/ManiaStar.webp",
+    "/laptop-uploads/ManiaRP.webp"
   ];
 
   // Duplicate images for seamless infinite scroll
