@@ -44,4 +44,17 @@
   .text-shadow {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
   }
+  
+  .animate-scroll {
+    animation: scroll 30s linear infinite;
+  }
+  
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-1 * var(--scroll-distance)));
+    }
+  }
 }

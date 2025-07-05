@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const NewsletterSection = () => {
   const productData = [
     { image: "/laptop-uploads/Banos.webp", link: "https://www.etsy.com/es/shop/TiendaNativa" },
@@ -17,14 +19,20 @@ export const NewsletterSection = () => {
   // Duplicate products for seamless infinite scroll
   const duplicatedProducts = [...productData, ...productData];
 
+  // Calculate the width for seamless looping
+  // Each item: 240px (w-60) + 32px (mx-4 = 16px each side) = 272px
+  const itemWidth = 272;
+  const totalItems = productData.length;
+  const scrollDistance = itemWidth * totalItems;
+
   return (
     <section className="py-8 bg-gradient-to-b from-nativo-sage/10 via-nativo-cream/50 to-nativo-beige/30 overflow-hidden">
       <div className="relative">
         <div 
-          className="flex"
+          className="flex animate-scroll"
           style={{
-            animation: 'scroll 30s linear infinite',
-          }}
+            '--scroll-distance': `${scrollDistance}px`,
+          } as React.CSSProperties}
         >
           {duplicatedProducts.map((product, index) => (
             <div key={index} className="flex-shrink-0 w-60 h-60 mx-4">
@@ -44,17 +52,6 @@ export const NewsletterSection = () => {
           ))}
         </div>
       </div>
-      
-      <style>{`
-        @keyframes scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-2448px);
-          }
-        }
-      `}</style>
     </section>
   );
 };
