@@ -39,11 +39,8 @@ export const ProgramsSection = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {programs.map((program, index) => (
-            <div key={index} className="animate-fade-in transform hover:scale-105 transition-all duration-200 group" style={{ animationDelay: `${index * 100}ms` }}>
-              <div className="relative">
-                <ProgramCard {...program} />
-                <div className="absolute inset-0 bg-gradient-to-t from-nativo-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg" />
-              </div>
+            <div key={index} className="animate-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
+              <ProgramCard {...program} />
             </div>
           ))}
         </div>
