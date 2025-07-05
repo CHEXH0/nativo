@@ -5,19 +5,19 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const programs = [
   {
     title: "Talleres Holisticos",
-    description: "",
+    description: "Descubre tu camino hacia una vida más equilibrada y consciente con nuestros talleres.",
     image: "/laptop-uploads/Vida.jpg",
     slug: "talleres-holisticos"
   },
   {
     title: "Programa De Bienestar",
-    description: "",
+    description: "Lleva una vida saludable integrando el ejercicio la nutrición, las emociones, y la espiritualidad mediante asesorías personalizadas.",
     image: "/laptop-uploads/Equal.jpg",
     slug: "programa-bienestar"
   },
   {
     title: "Casa NATIVA",
-    description: "",
+    description: "Es un lugar donde podrás conectar contigo mismo, con las plantas, con los animales, y con la espiritualidad.",
     image: "/laptop-uploads/NativaCasa.jpg",
     slug: "casa-nativo"
   },
