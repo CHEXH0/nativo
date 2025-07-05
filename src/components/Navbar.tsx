@@ -60,16 +60,22 @@ export const Navbar = () => {
       action: () => setShowMemberships(true)
     },
     { 
-      href: "/store", 
-      label: t('nav.store')
+      href: "https://www.etsy.com/es/shop/TiendaNativa", 
+      label: t('nav.store'),
+      external: true
     },
   ];
 
-  const handleNavigation = (href: string, action?: (e: React.MouseEvent) => void) => {
+  const handleNavigation = (href: string, action?: (e: React.MouseEvent) => void, external?: boolean) => {
     setIsOpen(false);
     
     if (action) {
       action(new MouseEvent('click') as unknown as React.MouseEvent);
+      return;
+    }
+    
+    if (external) {
+      window.open(href, '_blank', 'noopener,noreferrer');
       return;
     }
     
@@ -143,7 +149,7 @@ export const Navbar = () => {
       {menuItems.map((item) => (
         <button
           key={item.href}
-          onClick={(e) => handleNavigation(item.href, item.action)}
+          onClick={(e) => handleNavigation(item.href, item.action, (item as any).external)}
           className="text-nativo-green hover:text-nativo-green transition-colors"
         >
           {item.label}
