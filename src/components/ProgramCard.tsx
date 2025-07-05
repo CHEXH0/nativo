@@ -1,6 +1,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface ProgramCardProps {
   title: string;
@@ -10,8 +10,16 @@ interface ProgramCardProps {
 }
 
 export const ProgramCard = ({ title, description, image, slug }: ProgramCardProps) => {
+  const navigate = useNavigate();
+  
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log('Program card clicked:', slug);
+    navigate(`/program/${slug}`);
+  };
+
   return (
-    <Link to={`/program/${slug}`}>
+    <div onClick={handleClick} className="cursor-pointer">
       <Card className="overflow-hidden transition-all duration-300 hover:scale-[1.02] h-full border-2 border-nativo-gold/20 hover:border-nativo-gold/50 shadow-xl hover:shadow-2xl bg-gradient-to-br from-nativo-cream to-nativo-beige/80">
         <div className="relative w-full pb-[100%] overflow-hidden">
           <img
@@ -27,6 +35,6 @@ export const ProgramCard = ({ title, description, image, slug }: ProgramCardProp
           <p className="text-lg text-nativo-charcoal/70">{description}</p>
         </CardContent>
       </Card>
-    </Link>
+    </div>
   );
 };
