@@ -47,7 +47,7 @@ export const Navbar = () => {
       action: handleHomeClick
     },
     { 
-      href: "/program/talleres-holisticos", 
+      href: "/program/limpieza-indigena-ancestral", 
       label: t('nav.programs')
     },
     { 
