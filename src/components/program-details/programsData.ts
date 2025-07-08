@@ -5,57 +5,71 @@ export const usePrograms = () => {
   const { t } = useLanguage();
   
   return {
-    "talleres-holisticos": {
-      title: t('program.talleres.title'),
-      description: t('program.talleres.description'),
-      image: "/laptop-uploads/Vida.jpg",
+    "limpieza-indigena-ancestral": {
+      title: "Limpieza Indígena Ancestral",
+      description: "Purificación del cuerpo las emociones la mente y el alma",
+      image: "/laptop-uploads/Detox.jpg",
       video: "https://player.vimeo.com/video/1091659998?h=26f8a831b8&badge=0&autopause=0&player_id=0&app_id=58479",
       details: {
-        overview: t('program.talleres.overview'),
-        schedule: t('program.talleres.schedule'),
+        overview: "Una práctica ancestral de purificación que limpia no solo el cuerpo físico, sino también las emociones, la mente y el alma. Esta terapia utiliza técnicas tradicionales que han sido transmitidas por generaciones para restaurar el equilibrio energético y espiritual.",
+        schedule: "Sesiones disponibles bajo cita previa | Duración: 2-3 horas",
         includes: [
-          "Taller 1: La importancia de llevar una vida Consciente y Saludable",
-          "Taller 2: Crear tu Plan de Vida",
-          "Taller 3: Detoxificación de Cuerpo y Mente",
-          "Taller 4: Ejercicio fisico para el salud y la longevidad",
-          "Taller 5: Alimentacion consciente y saludable",
-          "Taller 6: Limpieza energetica de tu casa y tu cuerpo",
-          "Taller 7: Conecta con la energia de tu mascota",
-          "Taller 8: Meditacion y Alinacion de Chakras",
-          "Taller 9: Territorio Ancestral y Calendario Natural",
+          "Limpieza energética corporal",
+          "Purificación emocional",
+          "Equilibrio mental y espiritual",
+          "Técnicas ancestrales tradicionales",
+          "Seguimiento post-sesión"
         ]
       }
     },
-    "programa-bienestar": {
-      title: t('program.bienestar.title'),
-      description: t('program.bienestar.description'),
-      image: "/laptop-uploads/Equal.jpg",
+    "armonizacion-proteccion": {
+      title: "Armonización y Protección",
+      description: "De casas, negocios y coches. Los espacios guardan memorias, limpiar las memorias de los lugares y sembrar energía armoniosa y abundante.",
+      image: "/laptop-uploads/Casa_Nativa.jpg",
+      video: "/laptop-uploads/Casa-Nativa.mp4",
+      details: {
+        overview: "Los espacios que habitamos y frecuentamos absorben energías y memorias. Esta terapia se enfoca en limpiar las memorias negativas de lugares como casas, negocios y vehículos, sembrando energía armoniosa y abundante para crear ambientes protegidos y prósperos.",
+        schedule: "Visitas programadas | Duración variable según el espacio",
+        includes: [
+          "Limpieza energética de espacios",
+          "Eliminación de memorias negativas",
+          "Protección energética permanente",
+          "Armonización del ambiente",
+          "Activación de energía de abundancia"
+        ]
+      }
+    },
+    "conciencia-corporal": {
+      title: "Conciencia Corporal y Recuperación Física",
+      description: "Nuestro cuerpo habla y las memorias salen a la superficie, la terapia física hace fluir los conflictos represados",
+      image: "/laptop-uploads/Bienestar.jpg",
       video: "/laptop-uploads/Bienestar.mp4",
       details: {
-        overview: t('program.bienestar.overview'),
-        schedule: t('program.bienestar.schedule'),
+        overview: "El cuerpo almacena memorias y emociones que pueden manifestarse como tensiones y dolores. Esta terapia combina técnicas físicas con conciencia corporal para liberar conflictos represados y restaurar la armonía entre cuerpo, mente y espíritu.",
+        schedule: "Sesiones semanales recomendadas | Duración: 60-90 minutos",
         includes: [
-          "Plan de nutrición personalizado",
-          "Rutinas de ejercicio adaptadas",
-          "Sesiones de coaching emocional",
-          "Seguimiento continuo"
+          "Evaluación de memorias corporales",
+          "Terapia física especializada",
+          "Técnicas de liberación emocional",
+          "Ejercicios de conciencia corporal",
+          "Plan de recuperación personalizado"
         ]
       }
     },
-    "casa-nativo": {
-      title: t('program.casa.title'),
-      description: t('program.casa.description'),
-      image: "/laptop-uploads/Casa-Nativa.jpg",
+    "conexion-mascota": {
+      title: "Conexión con tu Mascota",
+      description: "Mediante la técnica de meditación guiada el vínculo con nuestro peludito se hace más profundo",
+      image: "/laptop-uploads/Pets.webp",
       video: "https://player.vimeo.com/video/1091659773?h=8ff58471ab&badge=0&autopause=0&player_id=0&app_id=58479",
       details: {
-        overview: t('program.casa.overview'),
-        schedule: t('program.casa.schedule'),
+        overview: "Las mascotas son seres sensibles que pueden beneficiarse enormemente de una conexión más profunda con sus compañeros humanos. A través de meditación guiada y técnicas energéticas, fortalecemos el vínculo entre tú y tu mascota, mejorando su bienestar mutuo.",
+        schedule: "Sesiones familiares | Duración: 45-60 minutos",
         includes: [
-          "Ceremonias tradicionales",
-          "Talleres de conexión con la naturaleza",
-          "Meditaciones guiadas",
-          "Experiencias de sanación",
-          "Limpiezas energéticas"
+          "Meditación guiada para conexión",
+          "Técnicas de comunicación energética",
+          "Fortalecimiento del vínculo",
+          "Sanación energética para mascotas",
+          "Ejercicios para practicar en casa"
         ]
       }
     }
@@ -64,57 +78,71 @@ export const usePrograms = () => {
 
 // Fallback static export for backward compatibility
 export const programs = {
-  "talleres-holisticos": {
-    title: "Talleres Holisticos",
-    description: "Descubre tu camino hacia una vida más equilibrada y consciente con nuestros talleres.",
-    image: "/laptop-uploads/Vida.jpg",
+  "limpieza-indigena-ancestral": {
+    title: "Limpieza Indígena Ancestral",
+    description: "Purificación del cuerpo las emociones la mente y el alma",
+    image: "/laptop-uploads/Detox.jpg",
     video: "https://player.vimeo.com/video/1091659998?h=26f8a831b8&badge=0&autopause=0&player_id=0&app_id=58479",
     details: {
-      overview: "Nuestros talleres holísticos están diseñados para ayudarte a encontrar el equilibrio en todas las áreas de tu vida. A través de prácticas ancestrales y modernas, te guiaremos en un viaje de autodescubrimiento y crecimiento personal.",
-      schedule: "Talleres disponibles las 24 horas. Duración aproximada 12 minutos por taller.",
+      overview: "Una práctica ancestral de purificación que limpia no solo el cuerpo físico, sino también las emociones, la mente y el alma. Esta terapia utiliza técnicas tradicionales que han sido transmitidas por generaciones para restaurar el equilibrio energético y espiritual.",
+      schedule: "Sesiones disponibles bajo cita previa | Duración: 2-3 horas",
       includes: [
-        "Taller 1: La importancia de llevar una vida Consciente y Saludable",
-        "Taller 2: Crear tu Plan de Vida",
-        "Taller 3: Detoxificación de Cuerpo y Mente",
-        "Taller 4: Ejercicio fisico para el salud y la longevidad",
-        "Taller 5: Alimentacion consciente y saludable",
-        "Taller 6: Limpieza energetica de tu casa y tu cuerpo",
-        "Taller 7: Conecta con la energia de tu mascota",
-        "Taller 8: Meditacion y Alinacion de Chakras",
-        "Taller 9: Territorio Ancestral y Calendario Natural",
+        "Limpieza energética corporal",
+        "Purificación emocional",
+        "Equilibrio mental y espiritual",
+        "Técnicas ancestrales tradicionales",
+        "Seguimiento post-sesión"
       ]
     }
   },
-  "programa-bienestar": {
-    title: "Programa De Bienestar",
-    description: "Lleva una vida saludable integrando el ejercicio la nutricion, las emociones, y la espirutualidad mediante ascesorias personalizadas.",
-    image: "/laptop-uploads/Equal.jpg",
+  "armonizacion-proteccion": {
+    title: "Armonización y Protección",
+    description: "De casas, negocios y coches. Los espacios guardan memorias, limpiar las memorias de los lugares y sembrar energía armoniosa y abundante.",
+    image: "/laptop-uploads/Casa_Nativa.jpg",
+    video: "/laptop-uploads/Casa-Nativa.mp4",
+    details: {
+      overview: "Los espacios que habitamos y frecuentamos absorben energías y memorias. Esta terapia se enfoca en limpiar las memorias negativas de lugares como casas, negocios y vehículos, sembrando energía armoniosa y abundante para crear ambientes protegidos y prósperos.",
+      schedule: "Visitas programadas | Duración variable según el espacio",
+      includes: [
+        "Limpieza energética de espacios",
+        "Eliminación de memorias negativas",
+        "Protección energética permanente",
+        "Armonización del ambiente",
+        "Activación de energía de abundancia"
+      ]
+    }
+  },
+  "conciencia-corporal": {
+    title: "Conciencia Corporal y Recuperación Física",
+    description: "Nuestro cuerpo habla y las memorias salen a la superficie, la terapia física hace fluir los conflictos represados",
+    image: "/laptop-uploads/Bienestar.jpg",
     video: "/laptop-uploads/Bienestar.mp4",
     details: {
-      overview: "Un programa integral que combina ejercicio físico, nutrición personalizada y apoyo emocional para alcanzar un estado óptimo de bienestar. Trabajamos con un enfoque personalizado para ayudarte a alcanzar tus objetivos de salud.",
-      schedule: "Planes personalizados | Seguimiento semanal",
+      overview: "El cuerpo almacena memorias y emociones que pueden manifestarse como tensiones y dolores. Esta terapia combina técnicas físicas con conciencia corporal para liberar conflictos represados y restaurar la armonía entre cuerpo, mente y espíritu.",
+      schedule: "Sesiones semanales recomendadas | Duración: 60-90 minutos",
       includes: [
-        "Plan de nutrición personalizado",
-        "Rutinas de ejercicio adaptadas",
-        "Sesiones de coaching emocional",
-        "Seguimiento continuo"
+        "Evaluación de memorias corporales",
+        "Terapia física especializada",
+        "Técnicas de liberación emocional",
+        "Ejercicios de conciencia corporal",
+        "Plan de recuperación personalizado"
       ]
     }
   },
-  "casa-nativo": {
-    title: "Casa NATIVA",
-    description: "Es un lugar donde podras conectar contigomismo, con las plantas, con los animales, y con la espiritualidad.",
-    image: "/laptop-uploads/Casa-Nativa.jpg",
+  "conexion-mascota": {
+    title: "Conexión con tu Mascota",
+    description: "Mediante la técnica de meditación guiada el vínculo con nuestro peludito se hace más profundo",
+    image: "/laptop-uploads/Pets.webp",
     video: "https://player.vimeo.com/video/1091659773?h=8ff58471ab&badge=0&autopause=0&player_id=0&app_id=58479",
     details: {
-      overview: "Un espacio sagrado diseñado para reconectar con tu esencia natural. Casa NATIVO te ofrece un ambiente único donde podrás experimentar la conexión con la naturaleza, las prácticas ancestrales y la sabiduría tradicional.",
-      schedule: "Retiros de fin de semana | Experiencias diarias",
+      overview: "Las mascotas son seres sensibles que pueden beneficiarse enormemente de una conexión más profunda con sus compañeros humanos. A través de meditación guiada y técnicas energéticas, fortalecemos el vínculo entre tú y tu mascota, mejorando su bienestar mutuo.",
+      schedule: "Sesiones familiares | Duración: 45-60 minutos",
       includes: [
-        "Ceremonias tradicionales",
-        "Talleres de conexión con la naturaleza",
-        "Meditaciones guiadas",
-        "Experiencias de sanación",
-        "Limpiezas energéticas"
+        "Meditación guiada para conexión",
+        "Técnicas de comunicación energética",
+        "Fortalecimiento del vínculo",
+        "Sanación energética para mascotas",
+        "Ejercicios para practicar en casa"
       ]
     }
   }
