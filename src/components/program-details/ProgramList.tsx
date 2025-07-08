@@ -33,13 +33,13 @@ export const ProgramList = ({ programs, currentProgramId }: ProgramListProps) =>
   };
 
   return (
-    <div className="flex flex-wrap gap-4 mb-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 max-w-7xl mx-auto">
       {Object.entries(programs).map(([slug, programInfo]) => (
         <Button
           key={slug}
           variant={slug === currentProgramId ? "default" : "outline"}
           onClick={() => handleProgramClick(slug)}
-          className="flex-grow md:flex-grow-0"
+          className="w-full"
           type="button"
         >
           {programInfo.title}
