@@ -65,6 +65,29 @@ export const useContentManagement = () => {
     }
   };
 
+  const handleOrderSwap = async (currentId: string | null, newOrder: number) => {
+    try {
+      // Find if there's already content with this sort_order
+      const existingContent = content.find(item => 
+        item.sort_order === newOrder && item.id !== currentId
+      );
+
+      if (existingContent && currentId) {
+        // Get the current item's sort_order
+        const currentContent = content.find(item => item.id === currentId);
+        if (currentContent) {
+          // Swap the orders
+          await supabase
+            .from('content')
+            .update({ sort_order: currentContent.sort_order })
+            .eq('id', existingContent.id);
+        }
+      }
+    } catch (error) {
+      console.error('Error swapping content order:', error);
+    }
+  };
+
   const fetchContent = async () => {
     try {
       setLoading(true);
@@ -102,6 +125,11 @@ export const useContentManagement = () => {
 
   const addContent = async (newContent: NewContentItem) => {
     try {
+      // Check if sort_order already exists and swap if needed
+      if (newContent.sort_order !== undefined) {
+        await handleOrderSwap(null, newContent.sort_order);
+      }
+
       const { data, error } = await supabase
         .from('content')
         .insert([newContent])
@@ -132,6 +160,11 @@ export const useContentManagement = () => {
 
   const updateContent = async (id: string, updates: Partial<ContentItem>) => {
     try {
+      // Check if sort_order is being updated and swap if needed
+      if (updates.sort_order !== undefined) {
+        await handleOrderSwap(id, updates.sort_order);
+      }
+
       const { data, error } = await supabase
         .from('content')
         .update(updates)

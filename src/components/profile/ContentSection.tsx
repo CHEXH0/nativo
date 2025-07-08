@@ -124,13 +124,6 @@ export const ContentSection = ({ userEmail }: ContentSectionProps) => {
                           <Badge className={getPlanBadgeColor(item.required_plan)}>
                             {getPlanDisplayName(item.required_plan)}
                           </Badge>
-                          
-                          {item.is_premium && (
-                            <Badge variant="secondary" className="bg-amber-100 text-amber-800">
-                              <Shield className="h-3 w-3 mr-1" />
-                              Premium
-                            </Badge>
-                          )}
                         </div>
                         
                         <div className="flex items-center justify-between text-xs text-muted-foreground">

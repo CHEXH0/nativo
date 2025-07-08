@@ -240,15 +240,7 @@ export const AdminContentManagement = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="is_premium"
-                      checked={formData.is_premium}
-                      onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_premium: checked }))}
-                    />
-                    <Label htmlFor="is_premium">Contenido Premium</Label>
-                  </div>
+                <div className="flex items-center justify-end">
                   <div className="flex items-center space-x-2">
                     <Switch
                       id="is_active"
@@ -287,14 +279,8 @@ export const AdminContentManagement = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <h4 className="font-medium">{item.title}</h4>
                     <Badge className={getPlanBadgeColor(item.required_plan)}>
-                      {item.required_plan === 'none' ? 'Gratis' : item.required_plan}
+                    {item.required_plan === 'none' ? 'Gratis' : item.required_plan}
                     </Badge>
-                    {item.is_premium && (
-                      <Badge variant="secondary" className="bg-amber-100 text-amber-800">
-                        <Shield className="h-3 w-3 mr-1" />
-                        Premium
-                      </Badge>
-                    )}
                     {!item.is_active && (
                       <Badge variant="destructive">Inactivo</Badge>
                     )}
