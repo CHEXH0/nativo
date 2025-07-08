@@ -7,7 +7,7 @@ export const usePrograms = () => {
   return {
     "limpieza-indigena-ancestral": {
       title: "Limpieza Indígena Ancestral",
-      description: "Purificación del cuerpo las emociones la mente y el alma",
+      description: "Purificación integral del cuerpo, las emociones, la mente y el alma a través de técnicas milenarias. Esta práctica ancestral utiliza métodos tradicionales transmitidos por generaciones para restaurar el equilibrio energético, liberar bloqueos emocionales y purificar el ser en su totalidad. Una experiencia transformadora que conecta con la sabiduría indígena para alcanzar un estado de armonía y renovación profunda.",
       image: "/laptop-uploads/Detox.jpg",
       video: "https://player.vimeo.com/video/1091659998?h=26f8a831b8&badge=0&autopause=0&player_id=0&app_id=58479",
       details: {
@@ -24,7 +24,7 @@ export const usePrograms = () => {
     },
     "armonizacion-proteccion": {
       title: "Armonización y Protección",
-      description: "De casas, negocios y coches. Los espacios guardan memorias, limpiar las memorias de los lugares y sembrar energía armoniosa y abundante.",
+      description: "Especializado en la limpieza energética de casas, negocios y coches. Los espacios que habitamos absorben y guardan memorias energéticas que pueden afectar nuestro bienestar. Este servicio profesional se enfoca en limpiar las memorias negativas acumuladas en los lugares, neutralizar energías densas y sembrar una nueva vibración armoniosa y abundante que promueva la prosperidad, protección y bienestar de quienes los habitan.",
       image: "/laptop-uploads/Casa_Nativa.jpg",
       video: "/laptop-uploads/Casa-Nativa.mp4",
       details: {
@@ -41,7 +41,7 @@ export const usePrograms = () => {
     },
     "conciencia-corporal": {
       title: "Conciencia Corporal y Recuperación Física",
-      description: "Nuestro cuerpo habla y las memorias salen a la superficie, la terapia física hace fluir los conflictos represados",
+      description: "Terapia especializada donde nuestro cuerpo habla y las memorias emocionales emergen a la superficie. Esta práctica terapéutica facilita que los conflictos y tensiones represadas fluyan naturalmente, combinando técnicas físicas avanzadas con desarrollo de la conciencia corporal para lograr una sanación integral que restaure el equilibrio entre cuerpo, mente y espíritu, promoviendo una recuperación profunda y duradera.",
       image: "/laptop-uploads/Bienestar.jpg",
       video: "/laptop-uploads/Bienestar.mp4",
       details: {
@@ -58,7 +58,7 @@ export const usePrograms = () => {
     },
     "conexion-mascota": {
       title: "Conexión con tu Mascota",
-      description: "Mediante la técnica de meditación guiada el vínculo con nuestro peludito se hace más profundo",
+      description: "Mediante la técnica de meditación guiada especializada, el vínculo profundo con nuestro querido compañero peludo se fortalece significativamente. Esta práctica única utiliza métodos energéticos y de comunicación intuitiva para crear una conexión más consciente y armoniosa entre humanos y mascotas, mejorando el bienestar emocional y espiritual de ambos, y facilitando una comprensión mutua más profunda que enriquece la relación.",
       image: "/laptop-uploads/Pets.webp",
       video: "https://player.vimeo.com/video/1091659773?h=8ff58471ab&badge=0&autopause=0&player_id=0&app_id=58479",
       details: {
@@ -80,7 +80,7 @@ export const usePrograms = () => {
 export const programs = {
   "limpieza-indigena-ancestral": {
     title: "Limpieza Indígena Ancestral",
-    description: "Purificación del cuerpo las emociones la mente y el alma",
+    description: "Purificación integral del cuerpo, las emociones, la mente y el alma a través de técnicas milenarias. Esta práctica ancestral utiliza métodos tradicionales transmitidos por generaciones para restaurar el equilibrio energético, liberar bloqueos emocionales y purificar el ser en su totalidad. Una experiencia transformadora que conecta con la sabiduría indígena para alcanzar un estado de armonía y renovación profunda.",
     image: "/laptop-uploads/Detox.jpg",
     video: "https://player.vimeo.com/video/1091659998?h=26f8a831b8&badge=0&autopause=0&player_id=0&app_id=58479",
     details: {
@@ -97,7 +97,7 @@ export const programs = {
   },
   "armonizacion-proteccion": {
     title: "Armonización y Protección",
-    description: "De casas, negocios y coches. Los espacios guardan memorias, limpiar las memorias de los lugares y sembrar energía armoniosa y abundante.",
+    description: "Especializado en la limpieza energética de casas, negocios y coches. Los espacios que habitamos absorben y guardan memorias energéticas que pueden afectar nuestro bienestar. Este servicio profesional se enfoca en limpiar las memorias negativas acumuladas en los lugares, neutralizar energías densas y sembrar una nueva vibración armoniosa y abundante que promueva la prosperidad, protección y bienestar de quienes los habitan.",
     image: "/laptop-uploads/Casa_Nativa.jpg",
     video: "/laptop-uploads/Casa-Nativa.mp4",
     details: {
@@ -114,7 +114,7 @@ export const programs = {
   },
   "conciencia-corporal": {
     title: "Conciencia Corporal y Recuperación Física",
-    description: "Nuestro cuerpo habla y las memorias salen a la superficie, la terapia física hace fluir los conflictos represados",
+    description: "Terapia especializada donde nuestro cuerpo habla y las memorias emocionales emergen a la superficie. Esta práctica terapéutica facilita que los conflictos y tensiones represadas fluyan naturalmente, combinando técnicas físicas avanzadas con desarrollo de la conciencia corporal para lograr una sanación integral que restaure el equilibrio entre cuerpo, mente y espíritu, promoviendo una recuperación profunda y duradera.",
     image: "/laptop-uploads/Bienestar.jpg",
     video: "/laptop-uploads/Bienestar.mp4",
     details: {
@@ -131,7 +131,7 @@ export const programs = {
   },
   "conexion-mascota": {
     title: "Conexión con tu Mascota",
-    description: "Mediante la técnica de meditación guiada el vínculo con nuestro peludito se hace más profundo",
+    description: "Mediante la técnica de meditación guiada especializada, el vínculo profundo con nuestro querido compañero peludo se fortalece significativamente. Esta práctica única utiliza métodos energéticos y de comunicación intuitiva para crear una conexión más consciente y armoniosa entre humanos y mascotas, mejorando el bienestar emocional y espiritual de ambos, y facilitando una comprensión mutua más profunda que enriquece la relación.",
     image: "/laptop-uploads/Pets.webp",
     video: "https://player.vimeo.com/video/1091659773?h=8ff58471ab&badge=0&autopause=0&player_id=0&app_id=58479",
     details: {
