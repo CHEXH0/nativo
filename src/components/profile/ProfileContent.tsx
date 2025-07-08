@@ -2,13 +2,12 @@
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Package, CreditCard, Settings } from "lucide-react";
+import { CreditCard, Settings } from "lucide-react";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 
 import { ContentSection } from "@/components/profile/ContentSection";
 import { PaymentSection } from "@/components/profile/PaymentSection";
 import { SettingsSection } from "@/components/profile/SettingsSection";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProfileContentProps {
   userName: string;
@@ -25,7 +24,6 @@ export const ProfileContent = ({
   isLoading,
   onProfileUpdate
 }: ProfileContentProps) => {
-  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState("content");
 
   return (

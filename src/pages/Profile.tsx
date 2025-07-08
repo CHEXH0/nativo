@@ -1,6 +1,5 @@
 
 import { useProfileData } from "@/hooks/useProfileData";
-import { ProfileUrlHandler } from "@/components/profile/ProfileUrlHandler";
 import { ProfileLoading } from "@/components/profile/ProfileLoading";
 import { ProfileContent } from "@/components/profile/ProfileContent";
 
@@ -11,7 +10,6 @@ const Profile = () => {
     isLoading,
     userId,
     avatarUrl,
-    userPlan,
     refreshUserData
   } = useProfileData();
 
@@ -20,16 +18,13 @@ const Profile = () => {
   }
 
   return (
-    <>
-      <ProfileUrlHandler userId={userId} />
-      <ProfileContent
-        userName={userName}
-        userEmail={userEmail}
-        avatarUrl={avatarUrl}
-        isLoading={isLoading}
-        onProfileUpdate={refreshUserData}
-      />
-    </>
+    <ProfileContent
+      userName={userName}
+      userEmail={userEmail}
+      avatarUrl={avatarUrl}
+      isLoading={isLoading}
+      onProfileUpdate={refreshUserData}
+    />
   );
 };
 

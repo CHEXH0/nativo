@@ -11,7 +11,6 @@ export const useProfileData = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [userPlan, setUserPlan] = useState("none");
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
 
@@ -34,38 +33,7 @@ export const useProfileData = () => {
         setAvatarUrl(avatarUrlFromMeta);
       }
 
-      // Fetch user profile with proper error handling
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('plan')
-        .eq('id', user.id)
-        .maybeSingle();
-
-      if (profileError) {
-        console.error("Error fetching user profile:", profileError);
-        // Create profile if it doesn't exist
-        const { error: insertError } = await supabase
-          .from('profiles')
-          .insert({ id: user.id, plan: 'none' });
-        
-        if (insertError) {
-          console.error("Error creating profile:", insertError);
-        } else {
-          setUserPlan('none');
-        }
-      } else if (profileData) {
-        setUserPlan(profileData.plan || 'none');
-      } else {
-        // Profile doesn't exist, create it
-        const { error: insertError } = await supabase
-          .from('profiles')
-          .insert({ id: user.id, plan: 'none' });
-        
-        if (insertError) {
-          console.error("Error creating profile:", insertError);
-        }
-        setUserPlan('none');
-      }
+      // User profile data loaded successfully
     } catch (error) {
       console.error("Error updating user data:", error);
     }
@@ -142,7 +110,6 @@ export const useProfileData = () => {
     isLoading,
     userId,
     avatarUrl,
-    userPlan,
     session,
     user,
     refreshUserData
