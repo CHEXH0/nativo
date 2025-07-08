@@ -1,37 +1,8 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-
-interface ContentItem {
-  id: string;
-  title: string;
-  description: string | null;
-  video_url: string | null;
-  thumbnail_url: string | null;
-  content_type: string;
-  category: string | null;
-  is_premium: boolean;
-  required_plan: string;
-  duration_minutes: number | null;
-  sort_order: number;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
-}
-
-interface NewContentItem {
-  title: string;
-  description?: string;
-  video_url?: string;
-  thumbnail_url?: string;
-  content_type?: string;
-  category?: string;
-  is_premium?: boolean;
-  required_plan?: string;
-  duration_minutes?: number;
-  sort_order?: number;
-  is_active?: boolean;
-}
+import { ContentItem, NewContentItem } from '@/types/content';
+import { ContentService } from '@/services/contentService';
 
 export const useContentManagement = () => {
   const [content, setContent] = useState<ContentItem[]>([]);
@@ -39,85 +10,21 @@ export const useContentManagement = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const { toast } = useToast();
 
-  const checkAdminRole = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return false;
-
-      const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id)
-        .eq('role', 'admin')
-        .single();
-
-      if (error && error.code !== 'PGRST116') {
-        console.error('Error checking admin role:', error);
-        return false;
-      }
-
-      const hasAdminRole = !!data;
-      setIsAdmin(hasAdminRole);
-      return hasAdminRole;
-    } catch (error) {
-      console.error('Error checking admin role:', error);
-      return false;
-    }
-  };
-
-  const handleOrderSwap = async (currentId: string | null, newOrder: number) => {
-    try {
-      // Find if there's already content with this sort_order
-      const existingContent = content.find(item => 
-        item.sort_order === newOrder && item.id !== currentId
-      );
-
-      if (existingContent && currentId) {
-        // Get the current item's sort_order
-        const currentContent = content.find(item => item.id === currentId);
-        if (currentContent) {
-          // Swap the orders
-          await supabase
-            .from('content')
-            .update({ sort_order: currentContent.sort_order })
-            .eq('id', existingContent.id);
-        }
-      }
-    } catch (error) {
-      console.error('Error swapping content order:', error);
-    }
-  };
-
   const fetchContent = async () => {
     try {
       setLoading(true);
-      const isUserAdmin = await checkAdminRole();
+      const isUserAdmin = await ContentService.checkAdminRole();
+      setIsAdmin(isUserAdmin);
       
-      let query = supabase
-        .from('content')
-        .select('*')
-        .order('sort_order', { ascending: true });
-
-      // If not admin, only show active content
-      if (!isUserAdmin) {
-        query = query.eq('is_active', true);
-      }
-
-      const { data, error } = await query;
-
-      if (error) {
-        console.error('Error fetching content:', error);
-        toast({
-          title: "Error",
-          description: "Failed to load content",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      setContent(data || []);
+      const data = await ContentService.fetchContent(isUserAdmin);
+      setContent(data);
     } catch (error) {
       console.error('Error fetching content:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load content",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
@@ -125,27 +32,7 @@ export const useContentManagement = () => {
 
   const addContent = async (newContent: NewContentItem) => {
     try {
-      // Check if sort_order already exists and swap if needed
-      if (newContent.sort_order !== undefined) {
-        await handleOrderSwap(null, newContent.sort_order);
-      }
-
-      const { data, error } = await supabase
-        .from('content')
-        .insert([newContent])
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Error adding content:', error);
-        toast({
-          title: "Error",
-          description: "Failed to add content",
-          variant: "destructive",
-        });
-        return false;
-      }
-
+      const data = await ContentService.addContent(newContent, content);
       setContent(prev => [...prev, data]);
       toast({
         title: "Success",
@@ -153,35 +40,18 @@ export const useContentManagement = () => {
       });
       return true;
     } catch (error) {
-      console.error('Error adding content:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add content",
+        variant: "destructive",
+      });
       return false;
     }
   };
 
   const updateContent = async (id: string, updates: Partial<ContentItem>) => {
     try {
-      // Check if sort_order is being updated and swap if needed
-      if (updates.sort_order !== undefined) {
-        await handleOrderSwap(id, updates.sort_order);
-      }
-
-      const { data, error } = await supabase
-        .from('content')
-        .update(updates)
-        .eq('id', id)
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Error updating content:', error);
-        toast({
-          title: "Error",
-          description: "Failed to update content",
-          variant: "destructive",
-        });
-        return false;
-      }
-
+      const data = await ContentService.updateContent(id, updates, content);
       setContent(prev => prev.map(item => item.id === id ? data : item));
       toast({
         title: "Success",
@@ -189,28 +59,18 @@ export const useContentManagement = () => {
       });
       return true;
     } catch (error) {
-      console.error('Error updating content:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update content",
+        variant: "destructive",
+      });
       return false;
     }
   };
 
   const deleteContent = async (id: string) => {
     try {
-      const { error } = await supabase
-        .from('content')
-        .delete()
-        .eq('id', id);
-
-      if (error) {
-        console.error('Error deleting content:', error);
-        toast({
-          title: "Error",
-          description: "Failed to delete content",
-          variant: "destructive",
-        });
-        return false;
-      }
-
+      await ContentService.deleteContent(id);
       setContent(prev => prev.filter(item => item.id !== id));
       toast({
         title: "Success",
@@ -218,7 +78,11 @@ export const useContentManagement = () => {
       });
       return true;
     } catch (error) {
-      console.error('Error deleting content:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete content",
+        variant: "destructive",
+      });
       return false;
     }
   };
