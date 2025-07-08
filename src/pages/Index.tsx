@@ -11,9 +11,9 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-nativo-cream via-nativo-beige to-nativo-sage/20">
       <Navbar />
       <HeroSection />
-      <NewsletterSection />
       <WelcomeSection />
       <ProgramsSection />
+      <NewsletterSection />
       <TestimonialsSection />
     </div>
   );
