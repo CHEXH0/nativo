@@ -4,22 +4,28 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const programs = [
   {
-    title: "Talleres Holisticos",
-    description: "Descubre tu camino hacia una vida más equilibrada y consciente con nuestros talleres.",
-    image: "/laptop-uploads/Vida.jpg",
-    slug: "talleres-holisticos"
+    title: "Limpieza Indígena Ancestral",
+    description: "Purificación del cuerpo las emociones la mente y el alma",
+    image: "/laptop-uploads/Detox.jpg",
+    slug: "limpieza-indigena-ancestral"
   },
   {
-    title: "Programa De Bienestar",
-    description: "Lleva una vida saludable integrando el ejercicio la nutrición, las emociones, y la espiritualidad mediante asesorías personalizadas.",
-    image: "/laptop-uploads/Equal.jpg",
-    slug: "programa-bienestar"
+    title: "Armonización y Protección",
+    description: "De casas, negocios y coches. Los espacios guardan memorias, limpiar las memorias de los lugares y sembrar energía armoniosa y abundante.",
+    image: "/laptop-uploads/Casa_Nativa.jpg",
+    slug: "armonizacion-proteccion"
   },
   {
-    title: "Casa NATIVA",
-    description: "Es un lugar donde podrás conectar contigo mismo, con las plantas, con los animales, y con la espiritualidad.",
-    image: "/laptop-uploads/NativaCasa.jpg",
-    slug: "casa-nativo"
+    title: "Conciencia Corporal y Recuperación Física",
+    description: "Nuestro cuerpo habla y las memorias salen a la superficie, la terapia física hace fluir los conflictos represados",
+    image: "/laptop-uploads/Bienestar.jpg",
+    slug: "conciencia-corporal"
+  },
+  {
+    title: "Conexión con tu Mascota",
+    description: "Mediante la técnica de meditación guiada el vínculo con nuestro peludito se hace más profundo",
+    image: "/laptop-uploads/Pets.webp",
+    slug: "conexion-mascota"
   },
 ];
 
@@ -30,11 +36,11 @@ export const ProgramsSection = () => {
       <div className="container px-4 mx-auto">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-nativo-green via-nativo-brown to-nativo-gold bg-clip-text text-transparent">
-            {t('programs.title')}
+            Terapias Premium
           </h2>
           <div className="w-32 h-1 bg-gradient-to-r from-nativo-green via-nativo-gold to-nativo-brown mx-auto rounded-full mb-4"></div>
           <p className="text-lg text-nativo-brown/80 max-w-2xl mx-auto">
-            Descubre nuestros programas diseñados para tu bienestar integral
+            Servicios de sanación y armonización para tu bienestar integral
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
