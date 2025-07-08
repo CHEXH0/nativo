@@ -74,9 +74,6 @@ export const ProgramHeader = ({ title, description, image, video }: ProgramHeade
         <h1 className="text-3xl md:text-4xl font-bold text-nativo-green border-b-2 border-nativo-gold/30 pb-2">
           {title}
         </h1>
-        <p className="text-lg text-nativo-charcoal/80 leading-relaxed">
-          {description}
-        </p>
       </div>
     </div>
   );

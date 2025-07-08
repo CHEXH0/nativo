@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { usePrograms, programs } from "@/components/program-details/programsData";
 import { ProgramList } from "@/components/program-details/ProgramList";
 import { ProgramHeader } from "@/components/program-details/ProgramHeader";
-import { ProgramTabs } from "@/components/program-details/ProgramTabs";
+
 import { ProgramNotFound } from "@/components/program-details/ProgramNotFound";
 
 const ProgramDetails = () => {
@@ -33,11 +33,6 @@ const ProgramDetails = () => {
           image={program.image}
           video={program.video}
         />
-        <ProgramTabs details={{
-          overview: program.details.overview,
-          schedule: program.details.schedule,
-          includes: program.details.includes
-        }} />
       </div>
     </div>
   );
