@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "./ui/use-toast";
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { MembershipsSection } from "./sections/MembershipsSection";
 import { LanguageSwitcher } from "./ui/language-switcher";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -164,12 +164,6 @@ export const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 bg-nativo-cream/80 backdrop-blur-md z-50 border-b border-nativo-sage/20">
       <Dialog open={showMemberships} onOpenChange={setShowMemberships}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-nativo-cream border-2 border-nativo-gold/30">
-          <DialogTitle className="text-2xl font-bold text-nativo-green mb-4">
-            {t('hero.memberships.title')}
-          </DialogTitle>
-          <DialogDescription className="text-nativo-charcoal/70 mb-6">
-            {t('hero.memberships.subtitle')}
-          </DialogDescription>
           <MembershipsSection inDialog={true} />
         </DialogContent>
       </Dialog>
