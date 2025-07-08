@@ -2,10 +2,11 @@
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CreditCard, Settings } from "lucide-react";
+import { CreditCard, Settings, Crown } from "lucide-react";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 
 import { ContentSection } from "@/components/profile/ContentSection";
+import { SubscriptionSection } from "@/components/profile/SubscriptionSection";
 import { PaymentSection } from "@/components/profile/PaymentSection";
 import { SettingsSection } from "@/components/profile/SettingsSection";
 
@@ -24,7 +25,7 @@ export const ProfileContent = ({
   isLoading,
   onProfileUpdate
 }: ProfileContentProps) => {
-  const [activeTab, setActiveTab] = useState("content");
+  const [activeTab, setActiveTab] = useState("subscription");
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-nativo-cream to-nativo-beige">
@@ -53,7 +54,11 @@ export const ProfileContent = ({
               onValueChange={setActiveTab} 
               className="space-y-6"
             >
-              <TabsList className="grid grid-cols-2 gap-4 mb-6">
+              <TabsList className="grid grid-cols-3 gap-4 mb-6">
+                <TabsTrigger value="subscription" className="flex items-center gap-2">
+                  <Crown className="h-4 w-4" />
+                  <span>Suscripción</span>
+                </TabsTrigger>
                 <TabsTrigger value="payment" className="flex items-center gap-2">
                   <CreditCard className="h-4 w-4" />
                   <span>Pagos</span>
@@ -63,6 +68,10 @@ export const ProfileContent = ({
                   <span>Configuración</span>
                 </TabsTrigger>
               </TabsList>
+
+              <TabsContent value="subscription">
+                <SubscriptionSection />
+              </TabsContent>
 
               <TabsContent value="payment">
                 <PaymentSection />

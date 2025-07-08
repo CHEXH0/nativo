@@ -18,17 +18,17 @@ const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY") || "";
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const PLAN_PRODUCTS = {
-  basic: {
-    productId: "prod_RsnTi3vnYdOLZw",
-    amount: 900
+  basico: {
+    amount: 1900,
+    name: "Plan Básico"
   },
   gold: {
-    productId: "prod_RsnURV3GymmmUX",
-    amount: 5900
+    amount: 5900,
+    name: "Plan GOLD"
   },
   vip: {
-    productId: "prod_RsnV4XA6NDM7kx",
-    amount: 10900
+    amount: 10900,
+    name: "Plan VIP"
   }
 };
 
@@ -115,7 +115,7 @@ serve(async (req) => {
         {
           price_data: {
             currency: "usd",
-            product: product.productId,
+            product_data: { name: product.name },
             unit_amount: product.amount,
             recurring: {
               interval: "month",

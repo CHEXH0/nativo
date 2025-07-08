@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, Crown } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSubscription } from "@/hooks/useSubscription";
 
 const plans = [
   {
@@ -46,11 +47,14 @@ const plans = [
 
 export const PlansSection = () => {
   const { t } = useLanguage();
+  const { subscription_tier, createCheckout, loading } = useSubscription();
 
   const handleSelectPlan = (planId: string) => {
-    // For now, just scroll to contact or show interest
-    console.log(`Selected plan: ${planId}`);
-    // You can implement contact form or navigation here
+    if (subscription_tier === planId) {
+      // User already has this plan
+      return;
+    }
+    createCheckout(planId);
   };
 
   return (
@@ -67,18 +71,34 @@ export const PlansSection = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {plans.map((plan, index) => (
-            <div 
-              key={plan.id} 
-              className="animate-fade-in transform hover:scale-105 transition-all duration-200 group relative" 
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <Card className={`relative p-6 bg-white ${plan.popular ? 'border-2 border-nativo-green shadow-2xl' : 'border border-nativo-sage/30 shadow-lg'} hover:shadow-xl transition-all duration-300`}>
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-nativo-green text-white px-4 py-1 rounded-full text-sm font-medium">
-                    Más Popular
-                  </div>
-                )}
+          {plans.map((plan, index) => {
+            const isCurrentPlan = subscription_tier === plan.id;
+            const isPopular = plan.popular;
+            
+            return (
+              <div 
+                key={plan.id} 
+                className="animate-fade-in transform hover:scale-105 transition-all duration-200 group relative" 
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <Card className={`relative p-6 bg-white ${
+                  isCurrentPlan 
+                    ? 'border-2 border-nativo-green shadow-2xl ring-2 ring-nativo-green/20' 
+                    : isPopular 
+                      ? 'border-2 border-nativo-green shadow-2xl' 
+                      : 'border border-nativo-sage/30 shadow-lg'
+                } hover:shadow-xl transition-all duration-300`}>
+                  {isCurrentPlan && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-nativo-green text-white px-4 py-1 rounded-full text-sm font-medium flex items-center gap-1">
+                      <Crown className="h-3 w-3" />
+                      Tu Plan Actual
+                    </div>
+                  )}
+                  {isPopular && !isCurrentPlan && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-nativo-green text-white px-4 py-1 rounded-full text-sm font-medium">
+                      Más Popular
+                    </div>
+                  )}
                 
                 <CardHeader className="text-center pb-4">
                   <CardTitle className="text-2xl font-bold text-nativo-green mb-2">
@@ -101,20 +121,24 @@ export const PlansSection = () => {
                   
                   <Button 
                     className={`w-full py-3 px-6 rounded-lg font-semibold transition-all duration-300 ${
-                      plan.popular 
-                        ? 'bg-nativo-green text-white hover:bg-nativo-brown shadow-lg hover:shadow-xl' 
-                        : 'bg-nativo-cream text-nativo-green border-2 border-nativo-green hover:bg-nativo-green hover:text-white'
+                      isCurrentPlan
+                        ? 'bg-nativo-sage text-white cursor-default'
+                        : isPopular 
+                          ? 'bg-nativo-green text-white hover:bg-nativo-brown shadow-lg hover:shadow-xl' 
+                          : 'bg-nativo-cream text-nativo-green border-2 border-nativo-green hover:bg-nativo-green hover:text-white'
                     }`}
                     onClick={() => handleSelectPlan(plan.id)}
+                    disabled={loading || isCurrentPlan}
                   >
-                    Seleccionar Plan
+                    {isCurrentPlan ? 'Plan Actual' : 'Seleccionar Plan'}
                   </Button>
                 </CardContent>
                 
                 <div className="absolute inset-0 bg-gradient-to-t from-nativo-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg pointer-events-none" />
-              </Card>
-            </div>
-          ))}
+               </Card>
+             </div>
+            );
+          })}
         </div>
       </div>
     </section>
