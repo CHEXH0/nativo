@@ -26,7 +26,6 @@ const Profile = () => {
         userName={userName}
         userEmail={userEmail}
         avatarUrl={avatarUrl}
-        userPlan={userPlan}
         isLoading={isLoading}
         onProfileUpdate={refreshUserData}
       />

@@ -5,14 +5,12 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "./ui/use-toast";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { MembershipsSection } from "./sections/MembershipsSection";
 import { LanguageSwitcher } from "./ui/language-switcher";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [showMemberships, setShowMemberships] = useState(false);
+  
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -47,17 +45,8 @@ export const Navbar = () => {
       action: handleHomeClick
     },
     { 
-      href: "/program/limpieza-indigena-ancestral", 
-      label: t('nav.programs')
-    },
-    { 
       href: "/instructors", 
       label: t('nav.instructors')
-    },
-    { 
-      href: "#", 
-      label: t('nav.memberships'),
-      action: () => setShowMemberships(true)
     },
     { 
       href: "https://www.etsy.com/es/shop/TiendaNativa", 
@@ -162,11 +151,6 @@ export const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-nativo-cream/80 backdrop-blur-md z-50 border-b border-nativo-sage/20">
-      <Dialog open={showMemberships} onOpenChange={setShowMemberships}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-nativo-cream border-2 border-nativo-gold/30">
-          <MembershipsSection inDialog={true} />
-        </DialogContent>
-      </Dialog>
 
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">

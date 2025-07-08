@@ -7,24 +7,15 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { LockedContent } from "./content/LockedContent";
-import { BasicContent } from "./content/BasicContent";
-import { GoldContent } from "./content/GoldContent";
-import { VipContent } from "./content/VipContent";
-import { DefaultContent } from "./content/DefaultContent";
 import { VideoDialog } from "./content/VideoDialog";
-import { MembershipsDialog } from "./content/MembershipsDialog";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ContentSectionProps {
-  userPlan: string;
   userEmail: string;
-  onUpgrade: () => void;
 }
 
-export const ContentSection = ({ userPlan, userEmail, onUpgrade }: ContentSectionProps) => {
+export const ContentSection = ({ userEmail }: ContentSectionProps) => {
   const { t } = useLanguage();
-  const [showMemberships, setShowMemberships] = useState(false);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
   // Admin emails with full access
@@ -34,7 +25,6 @@ export const ContentSection = ({ userPlan, userEmail, onUpgrade }: ContentSectio
   ];
 
   const isAdmin = adminEmails.includes(userEmail);
-  const effectivePlan = isAdmin ? 'vip' : userPlan;
 
   const previewVideos = [
     {
@@ -57,38 +47,33 @@ export const ContentSection = ({ userPlan, userEmail, onUpgrade }: ContentSectio
     setActiveVideo(videoUrl);
   };
 
-  const handleUpgradeClick = () => {
-    setShowMemberships(true);
-  };
-
   const renderContent = () => {
-    switch(effectivePlan) {
-      case "none":
-        return (
-          <LockedContent
-            previewVideos={previewVideos}
-            onPlay={handlePlayVideo}
-            onUpgradeClick={handleUpgradeClick}
-          />
-        );
-      case "basic":
-        return <BasicContent onUpgradeClick={handleUpgradeClick} />;
-      case "gold":
-        return <GoldContent onUpgradeClick={handleUpgradeClick} />;
-      case "vip":
-        return <VipContent />;
-      default:
-        return <DefaultContent />;
-    }
+    return (
+      <div className="space-y-6">
+        <h3 className="text-xl font-medium text-nativo-green">Contenido Disponible</h3>
+        <div className="grid md:grid-cols-2 gap-6">
+          {previewVideos.map((video) => (
+            <div
+              key={video.id}
+              className="bg-nativo-cream/50 rounded-lg p-4 border border-nativo-sage/20 cursor-pointer hover:bg-nativo-cream/70 transition-colors"
+              onClick={() => handlePlayVideo(video.videoUrl)}
+            >
+              <img
+                src={video.thumbnail}
+                alt={video.title}
+                className="w-full h-32 object-cover rounded-md mb-3"
+              />
+              <h4 className="font-medium text-nativo-green">{video.title}</h4>
+              <p className="text-sm text-nativo-sage">{video.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   };
 
   return (
     <>
-      <MembershipsDialog
-        open={showMemberships}
-        onOpenChange={setShowMemberships}
-      />
-
       <VideoDialog
         videoUrl={activeVideo}
         onClose={() => setActiveVideo(null)}
@@ -97,15 +82,15 @@ export const ContentSection = ({ userPlan, userEmail, onUpgrade }: ContentSectio
       <Card className="border-nativo-sage/30 shadow-lg">
         <CardHeader className="bg-nativo-cream/30 border-b border-nativo-sage/20">
           <CardTitle className="text-nativo-green text-2xl">
-            {t('profile.content.title')}
+            Contenido NATIVO
             {isAdmin && (
               <span className="ml-2 text-sm bg-nativo-gold text-white px-2 py-1 rounded">
-                {t('profile.admin.access')}
+                Acceso Administrador
               </span>
             )}
           </CardTitle>
           <CardDescription className="text-nativo-sage/80 text-base">
-            {t('profile.content.description')}
+            Explora nuestro contenido espiritual y de bienestar
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6">

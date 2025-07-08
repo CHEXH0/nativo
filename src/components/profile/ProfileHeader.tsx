@@ -5,13 +5,12 @@ import {
 } from "@/components/ui/card";
 import { ProfileAvatar } from "./ProfileAvatar";
 import { EditableName } from "./EditableName";
-import { PlanBadge } from "./PlanBadge";
+
 
 interface ProfileHeaderProps {
   userName: string;
   userEmail: string;
   avatarUrl: string | null;
-  userPlan: string;
   isLoading: boolean;
   onProfileUpdate?: () => void;
 }
@@ -20,7 +19,6 @@ export const ProfileHeader = ({
   userName,
   userEmail,
   avatarUrl,
-  userPlan,
   isLoading,
   onProfileUpdate
 }: ProfileHeaderProps) => {
@@ -41,7 +39,6 @@ export const ProfileHeader = ({
           <p className="text-nativo-sage">
             {isLoading ? "Cargando..." : userEmail}
           </p>
-          <PlanBadge userPlan={userPlan} />
         </div>
       </CardContent>
     </Card>
