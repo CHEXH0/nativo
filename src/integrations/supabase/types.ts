@@ -197,6 +197,10 @@ export type Database = {
         Args: { _user_id: string; _role: string }
         Returns: boolean
       }
+      is_admin: {
+        Args: { user_id: string }
+        Returns: boolean
+      }
       update_user_plan: {
         Args: Record<PropertyKey, never> | { user_id: string; new_plan: string }
         Returns: undefined
